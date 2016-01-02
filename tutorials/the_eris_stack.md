@@ -3,6 +3,12 @@ The eris stack has undergone many changes in the past six months. When I joined 
 
 Let's get started! Figure 1 shows the relationship between all the tools in the eris stack. Before docker, each had to be installed individually (`git clone` followed by `go install` a handful of times...yuk). Docker also provides the ability to seamlessly link the containers, so that the individual processes can talk to each other. With or without docker, there are several considerations for thinking about the mechanics of your chain as an application. The first three suffice if your goal is writing and testing smart contracts. The rest are for building a useable application at scale. 
 
+```
+WTF are docker containers and how do processes run inside them? What does this design mean for you, the user of `eris`? 
+//TODO
+
+```
+
 ##Blockchain Application Checklist
 
 1. It all starts with your keys. 
@@ -43,6 +49,4 @@ The last tricky part, now that we have a defined service, is to deploy it to the
 
 There you have it. From A to Blockchains, this is how you get rolling with the marmots. Want a tutorial that we haven't provided? Let us know(link to our to-be-open-sourced-doc-repo where people can open issues when docs/tuts are broken and also do PRs)
 
-```
-box on docker exec and how we wrap that
-```
+
