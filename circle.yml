@@ -1,0 +1,21 @@
+general:
+  branches:
+    only:
+      - master
+
+test:
+  override:
+    - bundle exec rake prepare
+    - git config --global user.email "billings@erisindustries.com"
+    - git config --global user.name "Billings the Bot"
+    - bundle exec scripts/test.rb
+
+deployment:
+  master:
+    branch: master
+    commands:
+      - bundle exec rake setup
+      - bundle exec jekyll build --destination _site/htdocs
+      - find _site/htdocs/documentation/eris-db.js -name *.html -type f -exec sed -i ':a;N;$!ba;s/<span class="jsdoc-message">\(.*\)<\/span>//g' {} \;
+      - bundle exec check-links '_site' --no-warnings --max-threads 2; true # don't flame out here, usually because of GH rate limiting
+      - bundle exec rake deploy

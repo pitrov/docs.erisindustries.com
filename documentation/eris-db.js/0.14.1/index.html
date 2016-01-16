@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ErisDB Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">ErisDB</a>
+	</div>
+	<div class="navbar-collapse">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts.html">accounts</a></li><li><a href="module-blockchain.html">blockchain</a></li><li><a href="module-consensus.html">consensus</a></li><li><a href="module-erisdb.html">erisdb</a></li><li><a href="module-index.html">index</a></li><li><a href="module-namereg.html">namereg</a></li><li><a href="module-network.html">network</a></li><li><a href="module-rpc_client.html">rpc/client</a></li><li><a href="module-rpc_clients.html">rpc/clients</a></li><li><a href="module-rpc_http.html">rpc/http</a></li><li><a href="module-rpc_rpc.html">rpc/rpc</a></li><li><a href="module-rpc_twc_client.html">rpc/twc_client</a></li><li><a href="module-rpc_websocket.html">rpc/websocket</a></li><li><a href="module-transactions.html">transactions</a></li><li><a href="module-unsafe.html">unsafe</a></li><li><a href="module-util.html">util</a></li><li><a href="module-validation.html">validation</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts-Accounts.html">accounts~Accounts</a></li><li><a href="module-blockchain-BlockChain.html">blockchain~BlockChain</a></li><li><a href="module-consensus-Consensus.html">consensus~Consensus</a></li><li><a href="module-consensus-Events.html">consensus~Events</a></li><li><a href="module-consensus-EventSub.html">consensus~EventSub</a></li><li><a href="module-consensus-HttpEventSub.html">consensus~HttpEventSub</a></li><li><a href="module-consensus-WsEventSub.html">consensus~WsEventSub</a></li><li><a href="module-erisdb-ErisDB.html">erisdb~ErisDB</a></li><li><a href="module-namereg-NameReg.html">namereg~NameReg</a></li><li><a href="module-network-Network.html">network~Network</a></li><li><a href="module-rpc_client-Client.html">rpc/client~Client</a></li><li><a href="module-rpc_http-HTTPClient.html">rpc/http~HTTPClient</a></li><li><a href="module-rpc_twc_client-TWCClient.html">rpc/twc_client~TWCClient</a></li><li><a href="module-rpc_websocket-WebSocketClient.html">rpc/websocket~WebSocketClient</a></li><li><a href="module-transactions-Transactions.html">transactions~Transactions</a></li><li><a href="module-unsafe-Unsafe.html">unsafe~Unsafe</a></li><li><a href="module-util-ComponentBase.html">util~ComponentBase</a></li><li><a href="module-util-UnsafeComponentBase.html">util~UnsafeComponentBase</a></li><li><a href="module-validation-CallValidator.html">validation~CallValidator</a></li><li><a href="module-validation-SinglePolicyValidator.html">validation~SinglePolicyValidator</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+    		<h1 class="page-title">Index</h1>
+			
+
+	
+	<span class="page-title">Index</span>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>erisdb-js (Alpha)</h1><p>This is a JavaScript API for communicating with a <a href="https://github.com/eris-ltd/eris-db">ErisDB</a> server.</p>
+<h2>Installation</h2><pre class="prettyprint source lang-shell"><code>$ npm install eris-db</code></pre><h2>Usage</h2><p>If you created an ErisDB server using the <a href="https://github.com/eris-ltd/eris-cli">Eris CLI</a> tool, you can find out its IP address using the following command:</p>
+<pre class="prettyprint source"><code>$ eris chains inspect &lt;name of ErisDB server> NetworkSettings.IPAddress</code></pre><p>The main class is <code>ErisDB</code>. A standard <code>ErisDB</code> instance is created like this:</p>
+<pre class="prettyprint source"><code>var edbFactory = require('eris-db');
+
+var edb = edbFactory.createInstance(&quot;http://&lt;IP address>:1337/rpc&quot;);
+
+edb.start(function(error){
+    if(!error){
+        console.log(&quot;Ready to go&quot;);
+    }
+});</code></pre><p>The parameters for <code>createInstance</code> is the server URL as a string. The client-type is chosen based on the URL scheme. As of now, the supported schemes are: <code>http</code> and <code>ws</code> (websockets). No additional configuration is needed.</p>
+<p>If you want to specify what client to use, you do that through the <code>createInstanceFromClient</code> method.</p>
+<pre class="prettyprint source"><code>var edbFactory = require('eris-db');
+
+var wsClient = new edbFactory.clients.WebSocketClient(&quot;ws://&lt;IP address>:1337/socketrpc&quot;)
+
+var edb = edbFactory.createInstanceFromClient(wsClient);
+
+edb.start(function(error){
+    if(!error){
+        console.log(&quot;Ready to go&quot;);
+    }
+});</code></pre><p>Clients can be found in <code>edbFactory.clients</code>. We currently provide two - <code>WebSocketClient</code> and <code>HTTPClient</code> + the base classes (<code>Client</code> and <code>TWCClient</code>) which is only used to implement other protocols.</p>
+<h3>HTTP</h3><p>If you use <code>http(s)</code>, the start command will do nothing, so it can just be called and no callback used.</p>
+<h3>WebSocket</h3><p>If you use websocket, the system will not be ready until the start callback fires.</p>
+<p>The start callback must be on the following format: <code>function(error)</code>.</p>
+<p>The websocket-client has a number of additional connection-related methods:</p>
+<p><code>WebSocketClient.shutDown(callback)</code> - Technically this method is available in all clients but does not do anything with the http client. If called on an edb instance with a websocket client (or on the client directly), it will invoke the zero-argument callback function when the socket has been terminated.</p>
+<p><code>WebSocketClient.reconnect(callback)</code> - Will terminate the current connection (if any), and establish a new one. Same callback as with <code>start</code> (<code>callback(error)</code>).</p>
+<p><code>WebSocketClient.setCloseCallback(callback)</code> - If this zero-argument callback is set, it will be invoked when the active connection is closed. The callback will remain until it is set to <code>null</code>. Note that it will also be called when reconnecting if there was an already active connection (since that connection will be closed).</p>
+<p>If you want to use several sockets at once (for some reason), you can do that. Just create multiple <code>ErisDB</code> instances through <code>edbFactory.createInstance(...)</code>.</p>
+<h2>API Reference</h2><p>There are bindings for all the RPC methods. All functions are on the form <code>function(param1, param2, ... , callback)</code>, where the callback is a function on the form <code>function(error,data)</code> (it is documented under the name <code>methodCallback</code>). The <code>data</code> object is the same as you would get by calling the corresponding RPC method directly.</p>
+<p>This is the over-all structure of the library. The <code>unsafe</code> flag means a private key is either sent or received, so should be used with care (dev only). </p>
+<p>NOTE: There will be links to the proper jsdoc and integration with erisindustries.com. For now, the components point to the actual code files and methods points to the web-API method in question.</p>
+<h3>ErisDB</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Component Name</th>
+<th style="text-align:left">Accessor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Accounts</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/accounts.js">ErisDB.accounts()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Blockchain</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/blockchain.js">ErisDB.blockchain()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Consensus</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/consensus.js">ErisDB.consensus()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Events</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/events.js">ErisDB.events()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">NameReg</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/namereg.js">ErisDB.namereg()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Network</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/network.js">ErisDB.network()</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/erisdb-js/blob/master/lib/transactions.js">ErisDB.txs()</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Components</h3><h4>Accounts</h4><p>The accounts object has methods for getting account and account-storage data.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Accounts.getAccounts</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getaccounts">erisdb.getAccounts</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Accounts.getAccount</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getaccount">erisdb.getAccount</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Accounts.getStorage</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getstorage">erisdb.getStorage</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Accounts.getStorageAt</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getstorageat">erisdb.getStorageAt</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Accounts.genPrivAccount</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#genprivaccount">erisdb.genPrivAccount</a></td>
+<td style="text-align:left">unsafe</td>
+</tr>
+</tbody>
+</table>
+<h4>BlockChain</h4><p>The accounts object has methods for getting blockchain-related data, such as a list of blocks, or individual blocks, or the hash of the genesis block.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">BlockChain.getInfo</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getblockchaininfo">erisdb.getBlockchainInfo</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getChainId</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getchainid">erisdb.getChainId</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getGenesisHash</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getgenesishash">erisdb.getGenesisHash</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getLatestBlockHeight</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getlatestblockheight">erisdb.getLatestBlockHeight</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getLatestBlock</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getlatestblock">erisdb.getLatestBlock</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getBlocks</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getblocks">erisdb.getBlocks</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">BlockChain.getBlock</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getblock">erisdb.getBlock</a></td>
+</tr>
+</tbody>
+</table>
+<h4>Consensus</h4><p>The consensus object has methods for getting consensus-related data.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Consensus.getState</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getconsensusstate">erisdb.getConsensusState</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Consensus.getValidators</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getvalidators">erisdb.getValidators</a></td>
+</tr>
+</tbody>
+</table>
+<h4>Events</h4><p>The tendermint client will generate and fire off events when important things happen, like when a new block has been committed, or someone is transacting to an account. It is possible to subscribe to these events. These are the methods for subscribing, un-subscribing and polling.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Events.subscribe</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#eventsubscribe">erisdb.eventSubscribe</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.unsubscribe</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#eventunubscribe">erisdb.eventUnsubscribe</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.poll</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#eventpoll">erisdb.eventPoll</a></td>
+</tr>
+</tbody>
+</table>
+<h5>Helpers</h5><p>The helper functions makes it easier to manage subscriptions. Normally you'd be using these functions rather then managing the subscriptions yourself.</p>
+<p>Helper functions always contain two callback functions - a <code>createCallback(error, data)</code> and an <code>eventCallback(error, data)</code>. </p>
+<p>The <code>createCallback</code> data is an <a href="">EventSub</a> object, that can be used to do things like getting the event ID, the subscriber ID, and to stop the subscription. </p>
+<p>The <code>eventCallback</code> data is the event object. This object is different depending on the event type. In the case of <code>NewBlock</code> it will be a block, the consensus events is a transaction object, etc. More info can be found in the <a href="">api doc</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Events.subAccountInput</td>
+<td style="text-align:left"><code>account address &lt;string&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subAccountOutput</td>
+<td style="text-align:left"><code>account address &lt;string&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subAccountReceive</td>
+<td style="text-align:left"><code>account address &lt;string&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subLogEvent</td>
+<td style="text-align:left"><code>account address &lt;string&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subSolidityEvent</td>
+<td style="text-align:left"><code>account address &lt;string&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subNewBlocks</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subForks</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subBonds</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subUnbonds</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subRebonds</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+<tr>
+<td style="text-align:left">Events.subDupeouts</td>
+<td style="text-align:left"><code>-</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>subSolidityEvent</code> and <code>subLogEvent</code> are two different names for the same type of subscription (log events).</p>
+<h4>NameReg</h4><p>The NameReg object has methods for accessing the name registry.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">NameReg.getEntry</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#get-namereg-entry">erisdb.getNameRegEntry</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">NameReg.getEntries</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#get-namereg-entries">erisdb.getNameRegEntries</a></td>
+</tr>
+</tbody>
+</table>
+<h4>Network</h4><p>The accounts object has methods for getting network-related data, such as a list of all peers. It could also have been named &quot;node&quot;.</p>
+<p>Client Version may be a bit misplaced</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Network.getInfo</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getnetworkinfo">erisdb.getNetworkInfo</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.getClientVersion</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getclientversion">erisdb.getClientVersion</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.getMoniker</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getmoniker">erisdb.getMoniker</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.isListening</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#islistening">erisdb.isListening</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.getListeners</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getlisteners">erisdb.getListeners</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.getPeers</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getpeers">erisdb.getPeers</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Network.getPeer</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getpeer">erisdb.getPeer</a></td>
+</tr>
+</tbody>
+</table>
+<h4>Transactions</h4><p>A transaction is the equivalence of a database <code>write</code> operation. They can be done in two ways. There's the &quot;dev&quot; way, which is to call <code>transact</code> and pass along the target address (if any), data, gas, and a private key used for signing. It is very similar to the old Ethereum way of transacting, except Tendermint does not keep accounts in the client, so a private key needs to be sent along. This means the server <strong>should either run on the same machine as the tendermint client, or in the same, private network</strong>.</p>
+<p>Transacting via <code>broadcastTx</code> will be the standard way of doing things if you want the key to remain on the users machine. This requires a browser plugin for doing the actual signing, which we will add later. For now, you should stick to the <code>transact</code> method. </p>
+<p>To get a private key for testing/developing, you can run <code>tendermint gen_account</code> if you have it installed. You can also run <code>tools/pa_generator.js</code> if you have a local node running. It will take the url as command line argument at some point...</p>
+<h5>Calls</h5><p>Calls provide read-only access to the smart contracts. It is used mostly to get data out of a contract-accounts storage by using the contracts accessor methods, but can be used to call any method that does not change any data in any account. A trivial example would be a contract function that takes two numbers as input, adds them, and then simply returns the sum. </p>
+<p>There are two types of calls. <code>Call</code> takes a data string and an account address and calls the code in that account (if any) using the provided data as input. This is the standard method for read-only operations.</p>
+<p><code>CallCode</code> works the same except you don't provide an account address but the actual compiled code instead. It's a dev tool for accessing the VM directly. &quot;Code-execution as a service&quot;.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">RPC method</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Transactions.broadcastTx</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#broadcasttx">erisdb.broadcastTx</a></td>
+<td style="text-align:left">see below</td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.getUnconfirmedTxs</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#getunconfirmedtxs">erisdb.getUnconfirmedTxs</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.call</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#call">erisdb.call</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.callCode</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#callcode">erisdb.callCode</a></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.transact</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#transact">erisdb.transact</a></td>
+<td style="text-align:left">unsafe</td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.transactAndHold</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#transact-and-hold">erisdb.transactAndHold</a></td>
+<td style="text-align:left">unsafe</td>
+</tr>
+<tr>
+<td style="text-align:left">Transactions.transactNameReg</td>
+<td style="text-align:left"><a href="https://github.com/eris-ltd/eris-db/blob/master/api.md#transactnamereg">erisdb.transactNameReg</a></td>
+<td style="text-align:left">unsafe</td>
+</tr>
+</tbody>
+</table>
+<p><code>broadcastTx</code> is useless until we add a client-side signing solution. </p>
+<h2>Tests</h2><p>For unit tests, run <code>npm test</code>.</p>
+<p>For integration tests:</p>
+<pre class="prettyprint source lang-shell"><code>$ cd test/integration
+$ ./test.sh</code></pre><h2>Documentation</h2><p>Generate documentation using the command <code>npm run doc</code>.</p>
+<h2>Browser</h2><p>This library will be possible to run from a web-browser at some point.</p>
+<h2>Copyright</h2><p>Copyright 2015 Eris Industries</p>
+<p>This program is free software: you can redistribute it and/or modify<br>it under the terms of the GNU General Public License as published by<br>the Free Software Foundation, either version 3 of the License, or<br>(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,<br>but WITHOUT ANY WARRANTY; without even the implied warranty of<br>MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License<br>along with this program.  If not, see <http://www.gnu.org/licenses/>.</p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+<footer>
+
+	Eris Industries
+	<br />
+
+
+	<span class="copyright">
+	Eris Industries Copyright © 2014-2015.
+	</span>
+	<br />
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	on Thu Dec 24th 2015 using the <a
+	href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<!--<script src="scripts/sunlight.js"></script>-->
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/bootstrap-dropdown.js"></script>
+<script src="scripts/toc.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		showAndHide : false,
+		scrollTo    : "100px"
+	} );
+
+	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			lang = "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+</body>
+</html>

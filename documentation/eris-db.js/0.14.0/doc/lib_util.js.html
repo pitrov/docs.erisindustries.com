@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ErisDB Source: lib/util.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">ErisDB</a>
+	</div>
+	<div class="navbar-collapse">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts.html">accounts</a></li><li><a href="module-blockchain.html">blockchain</a></li><li><a href="module-consensus.html">consensus</a></li><li><a href="module-erisdb.html">erisdb</a></li><li><a href="module-index.html">index</a></li><li><a href="module-namereg.html">namereg</a></li><li><a href="module-network.html">network</a></li><li><a href="module-rpc_client.html">rpc/client</a></li><li><a href="module-rpc_clients.html">rpc/clients</a></li><li><a href="module-rpc_http.html">rpc/http</a></li><li><a href="module-rpc_rpc.html">rpc/rpc</a></li><li><a href="module-rpc_twc_client.html">rpc/twc_client</a></li><li><a href="module-rpc_websocket.html">rpc/websocket</a></li><li><a href="module-transactions.html">transactions</a></li><li><a href="module-unsafe.html">unsafe</a></li><li><a href="module-util.html">util</a></li><li><a href="module-validation.html">validation</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts-Accounts.html">accounts~Accounts</a></li><li><a href="module-blockchain-BlockChain.html">blockchain~BlockChain</a></li><li><a href="module-consensus-Consensus.html">consensus~Consensus</a></li><li><a href="module-consensus-Events.html">consensus~Events</a></li><li><a href="module-consensus-EventSub.html">consensus~EventSub</a></li><li><a href="module-consensus-HttpEventSub.html">consensus~HttpEventSub</a></li><li><a href="module-consensus-WsEventSub.html">consensus~WsEventSub</a></li><li><a href="module-erisdb-ErisDB.html">erisdb~ErisDB</a></li><li><a href="module-namereg-NameReg.html">namereg~NameReg</a></li><li><a href="module-network-Network.html">network~Network</a></li><li><a href="module-rpc_client-Client.html">rpc/client~Client</a></li><li><a href="module-rpc_http-HTTPClient.html">rpc/http~HTTPClient</a></li><li><a href="module-rpc_twc_client-TWCClient.html">rpc/twc_client~TWCClient</a></li><li><a href="module-rpc_websocket-WebSocketClient.html">rpc/websocket~WebSocketClient</a></li><li><a href="module-transactions-Transactions.html">transactions~Transactions</a></li><li><a href="module-unsafe-Unsafe.html">unsafe~Unsafe</a></li><li><a href="module-util-ComponentBase.html">util~ComponentBase</a></li><li><a href="module-util-UnsafeComponentBase.html">util~UnsafeComponentBase</a></li><li><a href="module-validation-CallValidator.html">validation~CallValidator</a></li><li><a href="module-validation-SinglePolicyValidator.html">validation~SinglePolicyValidator</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+    		<h1 class="page-title">Source: lib/util.js</h1>
+			
+
+		<h1 class="page-title">Source: lib/util.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * @file util.js
+ * @fileOverview Utility functions and classes for the thelonious library.
+ * @author Andreas Olofsson (andreas@erisindustries.com)
+ * @module util
+ */
+'use strict';
+var nUtil = require('util');
+
+var HTTPRequest;
+
+if (typeof(XMLHttpRequest) === "undefined") {
+    HTTPRequest = require("xmlhttprequest").XMLHttpRequest;
+} else {
+    HTTPRequest = XMLHttpRequest;
+}
+
+/**
+ * ComponentBase is used for all Thelonious API components.
+ *
+ * @param {module:rpc/client~Client} client - A client object.
+ * @constructor
+ */
+function ComponentBase(client){
+    this._client = client;
+}
+
+/**
+ * UnsafeComponentBase is used for all Thelonious API components that makes use
+ * of the unsafe class.
+ *
+ * @param {module:rpc/client~Client} client - A client object.
+ * @param {module:unsafe~Unsafe} unsafe - The unsafe object.
+ * @constructor
+ */
+function UnsafeComponentBase(client, unsafe){
+    ComponentBase.call(this, client);
+    this._unsafe = unsafe;
+}
+
+nUtil.inherits(UnsafeComponentBase, ComponentBase);
+
+exports.createFilter = function(field, op, value){
+    if(typeof(value) != "string") {
+        console.error("Filter value is not a string");
+        return null;
+    }
+    return {field: field, op: op, value: value};
+};
+
+var hexRe = /^[0-9a-fA-F]*$/;
+var addrRe = /^[0-9a-fA-F]{40}$/;
+var pubRe = /^[0-9a-fA-F]{64}$/;
+var privRe = /^[0-9a-fA-F]{128}$/;
+
+/**
+ * Check if string is proper hex.
+ *
+ * @param {string} str - The string.
+ * @returns {boolean}
+ */
+function isHex(str){
+    return typeof(str) == "string" &amp;&amp; str.match(hexRe);
+}
+
+/**
+ * Check if string is proper hex of length 40 (20 bytes).
+ *
+ * @param {string} str - The string.
+ * @returns {boolean}
+ */
+function isAddress(str){
+    return typeof(str) == "string" &amp;&amp; str.match(addrRe);
+}
+
+/**
+ * Check if string is proper hex of length 64 (32 bytes).
+ *
+ * @param {string} str - The string.
+ * @returns {boolean}
+ */
+function isPubKey(str){
+    return typeof(str) == "string" &amp;&amp; str.match(pubRe);
+}
+
+/**
+ * Check if string is proper hex of length 128 (64 bytes).
+ *
+ * @param {string} str - The string.
+ * @returns {boolean}
+ */
+function isPrivKey(str){
+    return typeof(str) == "string" &amp;&amp; str.match(privRe);
+}
+
+/**
+ * Get a new eris-db from the server-server. Useful for doing tests.
+ * TODO desc for requestData object.
+ *
+ * @param {string} serverURL - The url to the server-server. Usually "http://localhost:1337/server"
+ * @param {object} requestData The request data.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+function getNewErisServer(serverURL, requestData, callback){
+
+    var msg = JSON.stringify(requestData);
+    var httpRequest = new HTTPRequest();
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState == 4) {
+
+            if (httpRequest.status &lt; 200 || httpRequest.status > 299) {
+                callback(httpRequest.responseText);
+            } else {
+                var port;
+                try {
+                    var ret = JSON.parse(httpRequest.responseText);
+                    port = ret.port;
+                } catch (err) {
+                    callback(err);
+                }
+                callback(null, port);
+            }
+        }
+    };
+    httpRequest.open("POST", serverURL, true);
+    httpRequest.setRequestHeader("Content-Type", "application/json");
+    httpRequest.send(msg);
+}
+
+/**
+ * Constructor for the ComponentBase class.
+ *
+ * @type {function}
+ */
+exports.ComponentBase = ComponentBase;
+
+/**
+ * Constructor for the UnsafeComponentBase class.
+ *
+ * @type {function}
+ */
+exports.UnsafeComponentBase = UnsafeComponentBase;
+
+/**
+ *
+ * @type {getNewErisServer}
+ */
+exports.getNewErisServer = getNewErisServer;
+
+/**
+ * @type {isHex}
+ */
+exports.isHex = isHex;
+/**
+ * @type {isAddress}
+ */
+exports.isAddress = isAddress;
+/**
+ * @type {isPubKey}
+ */
+exports.isPubKey = isPubKey;
+/**
+ * @type {isPrivKey}
+ */
+exports.isPrivKey = isPrivKey;
+
+/**
+ * A field filter.
+ *
+ * @typedef {Object} FieldFilter
+ * @property {string} field - The field to filter on.
+ * @property {string} op - The operator ( &lt;, >, &lt;=, >=, ==, !=)
+ * @property {*} value - The value to filter against.
+ */</pre>
+	</article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+<footer>
+
+	Eris Industries
+	<br />
+
+
+	<span class="copyright">
+	Eris Industries Copyright © 2014-2015.
+	</span>
+	<br />
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	on Mon Dec 14th 2015 using the <a
+	href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<!--<script src="scripts/sunlight.js"></script>-->
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/bootstrap-dropdown.js"></script>
+<script src="scripts/toc.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		showAndHide : false,
+		scrollTo    : "100px"
+	} );
+
+	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			lang = "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+</body>
+</html>

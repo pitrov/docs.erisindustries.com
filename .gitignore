@@ -1,0 +1,12 @@
+_site/
+**/*.*~
+Gemfile.lock
+NOTES.md
+.sass-cache/
+_assets/
+_config.yml
+_data/
+_includes/
+_layouts/
+blog_base/
+scripts/

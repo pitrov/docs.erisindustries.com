@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ErisDB Source: lib/transactions.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">ErisDB</a>
+	</div>
+	<div class="navbar-collapse">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts.html">accounts</a></li><li><a href="module-blockchain.html">blockchain</a></li><li><a href="module-consensus.html">consensus</a></li><li><a href="module-erisdb.html">erisdb</a></li><li><a href="module-index.html">index</a></li><li><a href="module-namereg.html">namereg</a></li><li><a href="module-network.html">network</a></li><li><a href="module-rpc_client.html">rpc/client</a></li><li><a href="module-rpc_clients.html">rpc/clients</a></li><li><a href="module-rpc_http.html">rpc/http</a></li><li><a href="module-rpc_rpc.html">rpc/rpc</a></li><li><a href="module-rpc_twc_client.html">rpc/twc_client</a></li><li><a href="module-rpc_websocket.html">rpc/websocket</a></li><li><a href="module-transactions.html">transactions</a></li><li><a href="module-unsafe.html">unsafe</a></li><li><a href="module-util.html">util</a></li><li><a href="module-validation.html">validation</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-accounts-Accounts.html">accounts~Accounts</a></li><li><a href="module-blockchain-BlockChain.html">blockchain~BlockChain</a></li><li><a href="module-consensus-Consensus.html">consensus~Consensus</a></li><li><a href="module-consensus-Events.html">consensus~Events</a></li><li><a href="module-consensus-EventSub.html">consensus~EventSub</a></li><li><a href="module-consensus-HttpEventSub.html">consensus~HttpEventSub</a></li><li><a href="module-consensus-WsEventSub.html">consensus~WsEventSub</a></li><li><a href="module-erisdb-ErisDB.html">erisdb~ErisDB</a></li><li><a href="module-namereg-NameReg.html">namereg~NameReg</a></li><li><a href="module-network-Network.html">network~Network</a></li><li><a href="module-rpc_client-Client.html">rpc/client~Client</a></li><li><a href="module-rpc_http-HTTPClient.html">rpc/http~HTTPClient</a></li><li><a href="module-rpc_twc_client-TWCClient.html">rpc/twc_client~TWCClient</a></li><li><a href="module-rpc_websocket-WebSocketClient.html">rpc/websocket~WebSocketClient</a></li><li><a href="module-transactions-Transactions.html">transactions~Transactions</a></li><li><a href="module-unsafe-Unsafe.html">unsafe~Unsafe</a></li><li><a href="module-util-ComponentBase.html">util~ComponentBase</a></li><li><a href="module-util-UnsafeComponentBase.html">util~UnsafeComponentBase</a></li><li><a href="module-validation-CallValidator.html">validation~CallValidator</a></li><li><a href="module-validation-SinglePolicyValidator.html">validation~SinglePolicyValidator</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+    		<h1 class="page-title">Source: lib/transactions.js</h1>
+			
+
+		<h1 class="page-title">Source: lib/transactions.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">/**
+ * @file transactions.js
+ * @fileOverview Factory module for the Transactions class.
+ * @author Andreas Olofsson (andreas@erisindustries.com)
+ * @module transactions
+ */
+'use strict';
+
+var util = require('./util');
+var nUtil = require('util');
+var rpc = require('./rpc/rpc');
+
+/**
+ * Create a new instance of the Transactions class.
+ *
+ * @param {module:rpc/client~Client} client - The client object.
+ * @param {module:unsafe~Unsafe} unsafe - The unsafe object.
+ * @returns {Transactions} - A new instance of the Transactions class.
+ */
+exports.createInstance = function (client, unsafe) {
+    return new Transactions(client, unsafe);
+};
+
+/**
+ * Transactions has methods for sending transactions, viewing currently pending ones etc.
+ *
+ * @param {module:rpc/client~Client} client - The client object.
+ * @param {module:unsafe~Unsafe} unsafe - The unsafe object.
+ * @augments module:util~ComponentBase
+ * @constructor
+ */
+function Transactions(client, unsafe) {
+    util.UnsafeComponentBase.call(this, client, unsafe);
+}
+
+nUtil.inherits(Transactions, util.UnsafeComponentBase);
+
+/**
+ * Get a list of all unconfirmed transactions.
+ *
+ * @param {methodCallback} callback - The callback function.
+ */
+Transactions.prototype.getUnconfirmedTxs = function (callback) {
+    this._client.send(rpc.methodName("getUnconfirmedTxs"), null, callback);
+};
+
+/**
+ * Broadcasting a Transaction will send it to the blockchain client. The transaction needs
+ * to be signed in order for this to work.
+ *
+ * @param {Object} tx - The transaction.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.broadcastTx = function (tx, callback) {
+    this._client.send(rpc.methodName("broadcastTx"), tx, callback);
+};
+
+/**
+ * Call the account at the given address. If there is no code in the account, this will do nothing.
+ * Call does not cost anything, and can not affect the state of the database. It is only used to
+ * &lt;tt>get&lt;/tt> data.
+ *
+ * @param {string} [fromAddress] - The address from which the call was made. The address is settable because this is a read-only operation.
+ * @param {string} toAddress - The address to the target (contract) account.
+ * @param {string} data - The input data.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.call = function (fromAddress, toAddress, data, callback) {
+    var from, to, dta, cb;
+    if (typeof(data) === "function") {
+        from = "";
+        to = fromAddress;
+        dta = toAddress;
+        cb = data;
+    } else {
+        from = fromAddress;
+        to = toAddress;
+        dta = data;
+        cb = callback;
+    }
+
+    if (!util.isAddress(to)) {
+        callback(new Error("'toAddress' is not a proper address string."));
+    }
+    if (!util.isHex(dta)) {
+        callback(new Error("'data' is not a proper hex string."));
+    }
+    this._client.send(rpc.methodName("call"), rpc.callParam(from, to, dta), cb);
+};
+
+/**
+ * Call the code with the given data as input. This function runs the code in a VM
+ * with the given input.
+ *
+ * @param {string} [fromAddress] - The address from which the call was made. The address is settable because this is a read-only operation.
+ * @param {string} code - The code to be executed.
+ * @param {string} data - The input data.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.callCode = function (fromAddress, code, data, callback) {
+    var from, cd, dta, cb;
+    if (typeof(data) === "function") {
+        from = "";
+        cd = fromAddress;
+        dta = code;
+        cb = data;
+    } else {
+        from = fromAddress;
+        cd = code;
+        dta = data;
+        cb = callback;
+    }
+    if (!util.isHex(cd)) {
+        callback(new Error("'code' is not a proper hex string."));
+    }
+    if (!util.isHex(dta)) {
+        callback(new Error("'data' is not a proper hex string."));
+    }
+    this._client.send(rpc.methodName("callCode"), rpc.callCodeParam(from, cd, dta), cb);
+};
+
+/**
+ * Transact to the account at the given address.
+ *
+ * Note: This requires a private key to be sent to the blockchain client.
+ *
+ * @param {string} privKey - The private key that will be used to sign.
+ * @param {string} address - The address to the account holding the code. Set it to null if
+ * doing a tx create.
+ * @param {string} data - The input data.
+ * @param {number} gasLimit - The gas limit.
+ * @param {number} fee - The fee.
+ * @param {*} context - an object containing information for the validator.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.transact = function (privKey, address, data, gasLimit, fee, context, callback) {
+    this._unsafe.transact(privKey, address, data, gasLimit, fee, context, function(error, data){
+        if(error) return callback(error);
+        callback(null, data);
+    });
+};
+
+/**
+ * Send to the account at the given address.
+ *
+ * Note: This requires a private key to be sent to the blockchain client.
+ *
+ * @param {string} privKey - The private key that will be used to sign.
+ * @param {string} toAddress - The target account address.
+ * @param {number} amount - The amount to send.
+ * @param {*} context - an object containing information for the validator.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.send = function (privKey, toAddress, amount, context, callback) {
+    this._unsafe.send(privKey, toAddress, amount, context, callback);
+};
+
+/**
+ * Transact to the account at the given address, and hold until the transaction has
+ * been committed to a block (or not).
+ *
+ * Note: This requires a private key to be sent to the blockchain client.
+ *
+ * @param {string} privKey - The private key that will be used to sign.
+ * @param {string} address - The address to the account holding the code. Set it to null if
+ * doing a tx create.
+ * @param {string} data - The input data.
+ * @param {number} gasLimit - The gas limit.
+ * @param {number} fee - The fee.
+ * @param {*} context - an object containing information for the validator.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.transactAndHold = function (privKey, address, data, gasLimit, fee, context, callback) {
+    this._unsafe.transactAndHold(privKey, address, data, gasLimit, fee, context, function(error, data){
+        if(error) return callback(error);
+        callback(null, data);
+    });
+};
+
+/**
+ * Transact to the account at the given address, and hold until the transaction has
+ * been committed to a block (or not).
+ *
+ * Note: This requires a private key to be sent to the blockchain client.
+ *
+ * @param {string} privKey - The private key that will be used to sign.
+ * @param {string} toAddress - The target account address.
+ * @param {number} amount - The amount to send.
+ * @param {*} context - an object containing information for the validator.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.sendAndHold = function (privKey, toAddress, amount, context, callback) {
+    this._unsafe.sendAndHold(privKey, toAddress, amount, context, callback);
+};
+
+
+/**
+ * Transact to the name registry. The name registry is essentially a distributed key-value store that comes
+ * with the client. Accessing the registry is done via the NameReg.
+ *
+ * Note: This requires a private key to be sent to the blockchain client.
+ *
+ * @param {string} privKey - The private key that will be used to sign.
+ * @param {string} name - The key, or name.
+ * @param {string} data - The data that should be stored.
+ * @param {number} amount - The amount of tokens to send.
+ * @param {number} fee - The fee.
+ * @param {*} context - an object containing information for the validator.
+ * @param {module:rpc/rpc~methodCallback} callback - The callback function.
+ */
+Transactions.prototype.transactNameReg = function (privKey, name, data, amount, fee, context, callback) {
+    this._unsafe.transactNameReg(privKey, name, data, amount, fee, context, callback);
+};</pre>
+	</article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+<footer>
+
+	Eris Industries
+	<br />
+
+
+	<span class="copyright">
+	Eris Industries Copyright © 2014-2015.
+	</span>
+	<br />
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	on Fri Dec 11th 2015 using the <a
+	href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<!--<script src="scripts/sunlight.js"></script>-->
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/bootstrap-dropdown.js"></script>
+<script src="scripts/toc.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		showAndHide : false,
+		scrollTo    : "100px"
+	} );
+
+	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			lang = "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+</body>
+</html>
