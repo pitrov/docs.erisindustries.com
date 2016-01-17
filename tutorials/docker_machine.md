@@ -104,13 +104,13 @@ eris      *        virtualbox   Running   tcp://192.168.99.101:2376
 
 To confirm: `$ docker-machine active`, which should output "eris".
 
-If you're an OSX/Windows user wanting to quickly get started on the eris platform, here is where you would 1) install eris via go (`go get github.com/eris-ltd/eris-cli/cmd/eris`) or via [binary](link) then run `$ eris init`. You'll also want to note the ip of your machine with `$ docker-machine ip eris`, which should match the ip seen above. This ip replaces the use of `localhost` (re: linux) in some of our tutorials and maps to `0.0.0.0` of a container running with exposed ports. Similar logic applies for cloud deployements with docker-machine, discussed further below. 
+If you're an OSX/Windows user wanting to quickly get started on the eris platform, here is where you would 1) install eris via go (`go get github.com/eris-ltd/eris-cli/cmd/eris`) or via [the latest binary](https://github.com/eris-ltd/eris-cli/releases) then run `$ eris init`. You'll also want to note the ip of your machine with `$ docker-machine ip eris`, which should match the ip seen above. This ip replaces the use of `localhost` (re: linux) in some of our tutorials and maps to `0.0.0.0` of a container running with exposed ports. Similar logic applies for cloud deployements with docker-machine, discussed further below. 
 
 There are several more `$ docker-machine` commands that I won't go through since they aren't immediately relevant to our purposes though they're definitely worth checking out.
 
 ## Machine Thinking
 
-Above, we created two machines. These should be thought of as *two individual hosts*, in addition to the 'master' host. Indeed, the containers within them are accessed via different ip addresses. While a machine is active (in scope - remember `eval/env`), any `$ docker` command executed on the host will apply to that machine and that machine only. This means that if you `$ docker run` a handful of containers while one machine is in scope then run the `$ eval` command for another machine, `$ docker ps -a` won't show the containers you had just started because that machine is no longer in scope. Which is exactly what we want and why docker-machine is so awesome. It gets even better; all machines created (and subsequently managed) from a host have access to the hosts filesystem (but not docker images, unfortunately). This logic applies equally to all `eris` commands, which have a pre-run check to connect to docker.
+Above, we created two machines. These should be thought of as *two individual hosts*, in addition to the 'master' host. Indeed, the containers within them are accessed via different ip addresses. While a machine is active (in scope - remember `eval/env`), any `$ docker` command executed on the host will apply to that machine and that machine only. This means that if you `$ docker run` a handful of containers while one machine is in scope then run the `$ eval` command for another machine, `$ docker ps -a` won't show the containers you had just started because that machine is no longer in scope. Which is exactly what we want and why docker-machine is so awesome. It gets even better; all machines created (and subsequently managed) from a host have access to the hosts filesystem (but not docker images, unfortunately). This logic applies equally to all `eris` commands, which have a pre-run check to connect to docker via the machine in scope.
 
 **Note:** `eris` by default (on linux) does not require an active machine (but does require a running docker daemon, i.e., docker installed) whereas OSX/Windows run by default with a machine named eris in scope, as per the previous section.
 
@@ -142,13 +142,13 @@ $ eris services ls --running --machine marmot2
 $ eris services ls --running --machine marmot3
 ```
 
-where the `--machine` flag tells eris to execute the listing function on *that* machine, so long as it exists and is running. This flag is global (applies to all `eris` commands) and overides any machine/environment variables in scope. This means that when using `eris`, you never have to check which one of your docker-machines is active and put it into scope before executing a command.  Up next, cloud deployments with docker-machine.
+where the `--machine` flag tells eris to execute the listing function on *that* machine, so long as it exists and is running. This flag is global (applies to all `eris` commands) and overides any machine/environment variables in scope. This means that when using `eris`, you never have to check which one of your docker-machines is active and put it into scope before executing a command. We think this is pretty functionality for wrangling the blockchain dragons. Up next, cloud deployments with docker-machine.
 
 ## Robots In The Sky
 
 Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../chaindeploying/). 
 
-Above, we deployed machines locally (using the `virtualbox` driver).. With docker-machine, this can all be done from the host. Instead of having to log into Digital Ocean/AWS, provision an instance, ssh into it, harden the server, install docker, install eris, copy in some files, and start a service/chain; it's simply a matter of:
+Above, we deployed machines locally (using the `virtualbox` driver). With docker-machine, this is all done from the host. Instead of having to log into Digital Ocean/AWS, provision an instance, ssh into it, harden the server, install docker, install eris, copy in some files, and start a service/chain; it's simply a matter of:
 
 ```
 $ docker-machine create mach1 --driver digitalocean  --digitalocean-access-token $DO_TOKEN
@@ -156,7 +156,7 @@ $ docker-machine create mach2 --driver digitalocean  --digitalocean-access-token
 $ docker-machine create mach3 --driver amazonec2 --amazonec2-access-key $AWS_A_KEY --amazonec2-secret-key $AWS_S_KEY --amazonec2-vpc-id $AWS_VPC
 ```
 
-whereby specifying a region is optional (one will be chosen for you) and, apparently, AWS requires three tokens to DOs one. For more info on (the many) supported docker-machine drivers, see [here](https://docs.docker.com/machine/drivers/). For maximum resilence, create machines in plenty of regions and on different providers. Once you've got those machines created:
+whereby specifying a region is optional (one will be chosen for you) and, apparently, AWS requires three tokens to DOs one (living up to their value proposition!). For more info on (the many) supported docker-machine drivers, see [here](https://docs.docker.com/machine/drivers/). For maximum resilence, create machines in plenty of regions and on different providers. Once you've got those machines created:
 
 ```
 $ eris init --yes --machine mach1
@@ -212,4 +212,4 @@ $ eris services start tor --machine bridge1
 
 and so on, until you have 10 of each an exit, bridge, and middle relay. As an aside, it would be trivial to make a new service definition file for each type of relay named `tor_exit.toml`, `tor_bridge.toml`, `tor_middle.toml` that would be marshalled by `$ eris services start tor exit/bridge/middle`, respectively. This avoids having to edit the service definition file every time a different relay is to be run. At any rate, this should give you a good idea of how to leverage docker-machine on the eris platform.
 
-But wait! What about the hassle of having to `$ eris services start NAME --machine number99` a service many times over, not to mention that each machine had to have been created manually from the command line? Not to fret, the command `$ eris remotes` is in our pipeline and will likely take the form of a configuration file to specify N machines in X region from Y cloud provider, starting services Z+n; be it a chain, ipfs, bitcoin, or any combination of any processes that can be dockerized. 
+But wait! What about the hassle of having to `$ eris services start NAME --machine number99` a service many times over, not to mention that each machine had to have been created manually from the command line? Not to fret, the command `$ eris remotes` is in our pipeline and will likely take the form of a configuration file to specify N machines in X region from Y cloud provider, starting services Z+n; be it a chain, ipfs, bitcoin, or any combination of any processes that can be dockerized. Stay tuned!
