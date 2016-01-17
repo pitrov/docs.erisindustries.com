@@ -75,7 +75,7 @@ To put the eris machine "in scope", run:
 ```
 $ eval "$(docker-machine env eris)"
 ```
-This command evaluates **and sets* the environment variables output from the `env` command. There ought not be any output to your screen. Note: this command has shell/operating system nuances. See [here](https://docs.docker.com/machine/reference/env/) for solutions.
+This command evaluates *and sets* the environment variables output from the `env` command. There ought not be any output to your screen. Note: this command has shell/operating system nuances. See [here](https://docs.docker.com/machine/reference/env/) for solutions.
 
 Now, re-run `$ docker-machine ls` and "eris" will be in scope:
 ```
@@ -137,7 +137,9 @@ $ eris init --yes --machine mach1
 $ eris init --yes --machine mach2
 $ eris init --yes --machine mach3
 ```
-which will initialize eris on each machine (`--yes` overides the command-line prompts) by pulling eris' default docker images and definition files into each machine. Note that we didn't need to install eris (or go, or docker) on any of those machines. Because `eris` is an (somewhat opiniated) orchestration tool that wraps `docker`, it goes `docker` where goes. And docker-machine provisions docker hosts for you. Three remote hosts, provisioned with eris images and ready for action. What a wonderful world we're in. Now `eris` can "plug in" to each one of these machines with only a flag. Some things you could do with, say, 30 machines each named btcd/core/class0-9, respectively:
+which will initialize eris on each machine (`--yes` overides the command-line prompts) by pulling eris' default docker images and definition files into each machine. Note that we didn't need to install eris (or go, or docker) on any of those machines. Because `eris` is an (somewhat opiniated) orchestration tool that wraps `docker`, it goes where `docker` goes. And docker-machine provisions docker hosts for you. 
+
+We've got three remote hosts, provisioned with eris images and ready for action. What a wonderful world we're in. Now `eris` can "plug in" to each one of these machines with only a flag. Some things you could do with, say, 30 machines each named btcd/core/class0-9, respectively:
 ```
 $ eris services start btcd --machine btcd0
 $ eris services start btcd --machine btcd1
