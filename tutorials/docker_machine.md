@@ -19,21 +19,21 @@ For help getting started, check out the docs at https://docs.docker.com
 
 Host does not exist: "default"
 ```
-or c) that certificates require regeneration. These will depend on where you are in the toolbox/docker/docker-machine/eris experimentation process. If you don't have a default machine, go ahead and create it:
+or c) that certificates require regeneration. These will depend on where you are in the toolbox/docker/docker-machine/eris experimentation process. If (c), follow the instructions. If you don't have a default machine, go ahead and create it:
 ```
 $ docker-machine create default --driver virtualbox
 ```
 Your output should be similar to the one a few lines below. Since `eris <=> docker-machine` can be testy on osx/windows, create a machine of the same name to please to marmots:
 ```
-$ docker-machine create eris1 --drive virtualbox
+$ docker-machine create eris --drive virtualbox
 ```
 You'll see something like:
 ```
 Running pre-create checks...
 Creating machine...
-(eris1) Creating VirtualBox VM...
-(eris1) Creating SSH key...
-(eris1) Starting VM...
+(eris) Creating VirtualBox VM...
+(eris) Creating SSH key...
+(eris) Starting VM...
 Waiting for machine to be running, this may take a few minutes...
 Machine is running, waiting for SSH to be available...
 Detecting operating system of created instance...
@@ -44,7 +44,7 @@ Copying certs to the remote machine...
 Setting Docker configuration on the remote daemon...
 Checking connection to Docker...
 Docker is up and running!
-To see how to connect Docker to this machine, run: docker-machine env eris1
+To see how to connect Docker to this machine, run: docker-machine env eris
 ```
 **That last line is critical to understanding what docker-machine does and how `eris` leverages it under the hood. It will be a running theme throughout this tutorial.**
 
@@ -56,24 +56,24 @@ There are two things to note here: the `-` under `ACTIVE` indicates that *neithe
 ```
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
 default   -        virtualbox   Running   tcp://192.168.99.100:2376       
-eris1      -        virtualbox   Running   tcp://192.168.99.101:2376
+eris      -        virtualbox   Running   tcp://192.168.99.101:2376
 ```
 Well, the machines are running, but the docker daemon doesn't know about them. Let's fix that:
 ```
-$ docker-machine env eris1
+$ docker-machine env eris
 ```
 The output you see below is a list of environment variables that need to be set if you'd like the docker daemon to talk to the machine named eris. In fact, all this command did was stdout to the terminal.
 ```
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.101:2376"
-export DOCKER_CERT_PATH="/Users/zicter/.docker/machine/machines/eris1"
-export DOCKER_MACHINE_NAME="eris1"
+export DOCKER_CERT_PATH="/Users/zicter/.docker/machine/machines/eris"
+export DOCKER_MACHINE_NAME="eris"
 # Run this command to configure your shell: 
-# eval "$(docker-machine env eris1)"
+# eval "$(docker-machine env eris)"
 ```
 To put the eris machine "in scope", run:
 ```
-$ eval "$(docker-machine env eris1)"
+$ eval "$(docker-machine env eris)"
 ```
 This command evaluates **and sets* the environment variables output from the `env` command. There ought not be any output to your screen. Note: this command has shell/operating system nuances. See [here](https://docs.docker.com/machine/reference/env/) for solutions.
 
@@ -81,9 +81,9 @@ Now, re-run `$ docker-machine ls` and "eris" will be in scope:
 ```
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
 default   -        virtualbox   Running   tcp://192.168.99.100:2376       
-eris1      *        virtualbox   Running   tcp://192.168.99.101:2376
+eris      *        virtualbox   Running   tcp://192.168.99.101:2376
 ```
-To confirm: `$ docker-machine active`, which should output "eris1".
+To confirm: `$ docker-machine active`, which should output "eris".
 
 If you're an OSX/Windows user wanting to quickly get started on the eris platform, here is where you would 1) install eris via go (`go get github.com/eris-ltd/eris-cli/cmd/eris`) or via [binary](link) then run `$ eris init`. You'll also want to note the ip of your machine with `$ docker-machine ip eris`, which should match the ip seen above. This ip replaces the use of `localhost` (re: linux) in some of our tutorials and maps to `0.0.0.0` of a container running with exposed ports. Similar logic applies for cloud deployements with docker-machine, discussed further below. 
 
