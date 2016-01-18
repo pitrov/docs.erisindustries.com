@@ -36,6 +36,7 @@ and simple to wrangle the dragons of smart contract blockchains.
 - [Deploying Your Own Smart Contracts](tutorials/contractsdeploying)
 - [Interacting with Your Own Smart Contracts](tutorials/contractsinteracting)
 - [Exporting and Importing Your Keys](tutorials/keyexporting)
+- [Eris <=> Docker Machine](tutorials/docker_machine)
 
 # Walkabouts & Advanced Tutorials
 
