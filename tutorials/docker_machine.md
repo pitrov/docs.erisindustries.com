@@ -7,7 +7,7 @@ title: "Tutorials | Working with docker-machine on eris"
 
 This tutorial will provide an overview of working with [docker-machine](https://docs.docker.com/machine/), a nifty tool for managing and deploying docker hosts. Eris uses a handful of docker-machine features, both as an integral part of the tool and for continous integration/testing. Windows and OSX users are ~~required~~ highly recommended to install the [Docker Toolbox](https://www.docker.com/docker-toolbox) and boot a docker-machine in order to use `eris` See [here](../getting-started/) to install eris, required for this tutorial. Many features of the `eris` platform on linux are available without `docker-machine`, however, your blockchain superpowers are greatly limited without it. See linux install guidelines [here](https://docs.docker.com/machine/install-machine/). The first section of this tutorial will highlight basic `docker-machine` commands and functioning. If it feels oddly familiar, that's because I've modeled after [this intro](https://docs.docker.com/machine/get-started/) but with a marmot twist. Section two will elaborate on `eris <=> docker-machine` orchestration while section three focuses on cloud deployments.
 
-Note: the first section is helpful in navigating the nuances of installing the eris tool on Windows/OSX operating systems but also introduces important docker-machine concepts relevant across os'. Future releases of `eris` will further simplify the process (and abstract away the use of `docker-machine` directly). On this last point, `eris` is primarily a convenience wrapper around various `docker` commands leveraging the [go-dockerclient library](https://godoc.org/github.com/fsouza/go-dockerclient). If you are new to docker, hang on! 
+Note: the first section is helpful in navigating the nuances of installing the eris tool on Windows/OSX operating systems but also introduces important docker-machine concepts relevant across os'. Future releases of `eris` will further simplify the process (and abstract away the use of `docker-machine` directly). On this last point, `eris` is primarily a convenience wrapper around various `docker` commands leveraging the [go-dockerclient library](https://godoc.org/github.com/fsouza/go-dockerclient). If you are new to docker, hang on!
 
 ## Setup & Basic Commands
 
@@ -15,7 +15,7 @@ After installing the toolbox, clicking the `Docker Quickstart Terminal` will ope
 
 ```
 Host does not exist: "default"
-docker is configured to use the default machine with IP 
+docker is configured to use the default machine with IP
 For help getting started, check out the docs at https://docs.docker.com
 
 Host does not exist: "default"
@@ -30,7 +30,7 @@ $ docker-machine create default --driver virtualbox
 Your output should be similar to the one a few lines below. Since `eris <=> docker-machine` can be testy on osx/windows, create a machine of the same name to please to marmots:
 
 ```
-$ docker-machine create eris --drive virtualbox
+$ docker-machine create eris --driver virtualbox
 ```
 You'll see something like:
 
@@ -61,11 +61,11 @@ What does it do, you ask? We'll get there. First, let's take a look at our machi
 $ docker-machine ls
 ```
 
-There are two things to note here: the `-` under `ACTIVE` indicates that *neither* machine is active ("in scope"). Specifically, `docker` has not been told to use either machines' environment variables. If you try, for example, `$ docker run hello-world`, you'll probably get an error like: `Cannot connect to the Docker daemon. Is the docker daemon running on this host?`. Yet there are two machine running! (Note: depending on how you started the toolbox, `default` *may* have a `*`, in which case the `$ docker run` command would have worked. More on this further below. 
+There are two things to note here: the `-` under `ACTIVE` indicates that *neither* machine is active ("in scope"). Specifically, `docker` has not been told to use either machines' environment variables. If you try, for example, `$ docker run hello-world`, you'll probably get an error like: `Cannot connect to the Docker daemon. Is the docker daemon running on this host?`. Yet there are two machine running! (Note: depending on how you started the toolbox, `default` *may* have a `*`, in which case the `$ docker run` command would have worked. More on this further below.
 
 ```
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
-default   -        virtualbox   Running   tcp://192.168.99.100:2376       
+default   -        virtualbox   Running   tcp://192.168.99.100:2376
 eris      -        virtualbox   Running   tcp://192.168.99.101:2376
 ```
 
@@ -82,7 +82,7 @@ export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.101:2376"
 export DOCKER_CERT_PATH="/Users/zicter/.docker/machine/machines/eris"
 export DOCKER_MACHINE_NAME="eris"
-# Run this command to configure your shell: 
+# Run this command to configure your shell:
 # eval "$(docker-machine env eris)"
 ```
 
@@ -98,13 +98,13 @@ Now, re-run `$ docker-machine ls` and "eris" will be in scope:
 
 ```
 NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
-default   -        virtualbox   Running   tcp://192.168.99.100:2376       
+default   -        virtualbox   Running   tcp://192.168.99.100:2376
 eris      *        virtualbox   Running   tcp://192.168.99.101:2376
 ```
 
 To confirm: `$ docker-machine active`, which should output "eris".
 
-If you're an OSX/Windows user wanting to quickly get started on the eris platform, here is where you would 1) install eris via go (`go get github.com/eris-ltd/eris-cli/cmd/eris`) or via [the latest binary](https://github.com/eris-ltd/eris-cli/releases) then run `$ eris init`. You'll also want to note the ip of your machine with `$ docker-machine ip eris`, which should match the ip seen above. This ip replaces the use of `localhost` (re: linux) in some of our tutorials and maps to `0.0.0.0` of a container running with exposed ports. Similar logic applies for cloud deployements with docker-machine, discussed further below. 
+If you're an OSX/Windows user wanting to quickly get started on the eris platform, here is where you would 1) install eris via go (`go get github.com/eris-ltd/eris-cli/cmd/eris`) or via [the latest binary](https://github.com/eris-ltd/eris-cli/releases) then run `$ eris init`. You'll also want to note the ip of your machine with `$ docker-machine ip eris`, which should match the ip seen above. This ip replaces the use of `localhost` (re: linux) in some of our tutorials and maps to `0.0.0.0` of a container running with exposed ports. Similar logic applies for cloud deployements with docker-machine, discussed further below.
 
 There are several more `$ docker-machine` commands that I won't go through since they aren't immediately relevant to our purposes though they're definitely worth checking out.
 
@@ -146,7 +146,7 @@ where the `--machine` flag tells eris to execute the listing function on *that* 
 
 ## Robots In The Sky
 
-Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../chaindeploying/). 
+Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../chaindeploying/).
 
 Above, we deployed machines locally (using the `virtualbox` driver). With docker-machine, this is all done from the host. Instead of having to log into Digital Ocean/AWS, provision an instance, ssh into it, harden the server, install docker, install eris, copy in some files, and start a service/chain; it's simply a matter of:
 
@@ -164,7 +164,7 @@ $ eris init --yes --machine mach2
 $ eris init --yes --machine mach3
 ```
 
-which will initialize eris on each machine (`--yes` overides the command-line prompts) by pulling eris' default docker images and definition files into each machine. Note that we didn't need to install eris (or go, or docker) on any of those machines. Because `eris` is an (somewhat opiniated) orchestration tool that wraps `docker`, it goes where `docker` goes. And docker-machine provisions docker hosts for you. 
+which will initialize eris on each machine (`--yes` overides the command-line prompts) by pulling eris' default docker images and definition files into each machine. Note that we didn't need to install eris (or go, or docker) on any of those machines. Because `eris` is an (somewhat opiniated) orchestration tool that wraps `docker`, it goes where `docker` goes. And docker-machine provisions docker hosts for you.
 
 We've got three remote hosts, provisioned with eris images and ready for action. What a wonderful world we're in. Now `eris` can "plug in" to each one of these machines with only a flag. Some things you could do with, say, 30 machines each named btcd/core/class0-9, respectively:
 
