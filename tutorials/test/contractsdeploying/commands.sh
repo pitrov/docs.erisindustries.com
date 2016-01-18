@@ -6,6 +6,11 @@
 set -o errexit
 set -o xtrace
 
+cd ../chainmaking
+npm install
+npm test
+cd ../contractsdeploying
+
 chain_dir=~/.eris/chains/simplechain
 app_dir=~/.eris/apps/idi
 rm -rf $app_dir
@@ -13,6 +18,7 @@ mkdir $app_dir
 cp idi.sol epm.yaml $app_dir
 cd $app_dir
 
+sleep 5
 eris contracts deploy --chain simplechain --address $(cat $chain_dir/addr1)
 
 if [ -e $app_dir/epm.json ]; then

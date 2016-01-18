@@ -1,0 +1,16 @@
+{
+  "name": "idis_app",
+  "version": "0.0.1",
+  "dependencies": {
+    "eris-contracts": "^0.13.1",
+    "prompt": "*",
+    "untildify": "^2.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
+  },
+  "scripts": {
+    "pretest": "cd ../contractsdeploying; ./commands.sh",
+    "test": "mocha"
+  }
+}
