@@ -216,7 +216,7 @@ Finally, we'll add in the validator field of the genesis.json
 ]
 ```
 
-Note, you'll want to replace the public key with the right string and the address with the correct unbonding address. You can change the amount bonded if you want, but there is usually no need to do that.
+Note, you'll want to replace the public key with the right string and the address with the correct unbonding address. You can change the amount bonded if you want, but there is usually no need to do that. If your default genesis.json has more validators than just the one, you can safely delete them from *this* genesis.json that you are currently editing them as we will only be using one validator for this chain.
 
 Now we are all set with our genesis.json. You may want to use a [JSON linter](http://jsonlint.com/) to make sure that the JSON is properly formatted, else eris:db will be unable to read it and you may have errors if, for example, you missed a comma where it should have been or had one where it shouldn't have been.
 
