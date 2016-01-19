@@ -359,10 +359,10 @@ What are dependencies to eris. Well they tell eris under the hood to make sure t
 
 ## Updating our app.js for Dockerizing
 
-Now we need to change one line of our app.js. The line where the `erisdbURL` variable is set to read like this:
+Now we need to change one line of our app.js. The line where the `chainUrl` variable is set to read like this:
 
 ```javascript
-var erisdbURL = "http://simplechain:1337/rpc";
+chainUrl = "http://localhost:1337/rpc"
 ```
 
 Not that we use `simplechain` here which is what we want. When eris has a dependent chain it will mount it using the `simplechain` name. This means that anything running inside the service can ping the "attached" chain at `http://simplechain`. Note, if we had used the `$chain` variable then it would be mounted as `chain` instead of `simplechain`.
