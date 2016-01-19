@@ -38,6 +38,7 @@ eris keys
 * [eris keys export](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys_export/)	 - Export a key from container to host.
 * [eris keys gen](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys_gen/)	 - Generates an unsafe key using the keys container.
 * [eris keys import](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys_import/)	 - Import a key to container from host.
+* [eris keys ls](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys_ls/)	 - List keys on host and in running keys container
 * [eris keys pub](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys_pub/)	 - Returns a machine readable pubkey given an address.
 
 ## See Also
