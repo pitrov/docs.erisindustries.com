@@ -113,7 +113,7 @@ iterate(times);
 
 Note the changes between this script and the previous script. For one thing, all the connection and setup information is the same with the proviso that we've removed the command line require tool.
 
-The second minor change is that we have made small changes to simplify the getValue function as well as the setValue function. These changes are mostly cosmetic. Now whenever the `getValue` contract is called it will display its results and then reduce the number by one. We have added a little ticker loop through the getValue sequence a few times.
+The second minor change is that we have made small changes to simplify the getValue function as well as the setValue function. These changes are mostly cosmetic. Now whenever the `contract.get` (which is basically a better refactor of the `getValue` function from the previous tutorial) the contract is called it will display its results and then reduce the number by one. We have added a little ticker loop through the getValue sequence a few times.
 
 In addition we are going to the above changes to the functionality, we will be populating two variables from environment variables. In `docker`-land we often use environment variables as an easy way to get containers running how we want them.
 
