@@ -218,21 +218,33 @@ We think this is pretty functionality for wrangling the blockchain dragons. Up n
 
 # Robots In The Sky
 
+## First, Create the Machines
+
 Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../../advanced/chaindeploying/).
 
 Above, we deployed machines locally (using the `virtualbox` driver). With docker-machine, this is all done from the host. Instead of having to log into Digital Ocean/AWS, provision an instance, ssh into it, harden the server, install docker, install eris, copy in some files, and start a service/chain; it's simply a matter of:
 
+```bash
+docker-machine create mach1 --driver digitalocean --digitalocean-access-token $DO_TOKEN --digitalocean-region sgp1
+docker-machine create mach2 --driver azure --azure-subscription-id $AZURE_SUBSCRIPTION_ID --azure-location "West US" --azure-subscription-cert $AZURE_SUBSCRIPTION_CERT
+docker-machine create mach3 --driver amazonec2 --amazonec2-access-key $AWS_A_KEY --amazonec2-secret-key $AWS_S_KEY --amazonec2-vpc-id $AWS_VPC
 ```
-$ docker-machine create mach1 --driver digitalocean  --digitalocean-access-token $DO_TOKEN
-$ docker-machine create mach2 --driver digitalocean  --digitalocean-access-token $DO_TOKEN --digitalocean-region sgp1
-$ docker-machine create mach3 --driver amazonec2 --amazonec2-access-key $AWS_A_KEY --amazonec2-secret-key $AWS_S_KEY --amazonec2-vpc-id $AWS_VPC
-```
 
-whereby specifying a region is optional (one will be chosen for you) and, apparently, AWS requires three tokens to DOs one (living up to their value proposition!).
+whereby specifying a region/location is usually optional (one will be chosen for you).
 
-For more info on (the many) supported docker-machine drivers, see [here](https://docs.docker.com/machine/drivers/). (More vendor specific tutorials coming soon!)
+For more info on (the many) supported docker-machine drivers, see [here](https://docs.docker.com/machine/drivers/). *Vendor specific tutorials coming soon!*
 
-For maximum resilence, create machines in plenty of regions and on different providers. Once you've got those machines created:
+For maximum resilence, create machines in plenty of regions and on different providers.
+
+**N.B.**
+
+If you're company has a subscription with a cloud provider, do not fret, docker-machine (probably) has you covered.
+
+**End N.B.**
+
+## Second, Get `eris` Sorted
+
+Once you've got those machines created:
 
 ```bash
 eris init --yes --machine mach1
@@ -248,9 +260,11 @@ And docker-machine provisions docker hosts for you.
 
 We've got three remote hosts, provisioned with eris images and ready for action. What a wonderful world we're in.
 
+## Third, Get Going!
+
 Now `eris` can "plug in" to each one of these machines with only a flag. Some things you could do with, say, 30 machines each named btcd/core/class0-9, respectively:
 
-```basj
+```bash
 eris services start btcd --machine btcd0
 eris services start btcd --machine btcd1
 ...
@@ -270,7 +284,7 @@ Perhaps performance of different tor relays is more interesting. In this case, t
 eris services edit tor
 ```
 
-will open the file; the last line here can be edited next:
+will open the file in your default editor if your shell has an `$EDITOR` set; the last line here can be edited next:
 
 ```bash
 # replace 'exit' with 'bridge' or 'middle'
@@ -296,8 +310,10 @@ eris services start tor --machine bridge1
 
 and so on, until you have 10 of each an exit, bridge, and middle relay.
 
-As an aside, it would be trivial to make a new service definition file for each type of relay named `tor_exit.toml`, `tor_bridge.toml`, `tor_middle.toml` that would be marshalled by `eris services start tor exit/bridge/middle`, respectively.
+As an aside, it would be trivial to make a new service definition file for each type of relay named `tor_exit.toml`, `tor_bridge.toml`, `tor_middle.toml` that would be marshalled by `eris services start tor_exit/tor_bridge/tor_middle`, respectively.
 
 This avoids having to edit the service definition file every time a different relay is to be run. At any rate, this should give you a good idea of how to leverage docker-machine on the eris platform.
+
+# Coming Soon
 
 But wait! What about the hassle of having to `eris services start NAME --machine number99` a service many times over, not to mention that each machine had to have been created manually from the command line? Not to fret, the command `eris remotes` is in our pipeline and will likely take the form of a configuration file to specify N machines in X region from Y cloud provider, starting services Z+n; be it a chain, ipfs, bitcoin, or any combination of any processes that can be dockerized. Stay tuned!
