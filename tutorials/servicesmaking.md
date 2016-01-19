@@ -228,7 +228,7 @@ What that's going to do is to tell Docker to take this directory and build the D
 
 ## What is a Docker Image
 
-A [Docker Image](https://docs.docker.com/engine/introduction/understanding-docker/) is a layered, statically compiled, file system. Each line in a Dockerfile represents a way to build the require functionality that is included in the produced docker image. You can think of docker images as the thing that can get us a whole lot of verifiable computing because of its deterministic methods of building and static nature. Once a docker image is built it can never be changed. (But you can remove it and replace it with a new docker image of the same name of course).
+A [Docker Image](https://docs.docker.com/engine/introduction/understanding-docker/) is a layered, statically compiled, file system. Each line in a Dockerfile represents a way to build the require functionality that is included in the produced docker image. You can think of docker images as _the thing_ that can get us a whole lot of verifiable computing because of its deterministic methods of building and static nature. Once a docker image is built it can never be changed. (But you can remove it and replace it with a new docker image of the same name of course).
 
 In other words, its the "thing" that we're going to "turn on or off" with the eris services commands. To see the docker images which we have available to us locally type:
 
