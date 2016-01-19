@@ -160,6 +160,8 @@ If you get an accounts not registered error, then check the following:
 
 If you have been following this tutorial sequence so far that checklist should ferret out your problem (or you can find where to find the fix!).
 
+**End Troubleshooting**
+
 ## Step 3: Run the New app.js
 
 ```bash
