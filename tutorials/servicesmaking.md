@@ -436,8 +436,7 @@ That's it! You've made a service! Now let's share it with our colleagues.
 
 # Share Your Service
 
-First things first, you'll need a Docker Hub to push to. So make sure you have a [Docker Hub](https://hub.docker.com/) account, [quay.io](quay.io) (which we use at eris and have been very satisfied with),
-or an account with a corporate Docker Registry.
+First things first, you'll need a Docker Hub to push to. So make sure you have a [Docker Hub](https://hub.docker.com/) account, [quay.io](quay.io) (which we use at eris and have been very satisfied with),or an account with a corporate Docker Registry.
 
 We will assume for the purposes of this tutorial that `idi` was able to register the `idi` user name on Docker Hub. You should substitute `idi/` for your username (+ a `/` :-) ). Let's get that docker image ready to be published to the world and then lets publish it.
 
