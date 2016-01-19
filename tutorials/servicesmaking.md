@@ -388,6 +388,8 @@ Now that we've turned on idi a few times we'll be ready to change a few things. 
 environment = [ "TIMES=2" ]
 ```
 
+Then run
+
 ```bash
 eris services rm idi
 eris services start idi
