@@ -1,6 +1,6 @@
 ---
 
-layout: content
+layout: docs
 title: "Tutorials | Working With Eris Keys"
 
 ---

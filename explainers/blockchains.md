@@ -1,6 +1,6 @@
 ---
 
-layout:     content
+layout: docs
 title:      "Explainer | Blockchains"
 excerpt:    "What is a Blockchain and why are these automated data management systems so cool?"
 

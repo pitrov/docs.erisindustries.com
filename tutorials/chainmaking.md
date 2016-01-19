@@ -1,6 +1,6 @@
 ---
 
-layout: content
+layout: docs
 title: "Tutorials | Making a Permissioned Chain (Simple) - Eris v0.11"
 
 ---

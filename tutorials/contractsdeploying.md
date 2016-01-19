@@ -1,6 +1,6 @@
 ---
 
-layout: content
+layout: docs
 title: "Tutorials | Deploying your Smart Contracts to a Chain"
 
 ---

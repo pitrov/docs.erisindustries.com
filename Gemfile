@@ -5,6 +5,7 @@ gem 'kramdown'
 gem 'coderay'
 gem 'rouge'
 gem 'link-checker'
+gem 'html-proofer'
 
 group :jekyll_plugins do
   gem "jekyll-assets"

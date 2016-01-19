@@ -1,11 +1,11 @@
 ---
 
-layout: content
+layout: docs
 title: "Tutorials | Eris by Curl"
 
 ---
 
-In an effort to illuminate some of the underpinnings of the eris stack, 
+In an effort to illuminate some of the underpinnings of the eris stack,
 here we present an executable tutorial written in bash,
 using wherever possible common unix tools for processing and curl for communicating with the http daemons.
 
@@ -142,7 +142,7 @@ BYTECODE=`echo $BYTECODE | base64 -D | hexdump -ve '1/1 "%.2X"'`
 
 # unescape quotes in the json and write the ABI to file
 # TODO: fix the lllc-server so this doesn't happen
-ABI=`eval echo $ABI` 
+ABI=`eval echo $ABI`
 ABI=`echo $ABI | jq .`
 echo $ABI > add.abi
 
@@ -175,7 +175,7 @@ GAS=1000
 AMOUNT=1
 NONCE=$(($NONCE + 1)) # the nonce in the transaction must be one greater than the account's current nonce
 
-# the string that must be signed is a special, canonical, deterministic json structure 
+# the string that must be signed is a special, canonical, deterministic json structure
 # that includes the chain_id and the transaction, where all fields are alphabetically ordered and there are no spaces
 SIGN_BYTES='{"chain_id":"'"$CHAIN_ID"'","tx":['"$CALLTX_TYPE"',{"address":"","data":"'"$BYTECODE"'","fee":'"$FEE"',"gas_limit":'"$GAS"',"input":{"address":"'"$ADDRESS"'","amount":'"$AMOUNT"',"sequence":'"$NONCE"'}}]}'
 
@@ -292,7 +292,7 @@ echo "CODE AT CONTRACT:"
 echo $CODE
 echo ""
 
-# NOTE: CODE won't be exactly equal to BYTECODE 
+# NOTE: CODE won't be exactly equal to BYTECODE
 # because BYTECODE contains additional code for the actual deployment (the init/constructor sequence of a contract)
 # so we only ensure that BYTECODE contains CODE
 if [[ "$BYTECODE" == *"$CODE"* ]]; then
