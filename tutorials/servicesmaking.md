@@ -398,7 +398,7 @@ eris services logs idi -f
 
 This time, instead of ticking 5 times, idi ticked 2 times! (This is why environment variables are so useful in dockerland.)
 
-Now let's use that PORT variable. But if you're tired of editing files and love command lines, you're in luck! Cause we're about to start idi, but this time using a flag when we do it to set the environment variables!
+If you're tired of editing files and love command lines, you're in luck! Cause we're about to start idi, but this time using a flag when we do it to set the environment variables.
 
 ```bash
 eris services rm idi
