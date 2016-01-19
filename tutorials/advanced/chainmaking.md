@@ -411,6 +411,6 @@ Boom. You're all set with your custom built, permissioned, smart contract-ified,
 
 **N.B.** You will want to export your keys onto the host at this point so that you have them backed up. Please see [this tutorial](../tool-specific/keyexporting) on how to do that.
 
-This particular chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../advanced/chaindeploying).
+This particular chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../chaindeploying).
 
 
