@@ -1,6 +1,6 @@
 ---
 
-layout: docs
+layout: wide
 title: "Tutorials"
 
 ---
