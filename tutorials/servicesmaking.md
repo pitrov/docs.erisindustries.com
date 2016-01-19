@@ -98,7 +98,7 @@ function iterate(times) {
           });
         }
       });
-    }, times * 3000);
+    }, 3000);
   }
 }
 
