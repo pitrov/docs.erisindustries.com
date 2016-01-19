@@ -1,7 +1,7 @@
 ---
 
 layout: wide
-title: "Tutorials"
+title: "Tutorials | Advanced"
 
 ---
 
