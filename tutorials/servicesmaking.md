@@ -55,49 +55,51 @@ Basically, services are daemons or microservices which you need for the applicat
 Copy this as the new app.js.
 
 ```javascript
-// requires
-var fs = require ('fs');
-var erisC = require('eris-contracts');
+'use strict';
 
-// NOTE. On Windows/OSX do not use localhost. find the
-// url of your chain with:
-// docer-machine ls
-// and find the docker machine name you are using (usually default or eris).
-var erisdbURL = "http://localhost:1337/rpc";
+var
+  contracts = require('eris-contracts'),
+  address = require('./epm.json').deployStorageK,
+  abi = require('./abi/' + address),
+  account = require('./account.json'),
+  chainUrl = "http://localhost:1337/rpc"
+  manager, contract;
 
-// get the abi and deployed data squared away
-var contractData = require('./epm.json');
-var idisContractAddress = contractData["deployStorageK"];
-var idisAbi = JSON.parse(fs.readFileSync("./abi/" + idisContractAddress));
+// Instantiate the contract object manager using the chain URL and the account
+// data.
+manager = contracts.newContractManagerDev(chainUrl, account);
 
-// properly instantiate the contract objects manager using the erisdb URL
-// and the account data (which is a temporary hack)
-var accountData = require('./account.json');
-var contractsManager = erisC.newContractManagerDev(erisdbURL, accountData);
+// Instantiate the contract object using the ABI and the address.
+contract = manager.newContractFactory(abi).at(address);
 
-// properly instantiate the contract objects using the abi and address
-var idisContract = contractsManager.newContractFactory(idisAbi).at(idisContractAddress);
+// Every second, display Idi's number and decrease it by one until 'times'
+// reaches 0.
+function iterate(times) {
+  if (times > 0) {
+    setTimeout(function () {
+      // Here we get the current number from the contract.
+      contract.get(function (error, result) {
+        var
+          number;
 
-// display the current value of idi's contract by calling
-// the `get` function of idi's contract
-function getValue(time, callback) {
-  idisContract.get(function(error, result){
-    if (error) { throw error }
-    number = result['c'][0]
-    console.log("Idi's number is:\t\t\t" + number);
-    console.log("\tlistening at:\t\t\t" + port);
-    setValue(parseInt(number)-1, time, callback);
-  });
-}
+        if (error)
+          console.error(error);
+        else {
+          number = parseInt(result['c'][0]);
+          console.log("Idi's number is:\t\t\t" + number);
+          console.log("\tlistening at:\t\t\t" + port);
 
-// using eris-contracts call the `set` function of idi's
-// contract using the value which was recieved from the
-// changeValue prompt
-function setValue(value, time, callback) {
-  idisContract.set(value, function(error, result){
-    if (error) { throw error }
-    callback(time-1);
-  });
+          // Set the new number in the contract.
+          contract.set(number - 1, function (error) {
+            if (error)
+              console.error(error);
+            else
+              iterate(times - 1);
+          });
+        }
+      });
+    }, times * 3000);
+  }
 }
 
 // establish a fake port to listen to....
@@ -106,16 +108,7 @@ var port = process.env.IDI_PORT
 // note the number of times, defaulting to 5 to do the get -> set reduction
 var times = parseInt(process.env.TIMES) || 5
 
-// run
-function ticker(times) {
-  if(times > 0) {
-    setTimeout(function () {
-      getValue(times, ticker);
-    }, 3000);
-  }
-}
-
-ticker(times);
+iterate(times);
 ```
 
 Note the changes between this script and the previous script. For one thing, all the connection and setup information is the same with the proviso that we've removed the command line require tool.
