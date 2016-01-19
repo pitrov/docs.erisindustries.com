@@ -347,7 +347,7 @@ email = "casey@erisindustries.com"
 [machine]
 ```
 
-What changed here? Well we added a `dependency` of the chain. And we used the eris name of the chain we've been working with. We could also have that linke be:
+What changed here? Well we added a `dependency` of the chain. And we used the eris name of the chain we've been working with. We could also have that link be:
 
 ```toml
 chains = ["$chain"]
@@ -365,7 +365,7 @@ Now we need to change one line of our app.js. The line where the `chainUrl` vari
 chainUrl = "http://localhost:1337/rpc"
 ```
 
-Not that we use `simplechain` here which is what we want. When eris has a dependent chain it will mount it using the `simplechain` name. This means that anything running inside the service can ping the "attached" chain at `http://simplechain`. Note, if we had used the `$chain` variable then it would be mounted as `chain` instead of `simplechain`.
+Note that we use `simplechain` here which is what we want. When eris has a dependent chain it will mount it using the `simplechain` name. This means that anything running inside the service can ping the "attached" chain at `http://simplechain`. Note, if we had used the `$chain` variable then it would be mounted as `chain` instead of `simplechain`.
 
 If the keys service had been added to the dependencies (although under a services field) then it would be available at `http://keys`. Pretty neat huh!?
 
