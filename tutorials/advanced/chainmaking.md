@@ -13,7 +13,7 @@ This tutorial, on the other hand is made to walk through a (slightly) more compl
 
 **Note** -- This tutorial is built for Eris versions >= 0.11. For other versions of this tutorial please see below:
 
-* [v0.10](../chainmaking-v0.10/)
+* [v0.10](../deprecated/chainmaking-v0.10/)
 
 # Introduction
 
@@ -409,8 +409,8 @@ eris chains rm -x $chain_name
 
 Boom. You're all set with your custom built, permissioned, smart contract-ified, blockchain.
 
-**N.B.** You will want to export your keys onto the host at this point so that you have them backed up. Please see [this tutorial](../keyexporting) on how to do that.
+**N.B.** You will want to export your keys onto the host at this point so that you have them backed up. Please see [this tutorial](../tool-specific/keyexporting) on how to do that.
 
-This particular chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../chaindeploying).
+This particular chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../advanced/chaindeploying).
 
-{% image idiamin.jpg %}
+

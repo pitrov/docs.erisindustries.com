@@ -7,7 +7,7 @@ title: "Tutorials | Working With Eris Keys"
 
 **Note** -- This tutorial is built for Eris versions >= 0.11. For other versions of this tutorial please see below:
 
-* [v0.10](../keyexporting-v0.10/)
+* [v0.10](../deprecated/keyexporting-v0.10/)
 
 Unless you have a different configuration than our standard, admittedly opinionated, pathway then you will be running the eris-keys signing server inside of a container. This means that you need to be able to import and export your keys. This tutorial covers the existing `eris keys` commands and working with keys vis-a-vis containers on the eris platform.
 
@@ -33,7 +33,7 @@ That will create a **non safe** (but easy for development) key. You'll see an ad
 $ eris actions do keys list
 ```
 
-The same address as above should be output. 
+The same address as above should be output.
 
 # Exporting a key
 
@@ -65,7 +65,7 @@ Both require ADDR to be in running keys container.
 
 ## Get pubkey
 
-Returns a pubkey; used for making genesis files. 
+Returns a pubkey; used for making genesis files.
 
 ```bash
 $ eris keys pub ADDR
@@ -73,7 +73,7 @@ $ eris keys pub ADDR
 
 ## Convert key to tendermint format
 
-This command will soon be deprecated in favour of adding a pubkey to `config.toml` rather than loading a `priv_validator.json` on `eris chains new`. In the meantime, it takes an `eris-keys` format key and converts it to a tendermint format priv validator. 
+This command will soon be deprecated in favour of adding a pubkey to `config.toml` rather than loading a `priv_validator.json` on `eris chains new`. In the meantime, it takes an `eris-keys` format key and converts it to a tendermint format priv validator.
 
 ```bash
 $ eris keys convert ADDR

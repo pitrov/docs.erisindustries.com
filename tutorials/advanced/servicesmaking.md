@@ -72,7 +72,7 @@ To check that it was exported, run:
 $ ls $HOME/.eris/keys/data
 ```
 
-**Protip:** You can also `$ eris keys import $ADDR` to go from host to container. Similiarly to `$ eris data import/export` these commands are thought of from the point of view of the container. See [this tutorial](../keyexporting/) for more information on the `eris keys` command.
+**Protip:** You can also `$ eris keys import $ADDR` to go from host to container. Similiarly to `$ eris data import/export` these commands are thought of from the point of view of the container. See [this tutorial](../tool-specific/keyexporting/) for more information on the `eris keys` command.
 
 ## Convert your key
 
@@ -84,7 +84,7 @@ $ eris keys convert $ADDR > $CHAIN_DIR/priv_validator.json
 
 ## Make the genesis file
 
-Because what's a chain without a genesis file? The genesis file specifies accounts, validators, amounts, and permissions. A handful of defaults are set for you. We also need to pipe it in to the chain directory. 
+Because what's a chain without a genesis file? The genesis file specifies accounts, validators, amounts, and permissions. A handful of defaults are set for you. We also need to pipe it in to the chain directory.
 
 ```bash
 $ eris chains make-genesis $CHAIN_NAME $PUB > $CHAIN_DIR/genesis.json
@@ -110,19 +110,19 @@ Maybe you want to chattier output to see what's going on under the hood? Add `--
 
 ```bash
 $ eris chains ls --running
-$ eris chains logs $CHAIN_NAME 
+$ eris chains logs $CHAIN_NAME
 $ eris chains plop $CHAIN_NAME genesis
 ```
 
-All endpoints are available via `http://HostIP:46657`. You can see a sample [here](http://pinkpenguin.interblock.io:46657). Notice a few things for your chain: 
- - `/genesis` should be nearly identical to `$CHAIN_DIR/genesis.json`; 
- - `/list_validators` should show the same info as your key (pubkey/addr). 
+All endpoints are available via `http://HostIP:46657`. You can see a sample [here](http://pinkpenguin.interblock.io:46657). Notice a few things for your chain:
+ - `/genesis` should be nearly identical to `$CHAIN_DIR/genesis.json`;
+ - `/list_validators` should show the same info as your key (pubkey/addr).
  - `/list_names` to see name registry entries. See below.
  - `/net_info` can be refreshed and block height should increase. This is also true of log output.
 
 # Boot up toadserver
 
-Your chain is now setup and ready to be used as a dependency for the toadserver. (Note: this process is still a WIP and will be smoother in future releases). Since we'll be launching the toadserver as a service, we need two things: 1) its docker image and 2) a service definition file (which specifies how to run the toadserver). The former is already built for you using this [Dockerfile](https://github.com/eris-ltd/toadserver/blob/master/Dockerfile) and is specified in the definition file at this line: `image = "quay.io/eris/toadserver:latest"`. The image will automatically be pulled from quay if not found locally when the toadserver is started (if you answer yes to the prompt). Alternatively, you can build it locally from the Dockerfile. See way below for more info on that. 
+Your chain is now setup and ready to be used as a dependency for the toadserver. (Note: this process is still a WIP and will be smoother in future releases). Since we'll be launching the toadserver as a service, we need two things: 1) its docker image and 2) a service definition file (which specifies how to run the toadserver). The former is already built for you using this [Dockerfile](https://github.com/eris-ltd/toadserver/blob/master/Dockerfile) and is specified in the definition file at this line: `image = "quay.io/eris/toadserver:latest"`. The image will automatically be pulled from quay if not found locally when the toadserver is started (if you answer yes to the prompt). Alternatively, you can build it locally from the Dockerfile. See way below for more info on that.
 
 ## Get the service definition file
 
@@ -137,7 +137,7 @@ $ curl -X GET http://ipfs.erisbootstrap.sexy:11113/getfile/toadserver.toml -o $H
 Check that it exists as a service with `$ eris services ls --known`
 
 ## Edit some variables
-Open the file (`$ eris services edit toadserver`) and replace the following environment variables with the values from above. 
+Open the file (`$ eris services edit toadserver`) and replace the following environment variables with the values from above.
 
 ```bash
 "MINTX_CHAINID=$CHAIN_NAME",
@@ -166,7 +166,7 @@ $ eris services ls --running
 $ eris services logs toadserver
 ```
 
-Two things happened: If IPFS was not already running as a service, the toadserver started it. If it was already running, the toadserver would have simply linked to it (a la docker). With IPFS running, `eris files` is also available to you. Both the chain and keys containers were also linked to the toadserver. These are used under the hood by the next commands. Notice the toadserver has a port exposed at `11113`. Let's see what we can do with it. First, make or pick a file in your current working directory (e.g., `hungryToad.txt`) that you'd like to add. Then run:  
+Two things happened: If IPFS was not already running as a service, the toadserver started it. If it was already running, the toadserver would have simply linked to it (a la docker). With IPFS running, `eris files` is also available to you. Both the chain and keys containers were also linked to the toadserver. These are used under the hood by the next commands. Notice the toadserver has a port exposed at `11113`. Let's see what we can do with it. First, make or pick a file in your current working directory (e.g., `hungryToad.txt`) that you'd like to add. Then run:
 
 ```bash
 $ curl -X POST http://0.0.0.0:11113/postfile/hungryToad.txt --data-binary "@hungryToad.txt"
@@ -180,7 +180,7 @@ You should now have a name registry on your chain. Head to your `http://HostIP:4
 {"jsonrpc":"2.0","id":"","result":[11,{"block_height":1224,"names":[{"name":"hungryToad.txt","owner":"CFAE357E4EA39A5CC72EADE597108D3C296057D8","data":"QmeBXhokamuGjUzvEf9vLhTT5Nzb9mboGRig8az7DFm9GC","expires":12908}]}],"error":""}
 ```
 
-Now you have a download server whereby anyone can download files. The file is retreivable in a few different ways: 
+Now you have a download server whereby anyone can download files. The file is retreivable in a few different ways:
 
 To save it locally, run:
 ```bash
@@ -239,9 +239,9 @@ The `-t` specifies a path/to/name:tag for your image while `.` at the end is the
 
 ```
 $ docker push quay.io/eris/toadserver:demo
-``` 
+```
 
-(after logging in, of course. It's all pretty similar to git.) 
+(after logging in, of course. It's all pretty similar to git.)
 
 ## Service Definition File
 
@@ -294,10 +294,10 @@ name = "toadserver"
 image = "quay.io/eris/toadserver"
 ports = [ "11113:11113" ]
 volumes = [  ]
-environment = [  
+environment = [
 	"MINTX_NODE_ADDR=http://toad:46657/",
-	"MINTX_CHAINID=toadserver", 
-	"MINTX_SIGN_ADDR=http://keys:4767", 
+	"MINTX_CHAINID=toadserver",
+	"MINTX_SIGN_ADDR=http://keys:4767",
 	"MINTX_PUBKEY=162ECE7A10260292CC562921725154193FA41C791AF4B2F2324687BF43C2107D",
 	"ERIS_IPFS_HOST=http://ipfs",
 	"TOADSERVER_IPFS_NODES=$NODES"
@@ -332,9 +332,9 @@ $ docker run --name toadserver \
 --env "MINTX_PUBKEY=162ECE7A10260292CC562921725154193FA41C791AF4B2F2324687BF43C2107D" \
 --env "ERIS_IPFS_HOST=http://ipfs" \
 --env "TOADSERVER_IPFS_NODES=$NODES" \
-  quay.io/eris/toadserver 
+  quay.io/eris/toadserver
 ```
 
 What a hassle it would be if you had to type this up at the command line every time you wanted to start a service. Not only that, this command above expects each container it is `--link`ing to, to already be running! That means `docker run` for each ipfs, keys, and your chain. Instead, just add the services you need as `[dependencies]` and they'll be started when and where you need them!
 
-So there you have it. Write an app. Write a Dockerfile. Build app from Dockerfile. Write service definition file. Add dependencies. Start service. Use service. In part 2, we'll go over deploying the toadserver to > 1 node and how it's being used as part of the `eris init` sequence. 
+So there you have it. Write an app. Write a Dockerfile. Build app from Dockerfile. Write service definition file. Add dependencies. Start service. Use service. In part 2, we'll go over deploying the toadserver to > 1 node and how it's being used as part of the `eris init` sequence.

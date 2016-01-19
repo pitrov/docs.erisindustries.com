@@ -64,7 +64,7 @@ By default the Docker Toolbox will use VirtualBox to create a very minimal Linux
 
 `eris` has been built to be able to connect into the Docker daemon running within a VirtualBox minimal Linux virtual machine by default and without any effort on your part (other than installing the Docker Toolbox).
 
-If virtualbox gives you trouble, then use [docker machine's plugins](https://github.com/docker/machine/blob/master/docs/AVAILABLE_DRIVER_PLUGINS.md) and create your `eris` machine [in the cloud](../chaindeploying/).
+If virtualbox gives you trouble, then use [docker machine's plugins](https://github.com/docker/machine/blob/master/docs/AVAILABLE_DRIVER_PLUGINS.md) and create your `eris` machine [in the cloud](../advanced/chaindeploying/).
 
 #### OSX Only
 
@@ -243,5 +243,3 @@ There are a lot of ways you can go from here!
 Please go here if you are interested in [learning about smart contracts](/explainers/smart_contracts/).
 
 Please go here if you are interested in [learning more about blockchains](/explainers/blockchains/).
-
-Please go here if you are interested in [continuing to go into the rabbit hole of distributed tech](/tutorials/).

@@ -289,6 +289,5 @@ eris chains new idiaminchain --genesis ~/.eris/blockchains/idiaminchain/genesis.
 
 Boom. You're all set with your custom built, permissioned, smart contract-ified, blockchain.
 
-This chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../chaindeploying).
+This chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../advanced/chaindeploying).
 
-{% image idiamin.jpg %}

@@ -11,7 +11,7 @@ This tutorial is structured to walk individuals through parts of the eris develo
 
 **Note** -- This tutorial is built for Eris versions >= 0.11. For other versions of this tutorial please see below:
 
-* [v0.10](../chainmaking-v0.10/)
+* [v0.10](../deprecated/chainmaking-v0.10/)
 
 # Introduction
 
@@ -108,7 +108,7 @@ eris actions do keys list
 
 `eris actions` are simplified bash scripts which operate similar to how continuous integration yamls typically operate. In the default actions we provide a handy action saved until `keys_list.toml` which can be "ran" with the above command. This action will display all the keys available to your eris-keys signing container.
 
-Now is a good time to export these keys to your host's hard drive, meaning to copy them from the container onto your "normal" hard drive so that if you accidentally remove your keys' data container that the keys will be backed up somewhere. To export your keys please see our [keys tutorial](../keyexporting/).
+Now is a good time to export these keys to your host's hard drive, meaning to copy them from the container onto your "normal" hard drive so that if you accidentally remove your keys' data container that the keys will be backed up somewhere. To export your keys please see our [keys tutorial](../tool-specific/keyexporting/).
 
 There are two more things we will need to do before we move on.
 
@@ -252,6 +252,6 @@ Boom. You're all set with your custom built, permissioned, smart contract-ified,
 
 **Next, you'll want to [deploy some contracts](../contractsdeploying/)!**
 
-Or, perhaps you'll want to go [make a more advanced permission chain](../chainmaking-advanced/).
+Or, perhaps you'll want to go [make a more advanced permission chain](../advanced/chainmaking/).
 
-{% image idiamin.jpg %}
+

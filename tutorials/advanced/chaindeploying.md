@@ -215,4 +215,3 @@ docker-machine rm idiaminchain-ps3
 docker-machine rm idiaminchain-ps4
 ```
 
-{% image idiamin.jpg %}

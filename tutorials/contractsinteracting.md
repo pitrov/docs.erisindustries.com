@@ -244,4 +244,6 @@ The first time you run the script it should tell you that the value is `5` or wh
 
 Congratulations, you've just made your very own smart contract backed application on a permissioned blockchain!
 
-{% image idiamin.jpg %}
+# Where to next?
+
+**Next you'll want to see how to a make a [longer running application](../servicesmaking/).**

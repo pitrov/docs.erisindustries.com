@@ -146,7 +146,7 @@ where the `--machine` flag tells eris to execute the listing function on *that* 
 
 ## Robots In The Sky
 
-Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../chaindeploying/).
+Note: this section is a modified (& more generalized) version of the [chain deploying tutorial](../advanced/chaindeploying/).
 
 Above, we deployed machines locally (using the `virtualbox` driver). With docker-machine, this is all done from the host. Instead of having to log into Digital Ocean/AWS, provision an instance, ssh into it, harden the server, install docker, install eris, copy in some files, and start a service/chain; it's simply a matter of:
 

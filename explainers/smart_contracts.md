@@ -101,7 +101,7 @@ Great strides have been made in industry around automation of a broad range of b
 
 In other words, if you're the big player and you can run the computation sequence on your metal then great, but everybody else either has to duplicate the work of formulating the automation and process management components on *their side* of the data driven relationship -- or they have to just trust you.
 
-Smart contracts offer a third way, a new paradigm, wherein legally binding agreements ([backed up by real world agreements]({{ site.data.sites["main"].url }}/components/erislegal/)) can be built to run within a network of computers which no single party can pull the plug on and in which all parties to the agreement **participate** in the management and supervision of the computers which have automated the agreement.
+Smart contracts offer a third way, a new paradigm, wherein legally binding agreements ([backed up by real world agreements]({{ site.data.sites["main"].url }}/components//tool-specific/erislegal/)) can be built to run within a network of computers which no single party can pull the plug on and in which all parties to the agreement **participate** in the management and supervision of the computers which have automated the agreement.
 
 In other words, the sweet spot for smart contracts is data driven *relationships* -- or business processes across stakeholders.
 

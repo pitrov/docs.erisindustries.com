@@ -19,17 +19,11 @@ Then see our [quick start guide](getting-started/) to get you more like this mar
 
 [Get the tools installed](getting-started/)
 
+[Troubleshoot your install](install-troubleshooting/)
+
 ## Step 2 -- Roll your own Blockchain in seconds
 
-[Roll Your Own eris:db Blockchain (simple)](chainmaking)
-
-[Roll Your Own eris:db Blockchain (advanced)](chainmaking-advanced)
-
-[Roll Your Own eris:db Blockchain (eris v0.10)](chainmaking-v0.10)
-
-[Deploy Your Advanced eris:db Blockchain to a Cloud Network](chaindeploying)
-
-[Go Deep with eris:db](/documentation/eris-db)
+[Roll Your Own eris:db Blockchain](chainmaking/)
 
 ## Step 3 -- Build (and run) your distributed application
 
@@ -37,19 +31,22 @@ Then see our [quick start guide](getting-started/) to get you more like this mar
 
 [Interacting with Your Contracts](contractsinteracting/)
 
-[Write Your Own Smart Contracts](solidity/)
+## Step 4 -- Share Your Work
 
-[Go Deep with eris:package_manager](/documentation/eris-pm)
+[Make an Eris Service](servicesmaking/)
 
-[Go Deep with eris:db.js](/documentation/eris-db.js)
+## Solidity Tutorials
 
-[Export and Import Your Keys](keyexporting)
+[See our solidity smart contract language tutorials](solidity/)
 
-[Go Deep with eris:keys](/documentation/eris-keys)
+## Advanced Tutorials
 
-## Bonus Features
+[See our advanced tutorials](advanced/)
 
-[Put the contract in smart contracts with eris:legal_markdown](erislegal/)
+## Tool Specific Tutorials
 
-[Working with the blockchain using bash and curl](eris_by_curl)
+[See our tool specific tutorials](tool-specific/)
 
+## Deprecated Tutorials (v0.10)
+
+[See our deprecated tutorials](deprecated/)

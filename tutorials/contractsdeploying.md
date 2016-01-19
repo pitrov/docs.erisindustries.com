@@ -181,7 +181,7 @@ To see what keys are currently on your key signing daemon do this:
 eris actions do keys list
 ```
 
-If you do not have any keys then please take the time to [make some keys](../keyexporting). After you find a key which you currently have, then add that as the `address` flag to the `eris contracts deploy` command.
+If you do not have any keys then please take the time to [make some keys](../tool-specific/keyexporting). After you find a key which you currently have, then add that as the `address` flag to the `eris contracts deploy` command.
 
 If you choose the wrong key then you'll get an error which will probably look something like this:
 
@@ -198,7 +198,7 @@ To "see" your genesis.json then do this:
 eris chains plop idiaminchain genesis
 ```
 
-If the account you are trying to use has not been registered in the genesis.json (or, latterly, has not been given the appropriate [permissions](../../documentation/eris-db-permissions/) via permission transactions) and been given the appropriate permissions, then it will not be able to perform the actions it needs to in order to deploy and test the contract. The easiest thing to do at this point is to [update your genesis.json](../genesisupdating/).
+If the account you are trying to use has not been registered in the genesis.json (or, latterly, has not been given the appropriate [permissions](../../documentation/eris-db-permissions/) via permission transactions) and been given the appropriate permissions, then it will not be able to perform the actions it needs to in order to deploy and test the contract. The easiest thing to do at this point is to [update your genesis.json](../tool-specific/genesisupdating/).
 
 Once you have the following sorted:
 
@@ -229,4 +229,4 @@ That's it! :-)
 
 If you would like to learn more about how to program smart contracts, please see [our smart contract tutorial series](../solidity/).
 
-{% image idiamin.jpg %}
+

@@ -33,6 +33,6 @@ title: "Documentation"
 
 [eris:compilers overview](eris-compilers/)
 
-[eris:legal command overview]({{ site.data.sites["main"].url }}/components/erislegal/)
+[eris:legal command overview]({{ site.data.sites["main"].url }}/components//tool-specific/erislegal/)
 
-[eris:legal command reference and specifications](erislegal/)
+[eris:legal command reference and specifications](/tool-specific/erislegal/)

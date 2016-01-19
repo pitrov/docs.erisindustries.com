@@ -3,3 +3,13 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} !^/rss.xml
 #RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
 RewriteRule tutorials/erisserver https://%{SERVER_NAME} [R,L]
+RewriteRule tutorials/chainmaking-advanced https://%{SERVER_NAME}/tutorials/advanced/chainmaking [R,L]
+RewriteRule tutorials/chaindeploying https://%{SERVER_NAME}/tutorials/advanced/chaindeploying [R,L]
+RewriteRule tutorials/making_a_service https://%{SERVER_NAME}/tutorials/advanced/servicesmaking [R,L]
+RewriteRule tutorials/keyexporting-v0.10 https://%{SERVER_NAME}/tutorials/deprecated/keyexporting-v0.10 [R,L]
+RewriteRule tutorials/chainmaking-v0.10 https://%{SERVER_NAME}/tutorials/deprecated/chainmaking-v0.10 [R,L]
+RewriteRule tutorials/keyexporting https://%{SERVER_NAME}/tutorials/tool-specific/keyexporting [R,L]
+RewriteRule tutorials/genesisupdating https://%{SERVER_NAME}/tutorials/tool-specific/genesisupdating [R,L]
+RewriteRule tutorials/erislegal https://%{SERVER_NAME}/tutorials/tool-specific/erislegal [R,L]
+RewriteRule tutorials/eris_by_curl https://%{SERVER_NAME}/tutorials/tool-specific/eris_by_curl [R,L]
+RewriteRule tutorials/docker_machine https://%{SERVER_NAME}/tutorials/tool-specific/docker_machine [R,L]

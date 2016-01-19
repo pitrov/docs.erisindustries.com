@@ -10,7 +10,7 @@ title: "Tutorials | Solidity 4"
 
 **Note**: Solidity is still under heavy development, which means running the actual code is hard, and since it's on dev it cannot be assumed to be stable.
 
-**Note (2)**: A working example of the solUnit version of the test-contract can be found [here](https://github.com/androlo/sol-unit/blob/master/contracts/src/CoinTest.sol).
+**Note (2)**: A working example of the solUnit version of the test-contract can be found [here](https://github.com/smartcontractproduction/sol-unit/blob/master/contracts/test/CoinTest.sol).
 
 ### Introduction
 
