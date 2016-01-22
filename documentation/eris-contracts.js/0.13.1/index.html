@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>eris-contracts - the javascript contracts library.</h1><p>This library lets you create and interact with on-chain Solidity contracts from javascript. It is a port of Ethereums <code>web3.js</code> contracts section. What it does is it provides javascript versions of solidity contracts that can be used to call on-chain contracts from javascript.  </p>
+<h2>Installation</h2><p><code>npm install eris-contracts</code></p>
+<p><strong>Note:</strong>  Installation fails on AWS Ubuntu as of 2015-12-31 because Ubuntu ships with an outdated version of npm.  To install successfully on Ubuntu, please follow these steps:</p>
+<pre class="prettyprint source lang-shell"><code>sudo apt-get update
+sudo apt-get install --yes git nodejs-legacy npm
+sudo npm install --global npm
+hash -r
+npm install eris-contracts</code></pre><h3>eris-db server</h3><p>You need a running <a href="https://github.com/eris-ltd/eris-db">eris-db</a> server. <code>eris-db</code> is a server wrapper for <a href="https://github.com/tendermint/tendermint">Tendermint</a>, which is the actual blockchain-client.</p>
+<h4>Native</h4><p><code>eris-db</code> server is officially supported on Ubuntu <code>14.04</code>, <code>14.10</code> and <code>15.04</code>. Installation instructions can be found in its <code>README.md</code> file.</p>
+<h4>Docker</h4><p>Docker is supported, but it is not recommended to build and run manually (see 'Eris cli' below).</p>
+<h4>Eris cli</h4><p>The preferred method of configuring your blockchain and starting up the server will be <a href="https://github.com/eris-ltd/eris-cli">eris-cli</a>. It is currently in the last stages before public release. It runs eris-db/tendermint servers through docker.</p>
+<h2>Usage</h2><p>To quickly set up a development/test-environment:</p>
+<pre class="prettyprint source lang-javascript"><code>var erisC = require('eris-contracts');
+
+// URL to the rpc endpoint of the eris-db server.
+var erisdbURL = &quot;http://localhost:1337/rpc&quot;;
+// See the 'Private Keys and Signing' section below for more info on this.
+var accountData = require('/some/account/data.json');
+// newContractManagerDev lets you use an accountData object (address & private key) directly, i.e. no key/signing daemon is needed. This should only be used while developing/testing.
+var contractManager = erisC.newContractManagerDev(erisdbURL, accountData);</code></pre><p>If using a websocket connection, you must add a callback to <code>newContractManagerDev</code>.</p>
+<pre class="prettyprint source lang-javascript"><code>// ...
+var contractManager;
+erisC.newContractManagerDev(erisdbURL, PrivKey, function(error, _contractManager){
+    if(!error){
+        // Server is ready.
+        // ...
+        contractManager = _contractManager;
+    }
+});</code></pre><p>For more advanced usage, see the API section.</p>
+<p>The <code>contracts</code> object works like the one in <code>web3.js</code> and is essentially a &quot;factory factory&quot; for javascript contracts. You call it and pass a JSON ABI file, and get a factory (or template) for that particular contract type in return, which you then use to create instances that points to actual on-chain contract accounts.</p>
+<p>There is two ways of using these factories/templates - one is to create a javascript contract and at the same time deploy a corresponding solidity contract. This is done using <code>new</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>var myAbi = [...];
+var myCompiledCode = &quot;...&quot;;
+
+// Create a factory for the contract with the JSON interface 'myAbi'.
+var myContractFactory = contractManager.newContractFactory(myAbi);
+
+// To create a new instance and simultaneously deploy a contract use `new`:
+var myNewContract;
+myContractFactory.new({data: myCompiledCode}, function(error, contract){
+    if (error) {
+        // Something.
+        throw error;
+    }
+    myNewContract = contract;
+});</code></pre><p>The manager lets you create factories. Factories has all the javascript functionality set up, and single instances are simply clones of the factorys template contract that point to different on-chain contracts.</p>
+<p>You may also create a new javascript contract and point it to an already existing solidity contract account using <code>at</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>var contractAddress = &quot;...&quot;;
+
+var myExistingContract;
+
+myContractFactory.at(contractAddress, function(error, contract){
+    if (error) {
+        // Something.
+        throw error;
+    }
+    myExistingContract = contract;
+});</code></pre><p>This is an example solidity contract:</p>
+<pre class="prettyprint source lang-javascript"><code>contract MyContract {
+
+  function add(int a, int b) constant returns (int sum) {
+      sum = a + b;
+  }
+}</code></pre><p>The JSON ABI of that contract would be this:</p>
+<pre class="prettyprint source lang-javascript"><code>[{
+    &quot;constant&quot;:true,
+    &quot;inputs&quot;:[
+    {
+        &quot;name&quot;:&quot;a&quot;,
+        &quot;type&quot;:&quot;int256&quot;
+    },{
+        &quot;name&quot;:&quot;b&quot;,
+        &quot;type&quot;:&quot;int256&quot;
+    }],
+    &quot;name&quot;:&quot;add&quot;,
+    &quot;outputs&quot;:[{
+        &quot;name&quot;:&quot;sum&quot;,
+        &quot;type&quot;:&quot;int256&quot;
+    }],
+    &quot;type&quot;:&quot;function&quot;
+}]</code></pre><p>You would access the <code>add</code> function from the javascript contract like this:</p>
+<pre class="prettyprint source lang-javascript"><code>myContract.add(34, 22, addCallback);
+
+function addCallback(error, sum){
+  console.log(sum.toString()); // Would print: 56
+}</code></pre><p>Finally, if you create a contract factory/template using an ABI, and the on-chain contracts that the javascript contracts points to does not use that ABI, the behavior of the javascript contract will be undefined.</p>
+<h2>Private Keys and Signing</h2><p>Eris/Tendermint uses public key cryptography to protect the identity of the users/accounts. Each account has a public key and a private key. The public key (or public address, rather, which is a representation of the public key) is used to identify the account. It may be shown to others in plain-text.</p>
+<p>In order to transact from the account (which is required to actually do things), the account holder has to sign data using their private key. The private key should never be exposed to others.</p>
+<p>For beginners, it can help to think about the public/private keypair as a username/password combination. The public key (public address) is the name, and the private key is the password. Others will see your username in most systems, but they normally have to provide the password in order to actually do something under that name. This is why private keys should never be exposed.</p>
+<p>The exception to the private key rule is if you are testing/developing. It is of course safe to generate a &quot;worthless&quot; key-pair to create test-accounts when developing, since the key is not actually protecting anything of value. It is essentially the same thing as having a test login/password when testing a web-service, or database, or anything else. That is why you may find private keys in things like unit tests.</p>
+<p>Even if worthless/throw-away keys are used when developing and testing, it is very important that they are removed before the system goes live, so handle them with care - even during dev.</p>
+<h2>API</h2><p>This is an overview and a short description of most objects. More details can be found in the code (jsdoc). This will later replace the current docs and tutorials on our <a href="https://erisindustries.com">main site</a>.</p>
+<h3>eris-contracts (root module)</h3><p>Eris contracts is what you get when requiring <code>eris-contracts</code>. It's a wrapper around the <code>contract_manager</code> module with a few additional utilities. Here's the getting started example from above:</p>
+<pre class="prettyprint source lang-javascript"><code>var erisC = require('eris-contracts');
+var erisdbURL = &quot;http://localhost:1337/rpc&quot;;
+var accountData = require('/some/account/data.json');
+var contractManager = erisC.newContractManagerDev(erisdbURL, accountData);</code></pre><p>The <code>newContractManagerDev</code> method is is just a convenient way of doing all of this:</p>
+<pre class="prettyprint source lang-javascript"><code>// Get 'eris-contracts'.
+var erisContracts = require('eris-contracts');
+
+// Get 'eris-db' (the javascript API for eris-db)
+var erisdbModule = require(&quot;eris-db&quot;);
+
+// Create a new instance of ErisDB that uses the given URL.
+var erisdb = erisdbModule.createInstance(&quot;http://localhost:1337/rpc&quot;);
+// The private key.
+var accountData = require('/some/account/data.json');
+
+// Create a new pipe. 
+var pipe = new erisContracts.pipes.DevPipe(erisdb, accountData);
+// Create a new contracts object using that pipe.
+var contractManager = erisContracts.newContractManager(pipe);</code></pre><h4>Pipes</h4><p>Pipes are used to connect <code>eris-contracts</code> with the <code>eris-db</code> javascript API. Th purpose of <code>pipes</code> is to enable multiple different ways of signing transactions. The <code>DevPipe</code> will take a private key which it sends to the server with each transaction so that the server can sign the transaction with the key. This should only be used in dev, or when the node.js server and blockchain client is running on the same machine or a private network.</p>
+<p>LocalSignerPipe is for applications where end-users will sign transactions themselves using a key. A signing function can then be passed to a <code>LocalSignerPipe</code> and used by <code>eris-contract</code>. For now, <code>DevPipe</code> is the standard because <strong>we do not yet have the infrastructure in place for local signing</strong>.</p>
+<p>The pipes are available as <code>erisContracts.pipes</code>. It has the <code>DevPipe</code>, <code>LocalSignerPipe</code> and also the base <code>Pipe</code> class in case someone wants to extend it to create their own pipe.</p>
+<h4>Accounts</h4><p>Accounts are managed via the pipe. The <code>DevPipe</code> takes account data in the constructor (as per the example above), but the <code>Pipe</code> class comes with a few standard methods as well.</p>
+<p><code>Pipe.addAccount(accountData)</code> - Add a new account to the list of available accounts. Will throw if the ID is already in use.
+<code>Pipe.removeAccount(accountId)</code> - Remove the account with the given ID. Will throw if no account with the given ID is found.
+<code>Pipe.setDefaultAccount(accountId)</code> - Set the account with the given ID as the default account (the account that will be used if no <code>from</code> account is added to the call/transaction options). Will throw if no account with the given ID is found.</p>
+<p>Account data is context sensitive. For <code>DevPipe</code>, which manages the account data in javascript:</p>
+<p>AccountData</p>
+<pre class="prettyprint source"><code>{
+    address: &lt;string>
+    pubKey: &lt;string>
+    privKey: &lt;string>
+}</code></pre><p>In a local signer implementation, account data would likely just be an identifier used for the account (which is managed elsewhere).</p>
+<h3>the contracts-manager</h3><p>The <code>ContractManager</code> is the basis for all solidity contracts you create. It lets you create contract factories from Solidity ABI files. The factories are all instances of the <code>ContractFactory</code> class.</p>
+<pre class="prettyprint source lang-javascript"><code>var myJsonAbi = [...];
+var myOtherJsonAbi = [...];
+// Create a factory (or contract template) from 'myJsonAbi'
+var myContractFactory = contractManager.newContractFactory(myJsonAbi);
+
+// Create another factory from 'myOtherJsonAbi'
+var myOtherContractFactory = contractManager.newContractFactory(myOtherJsonAbi);</code></pre><h3>ContractFactory</h3><p>Instances of <code>ContractFactory</code> are used to create instances that point to certain addresses of real contracts that exist on the chain.</p>
+<h4>ContractFactory.new(options, callback)</h4><p>Calling <code>ContractFactory.new</code> will create a new instance of <code>Contract</code>, but will also deploy the contract onto the chain. The javascript contract will get the address of the newly deployed contract automatically.</p>
+<pre class="prettyprint source lang-javascript"><code>var myContract;
+var myCode = &quot;...&quot;;
+
+myContractFactory.new({data: myCode}, function(error, contract){
+    if(error) {throw error}
+    myContract = contract;
+});</code></pre><p><code>options</code> is defined below.</p>
+<h4>ContractFactory.at(address, callback)</h4><p>This is used to create a new contract object that points to the address of a contract that is assumed to already exist on the chain.</p>
+<pre class="prettyprint source lang-javascript"><code>var address = &quot;...&quot;;
+var myContract;
+
+myContractFactory.at(address, function(error, contract){
+    if(error) {throw error}
+    myContract = contract;
+});</code></pre><p>No check is made to see if the contract actually exists, so you may omit the callback and instead get the new contract object as the return-value.</p>
+<pre class="prettyprint source lang-javascript"><code>var address = &quot;00000000000000000000000000000000DEADBEEF&quot;
+var myContract = myContractFactory.at(address);</code></pre><p><strong>Note:</strong> Use this with caution. There's no check if the address points to an actual contract, and if that contract is of the proper type. An existence check may be added later, but an ABI check will be harder since the ABI is not stored in the account that holds the compiled contract-code. 
+A check that can be done manually is to first try and get the account at that address (using the core <code>eris-db.js</code> library). An even more sophisticated check would be to then get the code from that account and check if it matches the expected code for a contract of that particular type. </p>
+<h4>options</h4><p>The transaction options object has the following fields:</p>
+<p><code>from</code>: This is used to set the sender account, and must be the account's public address. In the case of transactions you need to have registered the account data with the <code>pipe</code> (in the case of <code>DevPipe</code>), or with the key daemon (in the case of <code>LocalSignerPipe</code> - which is not fully implemented yet). If no account with the given address is found, the function callback will receive an error. When doing a simulated call (i.e. calling a <code>constant</code> function), the address you pass in will be used directly.</p>
+<p><code>to</code>: The address of the target account. This is <strong>only set internally</strong> as each javascript contracts targets a specific on-chain contract, and the address to that contract was automatically set during creation.</p>
+<p><code>data</code> : The transaction data. For a user, this is <strong>only set when creating new contracts</strong>, to pass in the compiled code:</p>
+<pre class="prettyprint source lang-javascript"><code>myContractFactory.new({data: myCode}, function(error, contract){
+    if(error) {throw error}
+    myContract = contract;
+});</code></pre><p>In a contract function, the options object must be added right before the callback. If no such object is added, it will use the default <code>from</code> address that was added to the pipe, the <code>to</code> value is set by the contract in question, and <code>data</code> is set by the function in question.</p>
+<p><code>contract.someConstFunc(arg0, arg1, ... , argN, {from: fromAddress}, callbackFn);</code></p>
+<h3>Contract</h3><p>Contracts are always created using factory methods. They will have their methods and events set based on the ABI that was used when creating the factory. Here is an example contract:</p>
+<pre class="prettyprint source"><code>contract TestContract {
+
+    address public testAddress;
+
+    event AddressSet(boolean indexed itWasSet);
+
+    function getInts() constant returns (int a, int b){
+        a = -10;
+        b = -50;
+        AddressSet(false);
+    }
+
+    function getUints() constant returns (uint a, uint b){
+        a = 10;
+        b = 50;
+        AddressSet(false);
+    }
+
+    function setAddress(address addressIn) external {
+        testAddress = addressIn;
+        AddressSet(true);
+    }
+
+}</code></pre><p>The corresponding javascript-contract would have the following methods:</p>
+<p><code>Contract.getInts(callback)</code> returns <code>[BigNumber, BigNumber]</code>
+<code>Contract.getUints(callback)</code> returns <code>[BigNumber, BigNumber]</code>
+<code>Contract.setAddress(string, callback)</code> returns <code>-</code></p>
+<p>And finally, since <code>testAddress</code> is public:</p>
+<p><code>Contract.testAddress(callback)</code> returns <code>[string]</code></p>
+<p>It would have the following event as well:</p>
+<p><code>Contract.AddressSet(startCallback, eventCallback)</code></p>
+<h4>constant vs non-constant</h4><p>The <code>constant</code> modifier for solidity functions denotes that the function does not modify the world state in any way what-so-ever. What this means is it does not write to any storage variable in any contract or transfer any tokens between accounts (e.g. Ether in the case of Ethereum). They could be referred to as &quot;read-only&quot;.</p>
+<p>Constant functions can be evaluated without the caller having to sign anything using their key, which means it does not need to wait for a block to be mined to process the results. If a function is indeed read-only, it should always have the constant modifier. </p>
+<p>Currently, <code>constant</code> is not enforced by the compiler, but it will be. It is implemented on the javascript side though, and functions that are flagged as constant will be invoked using the <code>call</code> method of the RPC library rather then <code>transact</code>. <code>call</code> does not use the the private key and does not count towards the account nonce/sequence; it simply executes the code and passes any return value back at once.</p>
+<p>You may override this by using the <code>call</code> and <code>sendTransaction</code> methods, although that support may be removed. There is almost never a good reason to do this with <code>eris-contracts</code>. </p>
+<p>These are examples of overriding the default behavior, and also examples of <strong>what not to do</strong>.</p>
+<pre class="prettyprint source lang-javascript"><code>// Transact to a constant method - bad.
+myContract.getInts.sendTransaction(function(error, data){});
+
+// Call a non-constant method - bad.
+myContract.setAddress.call(&quot;..&quot;, function(error, data){});</code></pre><h4>Events</h4><p>Events are called like this:</p>
+<pre class="prettyprint source lang-javascript"><code>myContract.MyEvent(startCallback, eventCallback);</code></pre><p><code>startCallback</code> is error-first, and returns the subscription management object as the second param.</p>
+<p><code>eventCallback</code> is error-first, and returns an event object as the second param. It is fired off every time a new event comes in.</p>
+<p>The <code>startCallback</code> can be omitted to create a <code>once</code> subscription i.e. a subscription that will close down automatically when the first event is received. There's an alternative syntax for this as well which makes the intentions a bit more clear: <code>myContract.MyEvent.once(eventCallback)</code>. </p>
+<p><strong>Note</strong>: If the backing <code>eris-db</code> object uses a websocket connection, events will come in as they happen. If it uses a HTTP connection then the subscription object will poll for events once every second (by default). It will then fire the callback once for each new event (if any), in the same order they came in. If you have lots of event activity and use HTTP, don't set the polling interval too high or you will have long periods of inactivity followed by a burst of new events.</p>
+<h5>The Event object</h5><p>Event objects are on the following form:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    &quot;event&quot; : &lt;string>
+    &quot;address&quot; : &lt;string>
+    &quot;args&quot; : {}
+}</code></pre><p><code>event</code> is the name of the event.</p>
+<p><code>address</code> is the address of the contract that fired off the event.</p>
+<p><code>args</code> is a map where the event parameter names are the keys, and their values the values. In the <code>AddressSet</code>-event, the <code>args</code> object would look like this:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    &quot;itWasSet&quot; : &lt;boolean>
+}</code></pre><h5>The Subscription object</h5><p>A subscription object in <code>eris-contracts</code> is mostly just used to stop subscriptions. They are automatically started when created, and the eventId/subId is not needed either, so you mostly just use the <code>stop</code> method when working with <code>eris-contracts</code>.</p>
+<p><code>EventSub.stop(callback)</code>: stop subscribing. <code>callback(error)</code> is optional, and can be used to check for errors.</p>
+<p>It also has the following methods:</p>
+<p><code>EventSub.getEventId</code>: Get the event-id used for this subscription. For solidity events it is always on the form: <code>Log/&lt;address&gt;</code>, where <code>address</code> is the address of the contract account.</p>
+<p><code>EventSub.getSubscriberId</code>: A unique 32 byte hex string identifier for the subscription.</p>
+<h5>Example</h5><p>This is an example of a trivial module that handles this event on one single contract of this type:</p>
+<pre class="prettyprint source lang-javascript"><code>var addressSetSub;
+var myContract;
+
+exports.subToAddressSet = function(contract){
+    myContract = contract;
+
+    myContract.AddressSet(startCallback, eventCallback);
+
+    function startCallback(error, eventSub){
+        if(error){ 
+            throw error;
+        }
+        addressSetSub = eventSub;
+    }
+
+    function eventCallback(error, event){
+        console.log(&quot;Address was &quot; + (event.args.itWasSet ? &quot;&quot; : &quot;not &quot;) + &quot;set in: &quot; event.address); 
+    }
+}
+
+exports.stop = function(){
+    if(addressSetSub){
+        // Optional callback.
+        addressSetSub.stop(function(error){
+            if(error){
+                console.error(&quot;Failed to stop sub for: &quot; + myContract.address + &quot;. Error: &quot; + error.message);
+            } else {
+                console.log(&quot;Info: Stopped watching AddressSet events on: &quot; + myContract.address);
+            }
+        });
+    } else {
+        console.log(&quot;Warning: No subscription has been started!&quot;); 
+    }
+}</code></pre><h2>eris-contracts.js and web3.js (for Ethereum users)</h2><p>If you have done dapp-development with <code>web3.js</code>, you'll quickly learn how to use <code>eris-contracts.js</code>, but there are some important differences.</p>
+<h3>Method callbacks</h3><p>You <strong>must</strong> use callbacks with <code>eris-contracts</code>. In <code>web3</code>, you may omit the callback and do a regular try-catch + return.</p>
+<pre class="prettyprint source lang-javascript"><code>var sum;
+
+try{
+    sum = myContract.add(34, 22);
+    // more synchronous calls perhaps
+    // ...
+} catch (error) {
+    // ...
+}</code></pre><p>The reason is because they allow blocking http calls to be made. <code>eris-contracts</code> only works with <code>node.js</code> for now (mainly as server side script). This restriction might be removed when browser support is added.</p>
+<h3>Events</h3><p>In <code>eris-contracts</code> you do not use watches and filters, but events. See the event section above for instructions.</p>
+<h3>Transacting / calling</h3><p>Transacting and calling is done via the javascript contract objects, but the mechanics is slightly different. Ethereum keeps the accounts in the client, while our client (Tendermint) expects the account info, such as private keys or pre-signed transactions, to be provided by the caller. See the section on <code>pipes</code> for more info.</p>
+<h2>Tests</h2><p><code>mocha</code> or <code>npm test</code></p>
+<h2>Web3 licence</h2><p>This library is built on <a href="https://github.com/ethereum/web3.js">web3.js</a>. Here is the web3.js licence:</p>
+<pre class="prettyprint source"><code>web3.js is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+web3.js is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with web3.js.  If not, see &lt;http://www.gnu.org/licenses/>.</code></pre></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contract.html">contract</a></li><li><a href="module-output_formatters.html">output_formatters</a></li></ul><h3>Classes</h3><ul><li><a href="module-contract-ContractFactory.html">ContractFactory</a></li></ul>
+</nav>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

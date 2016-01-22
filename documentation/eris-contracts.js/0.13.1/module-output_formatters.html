@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: output_formatters</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: output_formatters</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">output_formatters.js</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:andreas@erisindustries.com">Andreas Olofsson</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".json"><span class="type-signature">(static) </span>json<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Returns the output as an object with a field 'this.values.name' for each named output param.
+The raw output is put in 'this.raw'.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use 'toObject'</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".jsonStrings"><span class="type-signature">(static) </span>jsonStrings<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Returns the output an object with a field 'this.values.name' for each named output param.
+The raw output is put in 'this.raw'.
+
+ADDITIONALLY: All BigNumbers in 'this.values' are converted to decimal strings.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".toObject"><span class="type-signature">(static) </span>toObject<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Returns the output as an object with a field 'this.values.name' for each named output param.
+The raw output is put in 'this.raw'.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".toObjectDecimal"><span class="type-signature">(static) </span>toObjectDecimal<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Returns the output an object with a field 'this.values.name' for each named output param.
+The raw output is put in 'this.raw'.
+
+ADDITIONALLY: All BigNumbers in 'this.values' are converted to decimal strings.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use 'toObjectDecimal'</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".jsonNumbers"><span class="type-signature">(static) </span>jsonNumbers<span class="signature">(outputSpec, output)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Returns the output an object with a field 'this.values.name' for each named output param.
+The raw output is put in 'this.raw'.
+
+ADDITIONALLY: All BigNumbers in 'this.values' are converted to numbers, so if
+you're using numbers outside the range of javascript 'Number', errors will be had.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>outputSpec</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The json-abi array for the output.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>output</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The output data</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Don't use this.</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".valuesToJson"><span class="type-signature">(static) </span>valuesToJson<span class="signature">(formatter)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Takes the 'this.values' object from the object returned by 'formatter', json-stringifies it and returns
+the string. Useful when passing on to some form of stream.
+
+NOTE: Un-named return values will be lost. The raw output is not included as it contains big numbers and such.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>formatter</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".valuesToJsonDecimal"><span class="type-signature">(static) </span>valuesToJsonDecimal<span class="signature">(outputSpec, output)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Takes the 'this.values' object from the object returned by 'formatter', json-stringifies it and returns
+the string. Useful when passing on to some form of stream.
+
+NOTE: Un-named return values will be lost. The raw output is not included as it contains big numbers and such.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>outputSpec</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The json-abi array for the output.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>output</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The output data</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".valuesToJsonString"><span class="type-signature">(static) </span>valuesToJsonString<span class="signature">(formatter)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Takes the 'this.values' object from the object returned by 'formatter', json-stringifies it and returns
+the string. Useful when passing on to some form of stream.
+
+NOTE: Un-named return values will be lost. The raw output is not included as it contains big numbers and such.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>formatter</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-contract.html">contract</a></li><li><a href="module-output_formatters.html">output_formatters</a></li></ul><h3>Classes</h3><ul><li><a href="module-contract-ContractFactory.html">ContractFactory</a></li></ul>
+</nav>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
