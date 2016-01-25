@@ -1,26 +1,26 @@
 ---
 
 layout:     documentation
-title:      "Documentation | eris:keys | eris-keys lock"
+title:      "Documentation | eris:keys | eris-keys convert"
 
 ---
 
-# eris-keys lock
+# eris-keys convert
 
-lock a key
+eris-keys convert --addr <address>
 
 ## Synopsis
 
-lock an unlocked key by re-encrypting it
+eris-keys convert --addr <address>
 
 ```bash
-eris-keys lock
+eris-keys convert
 ```
 
 ## Options
 
 ```
-  -h, --help[=false]: help for lock
+  -h, --help[=false]: help for convert
 ```
 
 ## Options inherited from parent commands
