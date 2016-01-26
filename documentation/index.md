@@ -31,7 +31,7 @@ title: "Documentation"
 
 [eris:contracts.js overview](eris-contracts-js/)
 
-[eris:contracts.js library reference and specifications](eris-contracts-js/)
+[eris:contracts.js library reference and specifications](eris-contracts.js/)
 
 # Eris Packages and Tooling
 
