@@ -232,8 +232,8 @@ Container eris_interactive_eris_service_idi_tmp_deploy_1 exited with status 1
 
 That usually, but not always means that there is a problem with your chain. To debug this follow this sequence:
 
-1. Check that the account you are using to deply the contracts is in the genesis.json on your host (`cat ~/.eris/chains/simplechain/genesis.json`).
-2. Check that the genesis.json in the chain's data container matches the one in your `chain_dir` (`eris chains plop simplechain genesis`).
+* Check that the account you are using to deply the contracts is in the genesis.json on your host (`cat ~/.eris/chains/simplechain/genesis.json`).
+* Check that the genesis.json in the chain's data container matches the one in your `chain_dir` (`eris chains plop simplechain genesis`).
 
 If these are not the same, then you will need to reset your chain:
 
@@ -244,12 +244,12 @@ eris chains new simplechain --dir simplechain
 
 If those are the same, the next thing to check is that the priv_validators are fine.
 
-3. Check the priv_validator.json (which is the key that the eris chain uses) on your host (`cat ~/.eris/chains/simplechain/priv_validator.json`).
-4. Check the priv_validator.json in the chain's data container matches the one in your `chain_dir` (`eris data exec simplechain "cat /home/eris/.eris/chains/simplechain/priv_validator.json`).
+* Check the priv_validator.json (which is the key that the eris chain uses) on your host (`cat ~/.eris/chains/simplechain/priv_validator.json`).
+* Check the priv_validator.json in the chain's data container matches the one in your `chain_dir` (`eris data exec simplechain "cat /home/eris/.eris/chains/simplechain/priv_validator.json`).
 
 If they're different reset the chain (see above for instructions).
 
-5. Finally, check that the key in the priv_validator.json is registered in the genesis.json (the same address should be the single validator and also the key in the priv_validator.json). If the priv_validator.json is not in the genesis.json then make sure it is added to the accounts and the validators sections. See the [chain making](../chainmaking/) tutorial for instructions.
+* Finally, check that the key in the priv_validator.json is registered in the genesis.json (the same address should be the single validator and also the key in the priv_validator.json). If the priv_validator.json is not in the genesis.json then make sure it is added to the accounts and the validators sections. See the [chain making](../chainmaking/) tutorial for instructions.
 
 When that is done, reset the chain and you should be good to go.
 
