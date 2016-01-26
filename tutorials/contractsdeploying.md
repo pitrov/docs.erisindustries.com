@@ -166,6 +166,8 @@ Container eris_interactive_eris_service_idi_tmp_deploy_1 exited with status 1
 
 That means that your chain is not started. Please start the chain and give the chain a second to reboot before rerunning the deploy command again.
 
+<hr />
+
 If you get an error which looks something like this:
 
 ```irc
@@ -183,6 +185,8 @@ eris actions do keys list
 
 If you do not have any keys then please take the time to [make some keys](../tool-specific/keyexporting). After you find a key which you currently have, then add that as the `address` flag to the `eris contracts deploy` command.
 
+<hr />
+
 If you choose the wrong key then you'll get an error which will probably look something like this:
 
 ```irc
@@ -195,8 +199,10 @@ This means that the account `03E3FAC131CC111D78B569CEC45FA42CE5DA8AD8` has not b
 To "see" your genesis.json then do this:
 
 ```
-eris chains plop idiaminchain genesis
+eris chains plop simplechain genesis
 ```
+
+<hr />
 
 If the account you are trying to use has not been registered in the genesis.json (or, latterly, has not been given the appropriate [permissions](../../documentation/eris-db-permissions/) via permission transactions) and been given the appropriate permissions, then it will not be able to perform the actions it needs to in order to deploy and test the contract. The easiest thing to do at this point is to [update your genesis.json](../tool-specific/genesisupdating/).
 
@@ -208,10 +214,44 @@ Once you have the following sorted:
 Then you'll be ready to:
 
 ```bash
-eris contracts deploy --chain idiaminchain --address $addr
+eris contracts deploy --chain simplechain --address $addr
 ```
 
 Where `$addr` in the above command is the address you want to use.
+
+<hr />
+
+If you get an error which looks like this:
+
+```irc
+ERROR =>
+Saving ABI                                    /home/eris/.eris/apps/idi/abi
+open /home/eris/.eris/apps/idi/abi: is a directory
+Container eris_interactive_eris_service_idi_tmp_deploy_1 exited with status 1
+```
+
+That usually, but not always means that there is a problem with your chain. To debug this follow this sequence:
+
+1. Check that the account you are using to deply the contracts is in the genesis.json on your host (`cat ~/.eris/chains/simplechain/genesis.json`).
+2. Check that the genesis.json in the chain's data container matches the one in your `chain_dir` (`eris chains plop simplechain genesis`).
+
+If these are not the same, then you will need to reset your chain:
+
+```bash
+eris chains stop -rxf simplechain
+eris chains new simplechain --dir simplechain
+```
+
+If those are the same, the next thing to check is that the priv_validators are fine.
+
+3. Check the priv_validator.json (which is the key that the eris chain uses) on your host (`cat ~/.eris/chains/simplechain/priv_validator.json`).
+4. Check the priv_validator.json in the chain's data container matches the one in your `chain_dir` (`eris data exec simplechain "cat /home/eris/.eris/chains/simplechain/priv_validator.json`).
+
+If they're different reset the chain (see above for instructions).
+
+5. Finally, check that the key in the priv_validator.json is registered in the genesis.json (the same address should be the single validator and also the key in the priv_validator.json). If the priv_validator.json is not in the genesis.json then make sure it is added to the accounts and the validators sections. See the [chain making](../chainmaking/) tutorial for instructions.
+
+When that is done, reset the chain and you should be good to go.
 
 **End Troubleshooting**
 
