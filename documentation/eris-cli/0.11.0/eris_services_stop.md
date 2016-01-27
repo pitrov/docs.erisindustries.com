@@ -40,7 +40,7 @@ eris services stop NAME
 
 ## See Also
 
-* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application.
+* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application
 
 ## Specifications
 

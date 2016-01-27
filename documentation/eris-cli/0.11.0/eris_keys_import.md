@@ -25,7 +25,7 @@ eris keys import ADDR
 
 ```
       --addr="": address of key to import
-      --src="": source on host to import from. give full filepath to key
+      --src="/home/ubuntu/.eris/keys/data": source on host to import from. give full filepath to key
 ```
 
 ## Options inherited from parent commands

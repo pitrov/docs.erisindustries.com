@@ -26,7 +26,7 @@ eris keys export ADDR
 
 ```
       --addr="": address of key to export
-      --dest="": destination for export on host
+      --dest="/home/ubuntu/.eris/keys/data": destination for export on host
 ```
 
 ## Options inherited from parent commands
