@@ -43,7 +43,7 @@ Version:
 * [eris keys](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_keys/)	 - Do specific tasks with keys *for dev only*.
 * [eris ls](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_ls/)	 - List all the things eris knows about.
 * [eris man](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_man/)	 - Display a man page.
-* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application
+* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application.
 * [eris update](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_update/)	 - Update the eris tool.
 * [eris version](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_version/)	 - Display Eris's Platform Version.
 

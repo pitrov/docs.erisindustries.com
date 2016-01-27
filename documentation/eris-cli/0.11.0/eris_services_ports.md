@@ -37,7 +37,7 @@ $ eris services ports ipfs 4001 5001 -- will display specific IPFS ports
 
 ## See Also
 
-* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application
+* [eris services](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_services/)	 - Start, stop, and manage services required for your application.
 
 ## Specifications
 

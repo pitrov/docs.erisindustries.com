@@ -7,17 +7,14 @@ title:      "Documentation | eris:cli | eris services"
 
 # eris services
 
-Start, stop, and manage services required for your application
+Start, stop, and manage services required for your application.
 
 ## Synopsis
 
 Start, stop, and manage services required for your application.
 
-Eris services are "things that you turn on or off". They are meant to be long
-running microservices on which your application relies. They can be public
-blockchains, services your application needs, workers, bridges to other data
-or process management systems, or pretty much any process that has a docker
-image.
+Services are all services known and used by the Eris platform with the
+exception of blockchain services.
 
 ```bash
 eris services
