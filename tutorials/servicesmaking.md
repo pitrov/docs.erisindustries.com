@@ -62,7 +62,7 @@ var
   address = require('./epm.json').deployStorageK,
   abi = require('./abi/' + address),
   account = require('./account.json'),
-  chainUrl = "http://localhost:1337/rpc"
+  chainUrl = "http://localhost:1337/rpc",
   manager, contract;
 
 // Instantiate the contract object manager using the chain URL and the account
@@ -145,8 +145,10 @@ eris chains ls
 
 ```bash
 cd ~/.eris/apps/idi-service
-eris contracts deploy --chain simplechain
+eris contracts deploy --chain simplechain --address $ADDR
 ```
+
+Where `$ADDR` is the address you're using.
 
 **Troubleshooting**
 
