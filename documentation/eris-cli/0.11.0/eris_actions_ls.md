@@ -17,6 +17,12 @@ List all registered action definition files.
 eris actions ls
 ```
 
+## Options
+
+```
+      --quiet[=false]: machine readable output; also used in tests
+```
+
 ## Options inherited from parent commands
 
 ```
