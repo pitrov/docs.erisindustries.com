@@ -14,3 +14,4 @@ RewriteRule tutorials/erislegal https://%{SERVER_NAME}/tutorials/tool-specific/e
 RewriteRule tutorials/eris_by_curl https://%{SERVER_NAME}/tutorials/tool-specific/eris_by_curl [R,L]
 RewriteRule tutorials/docker_machine https://%{SERVER_NAME}/tutorials/tool-specific/docker_machine [R,L]
 RewriteRule documentation/epm https://%{SERVER_NAME}/documentation/eris-package-manager [R,L]
+RewriteRule tutorials/dappmaking/ https://%{SERVER_NAME}/tutorials/getting-started [R,L]
