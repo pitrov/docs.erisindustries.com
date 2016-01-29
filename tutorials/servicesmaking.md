@@ -37,7 +37,7 @@ What we are going to change up the old idi contract so that it does a few things
 
 ```bash
 cd ~/.eris/apps # or, wherever you made the idi app
-cp idi idi-service # or whatever you would like to call it
+cp -r idi idi-service # or whatever you would like to call it
 ```
 
 That will give us a new base application. Now this tutorial will assume that your simple chain is still around and that all of the key and capabilities based permission is all well and good. It will also assume that your contracts are running on the chain. If you have followed the previous tutorials and are coming back to this later with no docker containers or anything (but you have all of the old files on your hard drive) that is a-OK. With `eris` we can get you back up and running in no time.
