@@ -26,17 +26,17 @@ eris keys ls
 ## Options
 
 ```
-      --container[=false]: list keys in container: looks in /home/eris/.eris/keys/data
-      --host[=false]: list keys on host: looks in $HOME/.eris/keys/data
+      --container   list keys in container: looks in /home/eris/.eris/keys/data
+      --host        list keys on host: looks in $HOME/.eris/keys/data
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

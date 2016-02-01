@@ -22,19 +22,19 @@ eris clean
 ## Options
 
 ```
-      --all[=false]: removes everything, stopping short of uninstalling eris
-      --dir[=false]: remove the eris home directory ~/.eris
-      --images[=false]: remove all eris docker images
-  -y, --yes[=false]: overrides prompts prior to removing things
+      --all      removes everything, stopping short of uninstalling eris
+      --dir      remove the eris home directory ~/.eris
+      --images   remove all eris docker images
+  -y, --yes      overrides prompts prior to removing things
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

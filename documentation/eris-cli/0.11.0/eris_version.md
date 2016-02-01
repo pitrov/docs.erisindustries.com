@@ -20,16 +20,16 @@ eris version
 ## Options
 
 ```
-  -q, --quiet[=false]: machine readable output
+  -q, --quiet   machine readable output
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

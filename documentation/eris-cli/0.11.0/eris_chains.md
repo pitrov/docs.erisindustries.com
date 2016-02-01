@@ -34,10 +34,10 @@ eris chains
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## Subcommands
@@ -51,14 +51,12 @@ eris chains
 * [eris chains graduate](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_graduate/)	 - Graduate a chain to a service.
 * [eris chains import](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_import/)	 - Import a chain definition file from Github or IPFS.
 * [eris chains inspect](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_inspect/)	 - Machine readable chain operation details.
-* [eris chains install](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_install/)	 - Install a blockchain from the etcb registry.
 * [eris chains logs](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_logs/)	 - Display the logs of a blockchain.
 * [eris chains ls](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_ls/)	 - Lists everything chain related.
-* [eris chains make-genesis](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_make-genesis/)	 - Generates a genesis file.
-* [eris chains new](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_new/)	 - Create a new blockhain.
+* [eris chains make](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_make/)	 - Create keys and a genesis block for your chain.
+* [eris chains new](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_new/)	 - Create and start a new blockhain.
 * [eris chains plop](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_plop/)	 - Plop the genesis or config file
 * [eris chains ports](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_ports/)	 - Print port mappings.
-* [eris chains register](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_register/)	 - Register a blockchain on etcb (a blockchain for registering other blockchains).
 * [eris chains rename](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_rename/)	 - Rename a blockchain.
 * [eris chains rm](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_rm/)	 - Remove an installed chain.
 * [eris chains start](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_start/)	 - Start a blockchain.

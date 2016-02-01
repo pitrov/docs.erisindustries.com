@@ -22,17 +22,17 @@ eris files put FILE
 ## Options
 
 ```
-      --dir[=false]: add all files from a directory (note: this will not create an ipfs object). returns a log file (ipfs_hashes.csv) to pass into `eris files get`
-      --gateway="": specify a hosted gateway. default is IPFS' gateway; type "eris" for our gateway, or use your own with "http://yourhost"
+      --dir eris files get   add all files from a directory (note: this will not create an ipfs object). returns a log file (ipfs_hashes.csv) to pass into eris files get
+      --gateway string       specify a hosted gateway. default is IPFS' gateway; type "eris" for our gateway, or use your own with "http://yourhost"
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

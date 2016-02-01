@@ -29,33 +29,33 @@ eris contracts test
 ## Options
 
 ```
-  -b, --abi-path="./abi": path to the abi directory EPM should use when saving ABIs after the compile process (EPM only)
-  -a, --address="": default address to use; operates the same way as the [account] job, only before the epm file is ran (EPM only)
-  -y, --amount="9999": default amount to use (EPM only)
-  -c, --chain="": chain to be used for testing
-  -l, --compiler="https://compilers.eris.industries:9090": <ip:port> of compiler which EPM should use (EPM only)
-  -p, --contracts-path="./contracts": path to the contracts EPM should use (EPM only)
-  -i, --dir="": root directory of app (will use $pwd by default)
-  -w, --fee="1234": default fee to use (EPM only)
-  -f, --file="./epm.yaml": path to package file which EPM should use (EPM only)
-  -g, --gas="1111111111": default gas to use; can be overridden for any single job (EPM only)
-  -o, --output="": results output type (EPM only)
-  -r, --rm[=true]: remove containers after stopping
-  -x, --rm-data[=true]: remove artifacts from host
-  -s, --services=[]: comma separated list of services to start
-  -e, --set=[]: default sets to use; operates the same way as the [set] jobs, only before the epm file is ran (and after default address (EPM only)
-  -u, --summary[=true]: output a table summarizing epm jobs (EPM only)
-  -k, --task="": gulp task to be ran (overrides package.json; forces --type manual)
-  -t, --type="mint": app type paradigm to be used for testing (overrides package.json)
+  -b, --abi-path string         path to the abi directory EPM should use when saving ABIs after the compile process (EPM only) (default "./abi")
+  -a, --address string          default address to use; operates the same way as the [account] job, only before the epm file is ran (EPM only)
+  -y, --amount string           default amount to use (EPM only) (default "9999")
+  -c, --chain string            chain to be used for testing
+  -l, --compiler string         <ip:port> of compiler which EPM should use (EPM only) (default "https://compilers.eris.industries:9090")
+  -p, --contracts-path string   path to the contracts EPM should use (EPM only) (default "./contracts")
+  -i, --dir string              root directory of app (will use $pwd by default)
+  -w, --fee string              default fee to use (EPM only) (default "1234")
+  -f, --file string             path to package file which EPM should use (EPM only) (default "./epm.yaml")
+  -g, --gas string              default gas to use; can be overridden for any single job (EPM only) (default "1111111111")
+  -o, --output string           results output type (EPM only)
+  -r, --rm                      remove containers after stopping (default true)
+  -x, --rm-data                 remove artifacts from host (default true)
+  -s, --services value          comma separated list of services to start (default [])
+  -e, --set value               default sets to use; operates the same way as the [set] jobs, only before the epm file is ran (and after default address (EPM only) (default [])
+  -u, --summary                 output a table summarizing epm jobs (EPM only) (default true)
+  -k, --task string             gulp task to be ran (overrides package.json; forces --type manual)
+  -t, --type string             app type paradigm to be used for testing (overrides package.json) (default "mint")
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

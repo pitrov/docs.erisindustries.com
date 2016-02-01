@@ -7,11 +7,11 @@ title:      "Documentation | eris:cli | eris chains new"
 
 # eris chains new
 
-Create a new blockhain.
+Create and start a new blockhain.
 
 ## Synopsis
 
-Create a new blockchain.
+Create and start a new blockchain.
 
 The creation process will both create a blockchain on the current machine
 as well as start running that chain.
@@ -24,17 +24,15 @@ utilize [eris chains update NAME -p] to update the blockchain appropriately
 for eris:db).
 
 Will use a default genesis.json from ~/.eris/chains/default/genesis.json
-unless a --genesis flag is passed.
+unless a --genesis or --dir flag is passed.
 
 Will use a default config.toml from ~/.eris/chains/default/config.toml
-unless the --options flag is passed.
+unless the --options or --dir flag is passed.
 
 Will use a default eris:db server config from ~/.eris/chains/default/server_conf.toml
-unless the --serverconf flag is passed.
+unless the --serverconf or --dir flag is passed.
 
-For more complex blockchain creation, you will want to "hand craft" a genesis.json
-see our tutorial for chain creation here:
-https://docs.erisindustries.com/tutorials/chainmaking/
+If you would like to create a genesis.json then please utilize [eris chains make]
 
 ```bash
 eris chains new NAME
@@ -43,29 +41,22 @@ eris chains new NAME
 ## Options
 
 ```
-      --N=1: make a new genesis.json with this many validators and create data containers for each
-  -a, --api[=true]: turn the chain on using erisdb's api
-  -c, --config="": main config file (config.toml) for the chain
-      --csv="": render a genesis.json from a csv file
-      --dir="": a directory whose contents should be copied into the chain's main dir
-  -e, --env=[]: multiple env vars can be passed using the KEY1=val1,KEY2=val2 syntax
-  -f, --force[=false]: overwrite data in  ~/.eris/data/chainName
-  -g, --genesis="": genesis.json file
-  -l, --links=[]: multiple containers can be linked can be passed using the KEY1:val1,KEY2:val2 syntax
-  -z, --logsrotate[=false]: turn on logsrotate as a dependency to handle long output
-      --options=[]: space separated <key>=<value> pairs to set in config.toml
-      --priv="": pass in a priv_validator.json file (dev-only!)
-  -p, --publish[=false]: publish random ports
-      --serverconf="": pass in a server_conf.toml file
+  -a, --api           turn the chain on using erisdb's api (default true)
+      --dir string    a directory whose contents should be copied into the chain's main dir
+  -e, --env value     multiple env vars can be passed using the KEY1=val1,KEY2=val2 syntax (default [])
+  -f, --force         overwrite data in  ~/.eris/data/chainName (default true)
+  -l, --links value   multiple containers can be linked can be passed using the KEY1:val1,KEY2:val2 syntax (default [])
+  -z, --logsrotate    turn on logsrotate as a dependency to handle long output (default true)
+  -p, --publish       publish random ports
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

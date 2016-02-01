@@ -20,22 +20,22 @@ eris services stop NAME
 ## Options
 
 ```
-  -a, --all[=false]: stop the primary service and its dependent services
-  -c, --chain="": specify a chain the service should also stop
-  -x, --data[=false]: remove data containers after stopping
-  -f, --force[=false]: kill the container instantly without waiting to exit
-  -r, --rm[=false]: remove containers after stopping
-  -t, --timeout=10: manually set the timeout; overridden by --force
-  -o, --vol[=false]: remove volumes
+  -a, --all            stop the primary service and its dependent services
+  -c, --chain string   specify a chain the service should also stop
+  -x, --data           remove data containers after stopping
+  -f, --force          kill the container instantly without waiting to exit
+  -r, --rm             remove containers after stopping
+  -t, --timeout uint   manually set the timeout; overridden by --force (default 10)
+  -o, --vol            remove volumes
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

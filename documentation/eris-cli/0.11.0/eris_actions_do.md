@@ -48,18 +48,18 @@ $ eris actions do dns register cutemarm 111.111.111.111 -- will populate $1 and 
 ## Options
 
 ```
-  -c, --chain="": run action against a particular chain
-  -q, --quiet[=false]: suppress action output
-  -s, --services=[]: comma separated list of services to start
+  -c, --chain string     run action against a particular chain
+  -q, --quiet            suppress action output
+  -s, --services value   comma separated list of services to start (default [])
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

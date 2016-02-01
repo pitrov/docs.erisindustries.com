@@ -22,17 +22,17 @@ eris files get HASH [FILE]
 ## Options
 
 ```
-      --csv="": specify a .csv with entries of format: hash,fileName
-      --dirname="": name of new directory to dump IPFS files from --csv
+      --csv string       specify a .csv with entries of format: hash,fileName
+      --dirname string   name of new directory to dump IPFS files from --csv
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

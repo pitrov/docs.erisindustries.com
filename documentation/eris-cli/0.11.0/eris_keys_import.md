@@ -24,17 +24,17 @@ eris keys import ADDR
 ## Options
 
 ```
-      --addr="": address of key to import
-      --src="/home/ubuntu/.eris/keys/data": source on host to import from. give full filepath to key
+      --addr string   address of key to import
+      --src string    source on host to import from. give full filepath to key (default "/home/ubuntu/.eris/keys/data")
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also
