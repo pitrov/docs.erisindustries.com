@@ -29,19 +29,19 @@ eris services ls
 ## Options
 
 ```
-  -e, --existing[=false]: list all the all current containers which exist for a service
-  -k, --known[=false]: list all the service definition files that exist
-  -q, --quiet[=false]: machine parsable output
-  -r, --running[=false]: list all the current containers which are running for a service
+  -e, --existing   list all the all current containers which exist for a service
+  -k, --known      list all the service definition files that exist
+  -q, --quiet      machine parsable output
+  -r, --running    list all the current containers which are running for a service
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also

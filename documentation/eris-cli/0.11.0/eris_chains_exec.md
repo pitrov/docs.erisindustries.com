@@ -21,19 +21,19 @@ eris chains exec NAME
 ## Options
 
 ```
-      --image="": Docker image
-  -i, --interactive[=false]: interactive shell
-  -l, --links=[]: multiple containers can be linked can be passed using the KEY1:val1,KEY2:val2 syntax
-  -p, --publish[=false]: publish random ports
+      --image string   Docker image
+  -i, --interactive    interactive shell
+  -l, --links value    multiple containers can be linked can be passed using the KEY1:val1,KEY2:val2 syntax (default [])
+  -p, --publish        publish random ports
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output
-  -m, --machine="eris": machine name for docker-machine that is running VM
-  -n, --num=1: container number
-  -v, --verbose[=false]: verbose output
+  -d, --debug            debug level output
+  -m, --machine string   machine name for docker-machine that is running VM (default "eris")
+  -n, --num int          container number (default 1)
+  -v, --verbose          verbose output
 ```
 
 ## See Also
