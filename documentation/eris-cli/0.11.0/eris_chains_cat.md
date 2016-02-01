@@ -7,16 +7,22 @@ title:      "Documentation | eris:cli | eris chains cat"
 
 # eris chains cat
 
-Display chains definition file.
+Display chain information.
 
 ## Synopsis
 
-Display chains definition file.
-
-Command will cat local chains definition file.
+Display chain information.
 
 ```bash
-eris chains cat NAME
+eris chains cat NAME [config|genesis]
+```
+
+## Examples
+
+```bash
+$ eris chains cat simplechain -- will display the chain definition file
+$ eris chains cat simplechain config -- will display the config.toml file from inside the container
+$ eris chains cat simplechain genesis -- will display the genesis.json file from the container
 ```
 
 ## Options inherited from parent commands

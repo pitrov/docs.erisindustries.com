@@ -23,9 +23,10 @@ eris chains rm NAME
 ## Options
 
 ```
-  -x, --data   remove data containers after stopping
-  -f, --file   remove chain definition file as well as chain container
-  -o, --vol    remove volumes (default true)
+  -x, --data    remove data containers after stopping
+      --file    remove chain definition file as well as chain container
+  -f, --force   kill the container instantly without waiting to exit
+  -o, --vol     remove volumes (default true)
 ```
 
 ## Options inherited from parent commands

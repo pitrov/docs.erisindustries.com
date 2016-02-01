@@ -18,9 +18,6 @@ chain (--running).
 If no known chains exist yet, create a new blockchain with: [eris chains new NAME]
 command.
 
-To install and fetch a blockchain from a chain definition file,
-use [eris chains install NAME] command.
-
 Services are handled using the [eris services] command.
 
 ```bash
