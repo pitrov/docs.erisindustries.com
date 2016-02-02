@@ -37,7 +37,7 @@ eris-keys verify
 
 ## See Also
 
-* [eris-keys](https://docs.erisindustries.com/documentation/eris-keys/0.11.1/eris-keys/)	 - Generate and manage keys for producing signatures
+* [eris-keys](https://docs.erisindustries.com/documentation/eris-keys/latest/eris-keys/)	 - Generate and manage keys for producing signatures
 
 ## Specifications
 

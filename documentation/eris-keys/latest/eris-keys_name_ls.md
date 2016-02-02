@@ -36,7 +36,7 @@ eris-keys name ls
 
 ## See Also
 
-* [eris-keys name](https://docs.erisindustries.com/documentation/eris-keys/0.11.1/eris-keys_name/)	 - Manage key names. `eris-keys name <name> <address>`
+* [eris-keys name](https://docs.erisindustries.com/documentation/eris-keys/latest/eris-keys_name/)	 - Manage key names. `eris-keys name <name> <address>`
 
 ## Specifications
 
