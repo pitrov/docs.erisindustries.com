@@ -177,6 +177,7 @@ The last file is the `addresses.csv` file which is another artifact of the chain
 Now. Let's remove all those directories that were created and see how we can use these csv files to create a new set genesis.json.
 
 ```bash
+cd ~/.eris/chains/toRemoveLater
 rm -rf ~/.eris/chains/toRemoveLater/toremovelater*
 ls ~/.eris/chains/toRemoveLater
 ```
@@ -184,7 +185,7 @@ ls ~/.eris/chains/toRemoveLater
 Now you should only have the csv files. So let's make a new genesis.json:
 
 ```bash
-eris chains make --known --validators=$HOME/.eris/chains/toRemoveLater/validators.csv --accounts=$HOME/.eris/chains/toRemoveLater/accounts.csv toRemoveLater
+eris chains make --known --validators validators.csv --accounts accounts.csv toRemoveLater
 ```
 
 That command will display a genesis.json which you can pipe into a file if you needed. Since we already had the keys on the current keys container it also remade all of the bundles for us. You can check them with the ls commands.
@@ -192,6 +193,7 @@ That command will display a genesis.json which you can pipe into a file if you n
 OK, enough playing around let's get serious!
 
 ```bash
+cd ~/.eris/chains
 rm -rf ~/.eris/chains/toRemoveLater
 ```
 
