@@ -42,7 +42,7 @@ eris chains
 
 ## Subcommands
 
-* [eris chains cat](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_cat/)	 - Display chains definition file.
+* [eris chains cat](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_cat/)	 - Display chain information.
 * [eris chains checkout](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_checkout/)	 - Check out a chain.
 * [eris chains current](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_current/)	 - The currently checked out chain.
 * [eris chains edit](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_edit/)	 - Edit a blockchain.
@@ -55,7 +55,6 @@ eris chains
 * [eris chains ls](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_ls/)	 - Lists everything chain related.
 * [eris chains make](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_make/)	 - Create keys and a genesis block for your chain.
 * [eris chains new](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_new/)	 - Create and start a new blockhain.
-* [eris chains plop](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_plop/)	 - Plop the genesis or config file
 * [eris chains ports](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_ports/)	 - Print port mappings.
 * [eris chains rename](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_rename/)	 - Rename a blockchain.
 * [eris chains rm](https://docs.erisindustries.com/documentation/eris-cli/0.11.0/eris_chains_rm/)	 - Remove an installed chain.

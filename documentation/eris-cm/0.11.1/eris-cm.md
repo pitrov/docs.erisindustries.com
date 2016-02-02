@@ -27,8 +27,9 @@ eris-cm
 ## Options
 
 ```
-  -d, --debug[=false]: debug level output; the most output available for eris-cm; if it is too chatty use verbose flag; default respects $ERIS_CHAINMAKER_DEBUG
-  -v, --verbose[=false]: verbose output; more output than no output flags; less output than debug level; default respects $ERIS_CHAINMAKER_VERBOSE
+  -d, --debug[=false]: debug level output; the most output available for eris-cm; if it is too chatty use verbose flag; default respects $ERIS_CHAINMANAGER_DEBUG
+  -o, --output[=true]: should eris-cm provide an output of its job; default respects $ERIS_CHAINMANAGER_OUTPUT
+  -v, --verbose[=false]: verbose output; more output than no output flags; less output than debug level; default respects $ERIS_CHAINMANAGER_VERBOSE
 ```
 
 ## Subcommands
@@ -37,4 +38,6 @@ eris-cm
 
 ## Specifications
 
+* [Account Types](https://docs.erisindustries.com/documentation/eris-cm/0.11.1/account_types/)
+* [Chain Types](https://docs.erisindustries.com/documentation/eris-cm/0.11.1/chain_types/)
 

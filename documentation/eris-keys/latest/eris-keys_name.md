@@ -36,12 +36,12 @@ eris-keys name
 
 ## Subcommands
 
-* [eris-keys name ls](https://docs.erisindustries.com/documentation/eris-keys/0.11.1/eris-keys_name_ls/)	 - list key names
-* [eris-keys name rm](https://docs.erisindustries.com/documentation/eris-keys/0.11.1/eris-keys_name_rm/)	 - rm key name
+* [eris-keys name ls](https://docs.erisindustries.com/documentation/eris-keys/latest/eris-keys_name_ls/)	 - list key names
+* [eris-keys name rm](https://docs.erisindustries.com/documentation/eris-keys/latest/eris-keys_name_rm/)	 - rm key name
 
 ## See Also
 
-* [eris-keys](https://docs.erisindustries.com/documentation/eris-keys/0.11.1/eris-keys/)	 - Generate and manage keys for producing signatures
+* [eris-keys](https://docs.erisindustries.com/documentation/eris-keys/latest/eris-keys/)	 - Generate and manage keys for producing signatures
 
 ## Specifications
 
