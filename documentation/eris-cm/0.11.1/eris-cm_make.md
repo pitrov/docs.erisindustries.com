@@ -30,19 +30,20 @@ $ eris-cm make myChain --csv /path/to/csv -- will use the csv file to make your 
 ## Options
 
 ```
-  -t, --account-types=[]: what number of account types should we use? find these in ~/.eris/chains/account_types; incompatible with and overrides chain-type; default respects $ERIS_CHAINMAKER_ACCOUNTTYPES
-  -c, --chain-type="": which chain type definition should we use? find these in ~/.eris/chains/chain_types; default respects $ERIS_CHAINMAKER_CHAINTYPE
-  -s, --csv-file="": csv file in the form `account-type,number,tokens,toBond,perms; default respects $ERIS_CHAINMAKER_CSVFILE
+  -t, --account-types=[]: what number of account types should we use? find these in ~/.eris/chains/account_types; incompatible with and overrides chain-type; default respects $ERIS_CHAINMANAGER_ACCOUNTTYPES
+  -c, --chain-type="": which chain type definition should we use? find these in ~/.eris/chains/chain_types; default respects $ERIS_CHAINMANAGER_CHAINTYPE
+  -s, --csv-file="": csv file in the form `account-type,number,tokens,toBond,perms; default respects $ERIS_CHAINMANAGER_CSVFILE
   -k, --keys-server="http://localhost:4767": keys server which should be used to generate keys; default respects $ERIS_KEYS_PATH
-  -r, --tar[=false]: instead of making directories in ~/.chains, make tarballs; incompatible with and overrides zip; default respects $ERIS_CHAINMAKER_TARBALLS
-  -z, --zip[=false]: instead of making directories in ~/.chains, make zip files; default respects $ERIS_CHAINMAKER_ZIPFILES
+  -r, --tar[=false]: instead of making directories in ~/.chains, make tarballs; incompatible with and overrides zip; default respects $ERIS_CHAINMANAGER_TARBALLS
+  -z, --zip[=false]: instead of making directories in ~/.chains, make zip files; default respects $ERIS_CHAINMANAGER_ZIPFILES
 ```
 
 ## Options inherited from parent commands
 
 ```
-  -d, --debug[=false]: debug level output; the most output available for eris-cm; if it is too chatty use verbose flag; default respects $ERIS_CHAINMAKER_DEBUG
-  -v, --verbose[=false]: verbose output; more output than no output flags; less output than debug level; default respects $ERIS_CHAINMAKER_VERBOSE
+  -d, --debug[=false]: debug level output; the most output available for eris-cm; if it is too chatty use verbose flag; default respects $ERIS_CHAINMANAGER_DEBUG
+  -o, --output[=true]: should eris-cm provide an output of its job; default respects $ERIS_CHAINMANAGER_OUTPUT
+  -v, --verbose[=false]: verbose output; more output than no output flags; less output than debug level; default respects $ERIS_CHAINMANAGER_VERBOSE
 ```
 
 ## See Also
