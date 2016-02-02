@@ -17,7 +17,7 @@ And you'll be set up. This tutorial, on the other hand is made to walk through a
 
 **Note** -- This tutorial is built for Eris v0.10. For other versions of this tutorial please see below:
 
-* [v0.11](../chainmaking/)
+* [v0.11](/tutorials/chainmaking/)
 
 # Introduction
 
@@ -47,7 +47,7 @@ For this tutorial, we have kept the bash scripting to a bare minimum, but should
 
 # Step 1. Make (or Get) the Public Addresses
 
-Everyone who interacts with an eris:db blockchain will need to have a properly formated keypair. To make a keypair we will use a combination of `eris-keys` and `mintkey`. Neither of these will need to be installed on your machine if you already have the eris-cli [installed](../getting-started).
+Everyone who interacts with an eris:db blockchain will need to have a properly formated keypair. To make a keypair we will use a combination of `eris-keys` and `mintkey`. Neither of these will need to be installed on your machine if you already have the eris-cli [installed](/tutorials/getting-started).
 
 For this tutorial, we will be using these tools from "inside" their containers.
 
@@ -289,5 +289,5 @@ eris chains new idiaminchain --genesis ~/.eris/blockchains/idiaminchain/genesis.
 
 Boom. You're all set with your custom built, permissioned, smart contract-ified, blockchain.
 
-This chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](../../advanced/chaindeploying).
+This chain won't run out of the box though. Why? Because you'll need to deploy the validators and connect them to one another. This will be the subject of [the next tutorial in this series](/tutorials/advanced/chaindeploying).
 
