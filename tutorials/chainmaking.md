@@ -9,9 +9,10 @@ It is not necessarily a simple matter to "make" a permissioned chain. With the `
 
 This tutorial is structured to walk individuals through parts of the eris developer tool kit while also showing readers how to make a simple permissioned blockchain.
 
-**Note** -- This tutorial is built for Eris versions >= 0.11. For other versions of this tutorial please see below:
+**Note** -- This tutorial is built for Eris versions `>= 0.11.1`. For other versions of this tutorial please see below:
 
-* [v0.10](../deprecated/chainmaking-v0.10/)
+* [v0.10](/tutorials/deprecated/chainmaking-v0.10/)
+* [v0.11.0](/tutorials/deprecated/chainmaking-v0.11.0/)
 
 # Introduction
 
@@ -25,13 +26,21 @@ We shall go through these in their logical order.
 
 ## Users Design
 
-To do this we need to, first, consider, *who* will get *what* permissions and *why*. It is outside the scope of this tutorial to outline all of the considerations which would come into play when thinking about creating a [permissioning system](/documentation/eris-db-permissions/), but for the purposes of this tutorial, we will craft the genesis block to use the following paradigm:
+To do this we need to, first, consider, *who* will get *what* permissions and *why*. It is outside the scope of this tutorial to outline all of the considerations which would come into play when thinking about creating a permissioning system, but for the purposes of this tutorial, we will craft the genesis block to use the following paradigm:
 
-* 3 Administrators (these would be developers who had **full** control over the chain) (one of which will be "running" the chain performing validation)
+* 3 Administrators (these would be developers who have **full** control over the chain) (one of which will be "running" the chain performing validation)
 
-If you would like to understand all of the permissions which an eris:db smart contract network is capable of providing, [please see our documentation on the subject](/documentation/eris-db-permissions/).
+If you would like to understand all of the permissions which an eris chains smart contract network is capable of providing, [please see our documentation on the subject](/documentation/eris-db-permissions/).
 
-To see more about how we typically design chains for proofs of concept you can see [this deck](http://www.slideshare.net/CaseyKuhlman/eris-industries-typical-account-types).
+We use an abstraction to simplify the chain making process called [Account Types](/documentation/eris-cm/latest/account_types/). This abstraction is just that, an abstraction to help users quickly get up to speed. In order to reduce the complexity of dealing with different types of accounts typically built on a chain, we use the idea of "account types". Account types are not restrictive in the sense that they are not the "only" types of accounts you can make with eris chains.
+
+Account types are simply bundles of permissions no more no less. Using the eris tooling you can also create your own account types with your own bundles of permissions which will be helpful.
+
+Eris ships with a chain manager tool we typically run from a docker container. This tool helps to simplify the chain making process. To learn a bit more about this tool type:
+
+```
+eris chains make -h
+```
 
 ## A Note Regarding This Tutorial
 
@@ -39,9 +48,9 @@ The `eris` toolchain is designed to be very unix like, and as such we are able t
 
 For this tutorial, we have kept the bash scripting to a bare minimum, but should you have any questions regarding any of the bash scripting, please let us know on our [Support Forums](https://support.erisindustries.com) and we will endeavor to make more clear what any commands that are unclear are actually doing.
 
-# Step 1. Make (or Get) the Public Keys
+# Steps 1. Make (or Get) the Public Keys
 
-Everyone who interacts with an eris:db blockchain will need to have a properly formated keypair. To make a keypair we will use `eris keys`.
+Everyone who interacts with an eris chains blockchain will need to have a properly formated keypair. To make a keypair we will use `eris keys`.
 
 `eris keys` usually operates as a signing daemon, but when we use eris keys to *create* key pairs what we are doing effectively is writing files. As is usual with the eris tooling, `eris keys` is opinionated and will work by default against the following directory: `~/.eris/keys/data`. When a key pair is created, that key pair will get written into that directory.
 
@@ -67,7 +76,7 @@ eris services exec keys "eris-keys -h"
 
 What this is doing is running the `eris-keys -h` "inside" the keys containers. Technically it is not inside the keys container, but inside a separate container based on the keys image with the data container mounted, but if this sentence doesn't make sense to you then feel free to ignore.
 
-But instead of dealing with the `eris-keys` service directly, we are going to use `eris keys` from the eris cli tool. To see the wrappers which the eris cli tooling provides around the `eris-keys` daemon, please type:
+But instead of dealing with the `eris-keys` service directly, we mostly use `eris keys` from the eris cli tool. The `eris keys` commands are basically wrappers around the `eris-keys` commands which are ran inside containers. To see the wrappers which the eris cli tooling provides around the `eris-keys` daemon, please type:
 
 ```bash
 eris keys -h
@@ -77,155 +86,141 @@ Now it is time to generate some keys!
 
 For the purposes of this tutorial **only** we will also create all of the necesary keys for all of the "users" of the chain and we will do so without passwords. Again, this is for demonstration purposes only, for a production system you will not do what we're about to do.
 
-
 ```bash
-chain_dir=~/.eris/chains/simplechain
-mkdir $chain_dir
-eris keys gen > $chain_dir/addr1
-eris keys gen > $chain_dir/addr2
-eris keys gen > $chain_dir/addr3
+eris keys gen
 ```
 
-This will create a three keys. Let's check that the addresses got saved into `$chain_dir`.
-
-```bash
-cat $chain_dir/addr1
-```
-
-The output here should look something like this:
+This will create one key for you. The output here should look something like this:
 
 ```irc
 49CA2456F65B524BDEF50217AE539B8E10B37421
 ```
 
-You will want to do the same for `addr2` and `addr3` to make sure they also are all sorted.
-
-To see the keys which eris-keys generated *inside* the container type:
+Now. Let's export that key onto our host's drive so that we can back it up and keep it safe in the future.
 
 ```bash
-eris actions do keys list
+eris keys export 49CA2456F65B524BDEF50217AE539B8E10B37421
 ```
 
-`eris actions` are simplified bash scripts which operate similar to how continuous integration yamls typically operate. In the default actions we provide a handy action saved until `keys_list.toml` which can be "ran" with the above command. This action will display all the keys available to your eris-keys signing container.
+Note, that in the above command we used the output from the `eris keys gen` command with the `eris keys export`. You will want to replace the argument in the `export` command with whatever the address for the public key you created is.
 
-Now is a good time to export these keys to your host's hard drive, meaning to copy them from the container onto your "normal" hard drive so that if you accidentally remove your keys' data container that the keys will be backed up somewhere. To export your keys please see our [keys tutorial](../tool-specific/keyexporting/).
-
-There are two more things we will need to do before we move on.
-
-First, we need to have the public key for the keypair we will be using for the validator. We will be using `addr1` for the validator node, but you could replace this with whatever you wanted. This is fairly easy:
+To see the keys which eris-keys generated both *inside* the container type and available on your host machine type:
 
 ```bash
-eris keys pub $(cat $chain_dir/addr1) > $chain_dir/pub_key
+eris keys ls
 ```
 
-Make sure this is OK:
+Before we move on to actual chainmaking, if you would like to explore more of the eris keys functionality please see our [keys tutorial](/tutorials/tool-specific/keyexporting/).
 
-```bash
-cat $chain_dir/pub_key
-```
-
-The output should look something like this:
-
-```bash
-A03590C401A26947971F9E7B18C006B8C1AE4319089AB072BC9E46D4B9723714
-```
-
-Obviously, because you'll have different keys you'll have a different string there.
-
-Finally, we will want to export the priv_validator.json which eris:db will use for the validator. Again, we will be using `addr1` for the validator nodes but you can replace that with whatever you like.
-
-```bash
-eris keys convert $(cat $chain_dir/addr1) > $chain_dir/priv_validator.json
-```
-
-Check the output with:
-
-```bash
-cat $chain_dir/priv_validator.json
-```
-
-The output should look something like this:
-
-```json
-{"address":"49CA2456F65B524BDEF50217AE539B8E10B37421","pub_key":[1,"A03590C401A26947971F9E7B18C006B8C1AE4319089AB072BC9E46D4B9723714"],"priv_key":[1,"6EED5D0A9B62AB305250A7F6B821E9D2D937E932E667366E9C722A01B8D07FC1A03590C401A26947971F9E7B18C006B8C1AE4319089AB072BC9E46D4B9723714"],"last_height":0,"last_round":0,"last_step":0}
-```
-
-Now, we're all ready to go.
+Now, we're all ready to make a chain.
 
 # Step 2. Make the genesis.json
 
-When you ran `eris init` during the [getting started](../getting-started/) step, eris created a folder called `~/.eris/chains/default` on your host's hard drive. This is to hold the default files for using eris chains. We will now use a couple of those files as our default files so we will want to copy them into our current `$chain_dir`.
+Before we begin, we should quickly talk through the various files which are needed to run an eris chain. When you ran `eris init` during the [getting started](/tutorials/getting-started/) step, eris created a folder called `~/.eris/chains/default` on your host's hard drive. This is to hold the default files for using eris chains. There are a few primary files used by eris chains:
+
+1. the config file for the tendermint consensus engine called `config.toml`
+2. the chain definition file for eris chains called `chainName.toml` (where `chainName` is the name of your chain) (these are located in your ~/.eris/chains directory)
+3. the `genesis.json` which tells eris chains how it should configure itself at the beginning of the chain (or, its genesis state)
+4. the config file for the eris:db application engine called `server_conf.toml`
+5. the keypair which the tendermit consensus engine will use to sign blocks, etc. called the `priv_validator.json`
+
+In general you do not really need to mess with `server_conf.toml` unless you know what you're doing and need to move away from the default settings. Similarly, you should not need to edit `chainName.toml` unless you have a deeper understanding of docker or specific needs around how your chain will run.
+
+The three files you *may* need to edit are the `genesis.json` and `priv_validator.json` (both of which we're about to get "made" for us) and the `config.toml`.
+
+The `config.toml` file is generally edited to fill in the `seeds` and `moniker` fields. The `seeds` field (which is a misnomer because it accepts a string rather than an array, and as such should have been named `seed`) is used to point your consensus engine to the peer server it should connect into. For more information on how to deal with this please see our [advanced chain making tutuorial](/tutorials/advanced/chainmaking/). The `moniker` field is "your node's name on the network". It should be unique on the given network.
+
+The `genesis.json` is the primary file which tells eris chains how to instantiate a particular blockchain. It provides the "genesis" state of the blockchain including the accounts, permissions, and validators which will be used at the beginning of the chain. These can always be updated over the life of the chain of course, but the genesis.json provides the starting point. Luckily `eris` takes care of making this for you and there is very little which should be required for you in way of editing (unless you know what you're doing of course, in which case why are you reading this ;-) ).
+
+With all that said, we're ready to make a chain. First let us make a "fake" chain just to get a tour of the chain maker tool. Once we go through that process then we will make our "real" chain which we will use for the rest of this tutorial series. Let's see what eris chains make can do for us.
 
 ```bash
-cp ~/.eris/chains/default/config.toml $chain_dir/config.toml
-cp ~/.eris/chains/default/server_conf.toml $chain_dir/server_conf.toml
-cp ~/.eris/chains/default/genesis.json $chain_dir/genesis.json
+eris chains make -h
 ```
 
-These three files are (1) the config file for the tendermint consensus engine, (2) the config file for eris:db, and (3) the genesis.json which we will shortly edit.
+That will give you an overview of the chains maker tool. Now we are ready.
 
-The genesis.json is the primary file which tells eris:db how to instantiate a particular blockchain. It provides the "genesis" state of the blockchain including the accounts, permissions, and validators which will be used at the beginning of the chain. These can always be updated over the life of the chain of course, but the genesis.json provides the starting point.
-
-The genesis.json now needs to be edited. We'll edit this in three steps within the tutorial.
-
-First, change the `chain_id` which should be the first field to `simple_chain`.
-
-```json
-{
-  "chain_id": "simple_chain",
+```bash
+eris chains make toRemoveLater
 ```
 
-Second, we'll add in the addresses we generated and saved to addr1, addr2, and addr3 as accounts with some tokens on the chain in the accounts array of the genesis.json.
+This will drop you into an interactive, command line wizard. Follow the text and the prompts to chain making bliss. Since we're going to throw this chain away later you can just press "Enter" at each of the prompts or you can change the variables and get a feel for the wizard.
 
-```json
-"accounts": [
-  {
-    "address": "49CA2456F65B524BDEF50217AE539B8E10B37421",
-    "amount": 690000000000
-  },
-  {
-    "address": "E6191F8DEF96F727BB5D58CDB9021A2F1EFB32FB",
-    "amount": 565000000000
-  },
-  {
-    "address": "1FDD813D68F73BBABFEA6EF6FB83118441CFC347",
-    "amount": 525000000000
-  }
-],
+Once the wizard exits let's take a look at what was created:
+
+```bash
+ls ~/.eris/chains/toRemoveLater
 ```
 
-In the default genesis.json there are usually five accounts including a few dummy accounts we use in our test suite for eris, you can remove those and just have the three addresses you generated as the three accounts. You can give them whatever amount of tokens you want them to have (including 0).
+You should see three `*.csv` files and a bunch of directories. Let's look in one of those directories:
 
-Finally, we'll add in the validator field of the genesis.json
-
-```json
-"validators": [
-  {
-    "pub_key": [
-      1,
-      "A03590C401A26947971F9E7B18C006B8C1AE4319089AB072BC9E46D4B9723714"
-    ],
-    "amount": 5000000000,
-    "unbond_to": [
-      {
-        "address": "49CA2456F65B524BDEF50217AE539B8E10B37421",
-        "amount": 5000000000
-      }
-    ]
-  }
-]
+```bash
+ls ~/.eris/chains/toRemoveLater/toremovelater_full_000
 ```
 
-Note, you'll want to replace the public key with the right string and the address with the correct unbonding address. You can change the amount bonded if you want, but there is usually no need to do that. If your default genesis.json has more validators than just the one, you can safely delete them from *this* genesis.json that you are currently editing them as we will only be using one validator for this chain.
+In that directory you should see a genesis.json and a priv_validator.json. The marmots call these a "bundle" as generally they are what is needed to get a chain going (in addition to a config.toml which with the proper seed and moniker filled out).
 
-Now we are all set with our genesis.json. You may want to use a [JSON linter](http://jsonlint.com/) to make sure that the JSON is properly formatted, else eris:db will be unable to read it and you may have errors if, for example, you missed a comma where it should have been or had one where it shouldn't have been.
+What about those `csv` files? There should be three of them. Let's take a look:
+
+```bash
+cat ~/.eris/chains/toRemoveLater/accounts.csv
+cat ~/.eris/chains/toRemoveLater/validators.csv
+cat ~/.eris/chains/toRemoveLater/addresses.csv
+```
+
+The first two files can be used later to create a new genesis.json if the actual json gets lost. One of the things about this tooling is that it **creates** the keys for you. That is helpful in some circumstances. In other circumstances this is not helpful.
+
+In general, we recommend that if you are making a chain for a consortium that you have your consortium members **make their own keys** and then send the public key to you. Once you've assembled the keys then you will create an accounts.csv and validators.csv files in this format and then run `eris chains make` with the `--known` flag. More information on complex chain making is included in our [advanced chain making tutorial](/tutorials/advanced/chainmaking/).
+
+The last file is the `addresses.csv` file which is another artifact of the chain making process. It simply has the addresses and the "names" of the nodes. We find it useful when scripting out complex interactions and it is simply a reference file along the lines of `addr=$(cat $chain_dir/addresses.csv | grep $name | cut -d ',' -f 1)`.
+
+Now. Let's remove all those directories that were created and see how we can use these csv files to create a new set genesis.json.
+
+```bash
+rm -rf ~/.eris/chains/toRemoveLater/toremovelater*
+ls ~/.eris/chains/toRemoveLater
+```
+
+Now you should only have the csv files. So let's make a new genesis.json:
+
+```bash
+eris chains make --known --validators=$HOME/.eris/chains/toRemoveLater/validators.csv --accounts=$HOME/.eris/chains/toRemoveLater/accounts.csv toRemoveLater
+```
+
+That command will display a genesis.json which you can pipe into a file if you needed. Since we already had the keys on the current keys container it also remade all of the bundles for us. You can check them with the ls commands.
+
+OK, enough playing around let's get serious!
+
+```bash
+rm -rf ~/.eris/chains/toRemoveLater
+```
+
+That command will remove all of the stuff we've been working on. Per the above and after our review of the account types, we know we want to have two Root account types and one Full account type for our new chain. So let's get to business.
+
+```bash
+chain_dir=$HOME/.eris/chains/simplechain
+chain_dir_this=$chain_dir/simplechain_full_000
+```
+
+That will just create a few variables we'll be using in the future.
+
+```bash
+eris chains make --account-types=Root:2,Full:1 simplechain
+```
+
+That's it! Let's double check the files to make sure we are squared away.
+
+```bash
+ls $chain_dir
+ls $chain_dir_this
+```
 
 # Step 3. Instantiate the Blockchain
 
-With the genesis.json filled out we're ready to rock and roll.
+With all the files prepared we're ready to rock and roll.
 
 ```bash
-eris chains new simplechain --dir $chain_dir
+eris chains new simplechain --dir $chain_dir_this
 ```
 
 Check that the chain is running with:
@@ -250,8 +245,8 @@ Boom. You're all set with your custom built, permissioned, smart contract-ified,
 
 # Where to next?
 
-**Next, you'll want to [deploy some contracts](../contractsdeploying/)!**
+**Next, you'll want to [deploy some contracts](/tutorials/contractsdeploying/)!**
 
-Or, perhaps you'll want to go [make a more advanced permission chain](../advanced/chainmaking/).
+Or, perhaps you'll want to go [make a more advanced permission chain](/tutorials/advanced/chainmaking/).
 
 

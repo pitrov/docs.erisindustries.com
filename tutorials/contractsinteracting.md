@@ -7,7 +7,7 @@ title: "Tutorials | Interacting with Contracts Using eris-contracts"
 
 # Dependencies
 
-This tutorial is a continuation of our [contracts deploying tutorial](../contractsdeploying). If you have not completed that tutorial, please do so before working with this tutorial. Once we have some contracts deployed to our chain, we will want to interact with them. Indeed, that is the entire point.
+This tutorial is a continuation of our [contracts deploying tutorial](/tutorials/contractsdeploying). If you have not completed that tutorial, please do so before working with this tutorial. Once we have some contracts deployed to our chain, we will want to interact with them. Indeed, that is the entire point.
 
 So let us expand the very simple idiscontract out into a very simple smart contract backed appliction. To do this, we will be using node.js. To use this tutorial you will need a relatively recent version of [node](https://nodejs.org/en/download/package-manager/) installed on your box.
 
@@ -52,7 +52,7 @@ Currently we are in the process of refactoring eris-db.js and eris-contracts.js 
 eris keys convert ADDR
 ```
 
-Where `ADDR` in the above is the key you want to use to interact with the contracts. If you followed the [simple chainmaking tutorial](../chainmaking) then you'll want to use the validator address you created on the chain for simplicity's sake. That command will display a json which looks something like this:
+Where `ADDR` in the above is the key you want to use to interact with the contracts. If you followed the [simple chainmaking tutorial](/tutorials/chainmaking) then you'll want to use the validator address you created on the chain for simplicity's sake. That command will display a json which looks something like this:
 
 ```json
 {"address":"1FDD813D68F73BBABFEA6EF6FB83118441CFC347","pub_key":[1,"993C19257009531BA79D481D764553703DEE82B11F7C514DD0F99BDED5E3CAFF"],"priv_key":[1,"E6D862EF63AC414AF40C6AAD9D73A1620747CFF29021678B704231C12C18627F993C19257009531BA79D481D764553703DEE82B11F7C514DD0F99BDED5E3CAFF"],"last_height":0,"last_round":0,"last_step":0}
@@ -152,7 +152,7 @@ The beginning of the script, which gets everything sets up includes this line:
 var contractData = require('./epm.json');
 ```
 
-But in the [previous tutorial](../contractsdeploying/) we only worked with an `epm.yaml`, not an `epm.json`. So what is the `epm.json`? That file is an artifact of the `eris contracts deploy` / `eris contracts test` process. If you look at the `epm.json` file it should look something like this:
+But in the [previous tutorial](/tutorials/contractsdeploying/) we only worked with an `epm.yaml`, not an `epm.json`. So what is the `epm.json`? That file is an artifact of the `eris pkgs do` process. If you look at the `epm.json` file it should look something like this:
 
 ```javascript
 {
@@ -169,7 +169,7 @@ The json file is the result of each of the jobs. What we really need from this f
 
 **Troubleshooting**
 
-If you do not have an `epm.json` file that means there was a problem with the contracts deploy. Please resolve that problem by carefully following the [previous tutorial](../contractsdeploying/) before continuing with this tutorial.
+If you do not have an `epm.json` file that means there was a problem with the contracts deploy. Please resolve that problem by carefully following the [previous tutorial](/tutorials/contractsdeploying/) before continuing with this tutorial.
 
 **End Troubleshooting**
 
@@ -188,10 +188,10 @@ node app.js
 If you just started your chain you may not have any contracts on it. To solve this, run:
 
 ```
-eris contracts deploy --chain $chainname --address $addr
+eris pkgs do --chain $chainname --address $addr
 ```
 
-Where `$chainname` is the name of the chain you want to use and `$addr` is the address of the account you would like to use. [See the contracts deploying tutorial for more information](../contractsdeploying/).
+Where `$chainname` is the name of the chain you want to use and `$addr` is the address of the account you would like to use. [See the contracts deploying tutorial for more information](/tutorials/contractsdeploying/).
 
 When you do the deploy command you may get an error which looks like this:
 
@@ -240,10 +240,10 @@ Where `$chainname` in the above sequence is the name of the chain you are using.
 
 **End Troubleshooting**
 
-The first time you run the script it should tell you that the value is `5` or whatever value you entered into the `setStorageBase` job of the epm.yaml from the [previous tutorial](../contractsdeploying). Then it will prompt you to change the value. The second time you run the script it should tell you that the value is whatever you entered the first time and so on.
+The first time you run the script it should tell you that the value is `5` or whatever value you entered into the `setStorageBase` job of the epm.yaml from the [previous tutorial](/tutorials/contractsdeploying). Then it will prompt you to change the value. The second time you run the script it should tell you that the value is whatever you entered the first time and so on.
 
 Congratulations, you've just made your very own smart contract backed application on a permissioned blockchain!
 
 # Where to next?
 
-**Next you'll want to see how to a make a [longer running application](../servicesmaking/).**
+**Next you'll want to see how to a make a [longer running application](/tutorials/servicesmaking/).**

@@ -23,7 +23,7 @@ Then see our [quick start guide](getting-started/) to get you more like this mar
 
 ## Step 2 -- Roll your own Blockchain in seconds
 
-[Roll Your Own eris:db Blockchain](chainmaking/)
+[Roll Your Own Chain](chainmaking/)
 
 ## Step 3 -- Build (and run) your distributed application
 

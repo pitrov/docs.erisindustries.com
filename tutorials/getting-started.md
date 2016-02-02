@@ -20,7 +20,7 @@ There are three steps need to get moving with Eris:
 * Docker is a run anywhere container solution which makes development, deployment, testing, and running of distributed applications a breeze.
 * Go is a programming language we use to build our software.
 
-We have binary releases for `eris` available at this time via our [Github Releases](https://github.com/eris-ltd/eris-cli/releases). For those on Linux we also have (beta) `apt-get`  and (experimental) `yum` support.
+We have binary releases for `eris` available at this time via our [Github Releases](https://github.com/eris-ltd/eris-cli/releases). For those on Linux we also have (beta) `apt-get` and (experimental) `yum` support.
 
 **Note** if you install the binary of `eris` you **do not** need to install `go`; however, you **do** need to install Docker.
 
@@ -64,7 +64,7 @@ By default the Docker Toolbox will use VirtualBox to create a very minimal Linux
 
 `eris` has been built to be able to connect into the Docker daemon running within a VirtualBox minimal Linux virtual machine by default and without any effort on your part (other than installing the Docker Toolbox).
 
-If virtualbox gives you trouble, then use [docker machine's plugins](https://github.com/docker/machine/blob/master/docs/AVAILABLE_DRIVER_PLUGINS.md) and create your `eris` machine [in the cloud](../advanced/chaindeploying/).
+If virtualbox gives you trouble, then use [docker machine's plugins](https://github.com/docker/machine/blob/master/docs/AVAILABLE_DRIVER_PLUGINS.md) and create your `eris` machine [in the cloud](/tutorials/advanced/chaindeploying/).
 
 #### OSX Only
 
@@ -83,10 +83,6 @@ If you're a chocolatey user then:
 choco install virtualbox docker docker-machine
 ```
 
-#### Windows Only (applies to `eris` < 0.11)
-
-While this paragraph has *nothing* to do with Docker, it is important to note that if you are using Windows you will also need to make sure that `tar` is installed on your platform. Please see [here](http://gnuwin32.sourceforge.net/packages/gtar.htm) for **one** way to install `tar` on windows. If that does not work for your platform please see Google.
-
 #### All Platforms
 
 Make sure that everything is setup with Docker by running:
@@ -99,7 +95,7 @@ docker version
 
 At the current time, `eris` requires `go` >= {{ site.data.coding["golang"].minimum }}. Go is not needed if you install `eris` via a binary installation (details below).
 
-An easy way to install go (for OSX and Linux) is via Travis-CI's [Gimme](https://github.com/travis-ci/gimme) tool. First you install gimme; then `eval $(gimme {{ site.data.coding["os"].authoritative }})` and you'll be all set up.
+An easy way to install go (for OSX and Linux) is via Travis-CI's [Gimme](https://github.com/travis-ci/gimme) tool. First you install gimme; then `eval $(gimme {{ site.data.coding["golang"].authoritative }})` and you'll be all set up.
 
 Otherwise, please see the documentation in the above link to install go.
 
@@ -190,7 +186,7 @@ eris update --branch develop
 
 ## Troubleshooting Your Install
 
-If you have any errors which arise during the installation process, please see our [trouble shooting page](../install-troubleshooting/) or visit our [support forums](https://support.erisindustries.com)
+If you have any errors which arise during the installation process, please see our [trouble shooting page](/tutorials/install-troubleshooting/) or visit our [support forums](https://support.erisindustries.com)
 
 # Step 2: Roll Your Own Blockchain in Seconds
 
@@ -238,7 +234,7 @@ Now you're ready to build and run your distributed application!
 
 There are a lot of ways you can go from here!
 
-**To continue this getting started tour please see our next tutorial in this series on [Making Your Own Permissioned Chain](../chainmaking).**
+**To continue this getting started tour please see our next tutorial in this series on [Making Your Own Permissioned Chain](/tutorials/chainmaking).**
 
 Please go here if you are interested in [learning about smart contracts](/explainers/smart_contracts/).
 

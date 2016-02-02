@@ -1,7 +1,7 @@
 ---
 
 layout: docs
-title: "Tutorials | Deploying your Smart Contracts to a Chain"
+title: "Tutorials | Deploying your Smart Contracts to a Chain - Eris v0.11"
 
 ---
 
@@ -9,21 +9,19 @@ title: "Tutorials | Deploying your Smart Contracts to a Chain"
 
 For this tutorial, we are going to use a very simple `get` and `set` contract. All this contract does is get and sets a value.
 
+**Note** -- This tutorial is built for Eris versions `>= 0.11.1`. For other versions of this tutorial please see below:
+
+* [v0.11.0](/tutorials/deprecated/contractsdeploying-v0.11.0/)
+
 ## Dependencies
 
-Welcome! This tutorial assumes that you have a chain ready to deploy smart contracts to. Should you not have any idea what smart contracts are, please see our [explainer here](../../explainers/smart_contracts). If you do not have a chain ready to work on, please see our [chain making tutorial](../chainmaking).
+Welcome! This tutorial assumes that you have a chain ready to deploy smart contracts to. Should you not have any idea what smart contracts are, please see our [explainer here](/explainers/smart_contracts). If you do not have a chain ready to work on, please see our [chain making tutorial](/tutorials/chainmaking).
 
 ## Contracts Strategy
 
 In general, there are two contracts paradigms we are seeing develop within the smart contract community.
 
-The first paradigm is what we are calling backend apps. These applications are not structured necessarily to drive web-type applications and if they do, those web-type applications would have numerous layers and systems in between the contracts and the interface a user is looking at. In an enterprise scenario, this is likely to be the most common means of deploying smart contract systems which merge with and are harmonized to enterprise requirements. Of course there are many other non-enterprise settings in which such a system would also make sense. Many of these applications will be written in javascript, but need not necessarily be.
-
-Backend apps can be structured as a series of microservice APIs piped into a command bot who talks to a smart contract network (but more on that later!).
-
-The second paradigm is what we are calling javascript apps. These applications are specifically structured to drive web-type applications which look and feel like typical web applications other than at their backend is a smart contract network along with, perhaps, a distributed file storage system such as [IPFS](https://ipfs.io) or any other similar system.
-
-In the eris platform, we are capable of dealing with both of these strategies. This tutorial is only going to cover backend applications.
+We are going to use a very simple `get` | `set` contract which sets a variable and gets that same variable. It is about the easiest interactive contract one can imagine and as such we will use that for showing how to work with the eris platform.
 
 ## Overview of Tutorial
 
@@ -58,9 +56,7 @@ contract IdisContractsFTW {
 }
 ```
 
-What does this contract do? Well, it isn't very interesting we know.
-
-It merely `gets` and `sets` a value which is an unsigned integer type. Obviously, Idi wasn't the smartest man alive.
+What does this contract do? Well, it isn't very interesting we know. It merely `gets` and `sets` a value which is an unsigned integer type.
 
 # Fixup your epm.yaml
 
@@ -145,10 +141,19 @@ Both the `key` and the `val` (which in other testing frameworks are the `given` 
 Now, we are ready to deploy this world changing contract. Make sure you are in the `~/.eris/apps/idi` folder, or wherever you saved your epm.yaml. Note that this is a very common pattern in simple contract testing and development; namely to (1) deploy a contract; (2) send it some transactions (or `call`s); (3) query some results from the contract (or `query-contract`s); and (4) assert a result. As you get moving with contract development you will likely find yourself doing this a lot.
 
 ```bash
-eris contracts deploy --chain simplechain --address $(cat $chain_dir/addr1)
+addr=$(cat $chain_dir/addresses.csv | grep simplechain_full_000 | cut -d ',' -f 1)
+echo $addr
 ```
 
-You *should* be able to use any of the addresses you generated during the chainmaking tutorial since they all have the same permission levels on the chain (which, if you followed the simple tutorial are basically all public). If you are using this tutorial outside of the tutorial sequence then you can just give it the address that you'd like to use to sign transactions instead of the `$(cat $chain_dir/addr)` bash expansion.
+That will make sure we have available the address we would like to use to deploy the contracts. Now we're ready. If the above does not output an address then check your $chain_dir variable and also check that the `simplechain_full_000` variable exists in the addresses.csv.
+
+```bash
+eris pkgs do --chain simplechain --address $addr
+```
+
+You *should* be able to use any of the addresses you generated during the chainmaking tutorial since they all have the same permission levels on the chain (which, if you followed the simple tutorial are basically all public). If you are using this tutorial outside of the tutorial sequence then you can just give it the address that you'd like to use to sign transactions instead of the `grep simplechain_full_000` bash expansion.
+
+(For those that do not know what is happening in that bash line: `cat` is used to "print the file" and "pipe" it into the second command; `grep` is a finder tool which will find the line which has the right name we want to use; the `cut` says split the line at the `,` and give me the first field).
 
 Note that eris:package_manager can override the account which is used in any single job and/or, eris:package_manager can set a default `account` job which will establish a default account within the yaml. We find setting the default account within the yaml to usually be counter-productive because others will not be able to easily use your yaml unless they have the same keys in their `eris-keys` (which we **never** recommend). For more on using accounts [please see the jobs specification](/documentation/eris-pm/latest/jobs_specification/).
 
@@ -180,10 +185,10 @@ What is this telling us? Well, it is telling us that it doesn't have the key in 
 To see what keys are currently on your key signing daemon do this:
 
 ```
-eris actions do keys list
+eris keys ls
 ```
 
-If you do not have any keys then please take the time to [make some keys](../tool-specific/keyexporting). After you find a key which you currently have, then add that as the `address` flag to the `eris contracts deploy` command.
+If you do not have any keys then please take the time to [make some keys](/tutorials/tool-specific/keyexporting). After you find a key which you currently have, then add that as the `address` flag to the `eris pkgs do` command.
 
 <hr />
 
@@ -199,12 +204,12 @@ This means that the account `03E3FAC131CC111D78B569CEC45FA42CE5DA8AD8` has not b
 To "see" your genesis.json then do this:
 
 ```
-eris chains plop simplechain genesis
+eris chains cat simplechain genesis
 ```
 
 <hr />
 
-If the account you are trying to use has not been registered in the genesis.json (or, latterly, has not been given the appropriate [permissions](../../documentation/eris-db-permissions/) via permission transactions) and been given the appropriate permissions, then it will not be able to perform the actions it needs to in order to deploy and test the contract. The easiest thing to do at this point is to [update your genesis.json](../tool-specific/genesisupdating/).
+If the account you are trying to use has not been registered in the genesis.json (or, latterly, has not been given the appropriate [permissions](/documentation/eris-db-permissions/) via permission transactions) and been given the appropriate permissions, then it will not be able to perform the actions it needs to in order to deploy and test the contract. The easiest thing to do at this point is to [update your genesis.json](/tutorials/tool-specific/genesisupdating/).
 
 Once you have the following sorted:
 
@@ -214,10 +219,10 @@ Once you have the following sorted:
 Then you'll be ready to:
 
 ```bash
-eris contracts deploy --chain simplechain --address $addr
+eris pkgs do --chain simplechain --address ADDR
 ```
 
-Where `$addr` in the above command is the address you want to use.
+Where `ADDR` in the above command is the address you want to use.
 
 <hr />
 
@@ -230,10 +235,10 @@ open /home/eris/.eris/apps/idi/abi: is a directory
 Container eris_interactive_eris_service_idi_tmp_deploy_1 exited with status 1
 ```
 
-That usually, but not always means that there is a problem with your chain. To debug this follow this sequence:
+That is not a very helpful error, we realize. Usually, but not always means that there is a problem with your chain. To debug this follow this sequence:
 
 * Check that the account you are using to deply the contracts is in the genesis.json on your host (`cat ~/.eris/chains/simplechain/genesis.json`).
-* Check that the genesis.json in the chain's data container matches the one in your `chain_dir` (`eris chains plop simplechain genesis`).
+* Check that the genesis.json in the chain's data container matches the one in your `chain_dir` (`eris chains cat simplechain genesis`).
 
 If these are not the same, then you will need to reset your chain:
 
@@ -249,7 +254,7 @@ If those are the same, the next thing to check is that the priv_validators are f
 
 If they're different reset the chain (see above for instructions).
 
-* Finally, check that the key in the priv_validator.json is registered in the genesis.json (the same address should be the single validator and also the key in the priv_validator.json). If the priv_validator.json is not in the genesis.json then make sure it is added to the accounts and the validators sections. See the [chain making](../chainmaking/) tutorial for instructions.
+* Finally, check that the key in the priv_validator.json is registered in the genesis.json (the same address should be the single validator and also the key in the priv_validator.json). If the priv_validator.json is not in the genesis.json then make sure it is added to the accounts and the validators sections. See the [chain making](/tutorials/chainmaking/) tutorial for instructions.
 
 When that is done, reset the chain and you should be good to go.
 
@@ -258,15 +263,13 @@ When that is done, reset the chain and you should be good to go.
 Since we have a deployed contract on a running chain, please do take a look at the available options for eris contracts with:
 
 ```bash
-eris contracts deploy -h
+eris pkgs do -h
 ```
 
 That's it! :-)
 
 # Where to next?
 
-**Next you'll want to interact with your contracts, so please see our [contract interaction tutorial](../contractsinteracting/).**
+**Next you'll want to interact with your contracts, so please see our [contract interaction tutorial](/tutorials/contractsinteracting/).**
 
-If you would like to learn more about how to program smart contracts, please see [our smart contract tutorial series](../solidity/).
-
-
+If you would like to learn more about how to program smart contracts, please see [our smart contract tutorial series](/tutorials/solidity/).

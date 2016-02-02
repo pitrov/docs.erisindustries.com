@@ -7,11 +7,11 @@ title: "Tutorials | Trouble Shooting Your Installation"
 
 # I'm On OSX or Windows and It's All Wonky!
 
-Never fear, the marmots are here. See [Section 1 of our docker-machine tutorial](../tool-specific/docker_machine/) and come back to your installation. All will be well.
+Never fear, the marmots are here. See [Section 1 of our docker-machine tutorial](/tutorials/tool-specific/docker_machine/) and come back to your installation. All will be well.
 
 # No `eris` command found
 
-If you get a "No command 'eris' found" error then (if you built from source) you need to make sure that your `$GOPATH/bin` is in your `$PATH` (see [Getting Started](https://docs.erisindustries.com/tutorials/getting-started/) and then do:
+If you get a "No command 'eris' found" error then (if you built from source) you need to make sure that your `$GOPATH/bin` is in your `$PATH` (see [Getting Started](/tutorials/getting-started/) and then do:
 
 ```irc
 cd $GOPATH/src/github.com/eris-ltd/eris-cli/cmd/eris

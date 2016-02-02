@@ -7,13 +7,13 @@ title: "Tutorials | Making and Using eris-services"
 
 # Dependencies
 
-This tutorial is a continuation of our [contracts interacting tutorial](../contractsinteracting). If you have not completed that tutorial, please do so before working with this tutorial. Once we have a chain made, some contracts deployed to our chain, and a script to interact with them, we may want to be able to share that script with our colleagues *or* we may want to turn that script into a longer running microservice which is necessary for the applications we're building.
+This tutorial is a continuation of our [contracts interacting tutorial](/tutorials/contractsinteracting). If you have not completed that tutorial, please do so before working with this tutorial. Once we have a chain made, some contracts deployed to our chain, and a script to interact with them, we may want to be able to share that script with our colleagues *or* we may want to turn that script into a longer running microservice which is necessary for the applications we're building.
 
 To do this we will need to do two things: (1) docker-ize our scripts or daemons; and (2) marmot-ize our docker image.
 
 Along the way we are going to learn more about how docker works and how `eris` leverages docker under the hood to simplify your blockchain application making and operating.
 
-Before we begin, please rerun the app.js from the [previous tutorial](../contractsinteracting) and set idi's number to `>=150`.
+Before we begin, please rerun the app.js from the [previous tutorial](/tutorials/contractsinteracting) and set idi's number to `>=150`.
 
 **N.B.**
 
@@ -145,7 +145,7 @@ eris chains ls
 
 ```bash
 cd ~/.eris/apps/idi-service
-eris contracts deploy --chain simplechain --address $ADDR
+eris pkgs do --chain simplechain --address $ADDR
 ```
 
 Where `$ADDR` is the address you're using.
@@ -156,7 +156,7 @@ If you get an accounts not registered error, then check the following:
 
 * what are your addresses (`cat $chain_dir/addrX`)?
 * are those addresses known to eris keys (`eris actions do keys list`)?
-* are those addresses in the genesis block (`eris chains plop simplechain genesis`)?
+* are those addresses in the genesis block (`eris chains cat simplechain genesis`)?
 * what account does your epm.yaml use (`cat ~/.eris/apps/idi/epm.yaml`)?
 * what account does your account.json use (`cat ~/.eris/apps/idi-service/account.json`)?
 
@@ -489,4 +489,4 @@ Congratulations, you've just made your very own smart contract backed service ru
 
 # Where to next?
 
-You may want to next [go deeper with some of our more advanced tutorials](../advanced/)
+You may want to next [go deeper with some of our more advanced tutorials](/tutorials/advanced/)
