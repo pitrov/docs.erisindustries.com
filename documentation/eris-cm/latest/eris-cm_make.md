@@ -48,8 +48,10 @@ $ eris-cm make myChain --csv /path/to/csv -- will use the csv file to make your 
 
 ## See Also
 
-* [eris-cm](https://docs.erisindustries.com/documentation/eris-cm/0.11.0/eris-cm/)	 - The Eris Chain Manager is a utility for performing complex operations on eris chains
+* [eris-cm](https://docs.erisindustries.com/documentation/eris-cm/latest/eris-cm/)	 - The Eris Chain Manager is a utility for performing complex operations on eris chains
 
 ## Specifications
 
+* [Account Types](https://docs.erisindustries.com/documentation/eris-cm/latest/account_types/)
+* [Chain Types](https://docs.erisindustries.com/documentation/eris-cm/latest/chain_types/)
 

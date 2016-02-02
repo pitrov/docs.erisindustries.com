@@ -18,7 +18,7 @@ Made with <3 by Eris Industries.
 Complete documentation is available at https://docs.erisindustries.com
 
 Version:
-  0.11.0
+  latest
 
 ```bash
 eris-cm
@@ -34,8 +34,10 @@ eris-cm
 
 ## Subcommands
 
-* [eris-cm make](https://docs.erisindustries.com/documentation/eris-cm/0.11.0/eris-cm_make/)	 - The Eris Chain Maker is a utility for easily creating the files necessary to build eris chains
+* [eris-cm make](https://docs.erisindustries.com/documentation/eris-cm/latest/eris-cm_make/)	 - The Eris Chain Maker is a utility for easily creating the files necessary to build eris chains
 
 ## Specifications
 
+* [Account Types](https://docs.erisindustries.com/documentation/eris-cm/latest/account_types/)
+* [Chain Types](https://docs.erisindustries.com/documentation/eris-cm/latest/chain_types/)
 

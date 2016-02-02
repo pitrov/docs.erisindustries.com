@@ -38,4 +38,6 @@ eris-cm
 
 ## Specifications
 
+* [Account Types](https://docs.erisindustries.com/documentation/eris-cm/0.11.1/account_types/)
+* [Chain Types](https://docs.erisindustries.com/documentation/eris-cm/0.11.1/chain_types/)
 
