@@ -18,7 +18,7 @@ Made with <3 by Eris Industries.
 Complete documentation is available at https://docs.erisindustries.com
 
 Version:
-  0.11.1
+  latest
 
 ```bash
 epm
@@ -47,6 +47,6 @@ epm
 
 ## Specifications
 
-* [Jobs Specification](https://docs.erisindustries.com/documentation/eris-pm/0.11.1/jobs_specification/)
-* [Variable Specification](https://docs.erisindustries.com/documentation/eris-pm/0.11.1/variable_specification/)
+* [Jobs Specification](https://docs.erisindustries.com/documentation/eris-pm/latest/jobs_specification/)
+* [Variable Specification](https://docs.erisindustries.com/documentation/eris-pm/latest/variable_specification/)
 
