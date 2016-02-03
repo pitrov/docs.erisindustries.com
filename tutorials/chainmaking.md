@@ -174,22 +174,6 @@ In general, we recommend that if you are making a chain for a consortium that yo
 
 The last file is the `addresses.csv` file which is another artifact of the chain making process. It simply has the addresses and the "names" of the nodes. We find it useful when scripting out complex interactions and it is simply a reference file along the lines of `addr=$(cat $chain_dir/addresses.csv | grep $name | cut -d ',' -f 1)`.
 
-Now. Let's remove all those directories that were created and see how we can use these csv files to create a new set genesis.json.
-
-```bash
-cd ~/.eris/chains/toRemoveLater
-rm -rf ~/.eris/chains/toRemoveLater/toremovelater*
-ls ~/.eris/chains/toRemoveLater
-```
-
-Now you should only have the csv files. So let's make a new genesis.json:
-
-```bash
-eris chains make --known --validators validators.csv --accounts accounts.csv toRemoveLater
-```
-
-That command will display a genesis.json which you can pipe into a file if you needed. Since we already had the keys on the current keys container it also remade all of the bundles for us. You can check them with the ls commands.
-
 OK, enough playing around let's get serious!
 
 ```bash
