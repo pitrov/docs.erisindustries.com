@@ -60,7 +60,8 @@ Copy this as the new app.js.
 var
   contracts = require('eris-contracts'),
   address = require('./epm.json').deployStorageK,
-  abi = require('./abi/' + address),
+  fs = require('fs'),
+  abi = JSON.parse(fs.readFileSync("./abi/" + address)),
   account = require('./account.json'),
   chainUrl = "http://localhost:1337/rpc",
   manager, contract;
