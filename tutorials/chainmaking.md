@@ -44,7 +44,7 @@ eris chains make -h
 
 ## A Note Regarding This Tutorial
 
-The `eris` toolchain is designed to be very unix like, and as such we are able to craft most of what is needed in simple bash scripts which any competant developer should be able to understand. Bash really, truly, is the common demoninator as it does not require any specialized language specific knowledge beyond a bare minimum to understand what is happening.
+The `eris` toolchain is designed to be very unix like, and as such we are able to craft most of what is needed in simple bash scripts which any competant developer should be able to understand. Bash really, truly, is the common denominator as it does not require any specialized language specific knowledge beyond a bare minimum to understand what is happening.
 
 For this tutorial, we have kept the bash scripting to a bare minimum, but should you have any questions regarding any of the bash scripting, please let us know on our [Support Forums](https://support.erisindustries.com) and we will endeavor to make more clear what any commands that are unclear are actually doing.
 
@@ -56,7 +56,7 @@ Everyone who interacts with an eris chains blockchain will need to have a proper
 
 Because we use Docker to take out most of the edge cases with various operating systems and simplify the development environment for our users, these files will be written to a file system located inside the eris keys container. As we go through this tutorial we will explain a bit about what that means. When we are using containers, these containers are not built to *hold* data, but rather are built to hold what is needed to run processes. But, if we're making keypairs, then we definitely want to *keep* these.
 
-To accomplish this, we will use use the `eris` tooling only. First we need to start the eris-keys daemon:
+To accomplish this, we will use the `eris` tooling only. First we need to start the eris-keys daemon:
 
 ```bash
 eris services start keys
@@ -84,7 +84,7 @@ eris keys -h
 
 Now it is time to generate some keys!
 
-For the purposes of this tutorial **only** we will also create all of the necesary keys for all of the "users" of the chain and we will do so without passwords. Again, this is for demonstration purposes only, for a production system you will not do what we're about to do.
+For the purposes of this tutorial **only** we will also create all of the necessary keys for all of the "users" of the chain and we will do so without passwords. Again, this is for demonstration purposes only, for a production system you will not do what we're about to do.
 
 ```bash
 eris keys gen
@@ -128,7 +128,7 @@ In general you do not really need to mess with `server_conf.toml` unless you kno
 
 The three files you *may* need to edit are the `genesis.json` and `priv_validator.json` (both of which we're about to get "made" for us) and the `config.toml`.
 
-The `config.toml` file is generally edited to fill in the `seeds` and `moniker` fields. The `seeds` field (which is a misnomer because it accepts a string rather than an array, and as such should have been named `seed`) is used to point your consensus engine to the peer server it should connect into. For more information on how to deal with this please see our [advanced chain making tutuorial](/tutorials/advanced/chainmaking/). The `moniker` field is "your node's name on the network". It should be unique on the given network.
+The `config.toml` file is generally edited to fill in the `seeds` and `moniker` fields. The `seeds` field (which is a misnomer because it accepts a string rather than an array, and as such should have been named `seed`) is used to point your consensus engine to the peer server it should connect into. For more information on how to deal with this please see our [advanced chain making tutorial](/tutorials/advanced/chainmaking/). The `moniker` field is "your node's name on the network". It should be unique on the given network.
 
 The `genesis.json` is the primary file which tells eris chains how to instantiate a particular blockchain. It provides the "genesis" state of the blockchain including the accounts, permissions, and validators which will be used at the beginning of the chain. These can always be updated over the life of the chain of course, but the genesis.json provides the starting point. Luckily `eris` takes care of making this for you and there is very little which should be required for you in way of editing (unless you know what you're doing of course, in which case why are you reading this ;-) ).
 
