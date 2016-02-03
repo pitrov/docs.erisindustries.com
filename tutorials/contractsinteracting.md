@@ -49,10 +49,10 @@ If you are on AWS, the version of NPM which will likely be installed will create
 Currently we are in the process of refactoring eris-db.js and eris-contracts.js to use eris-keys like the rest of the eris stack does in an effort to be fully modular. This effort is not currently completed so at this time, eris-db.js and eris-contracts.js will sign themselves. Because of this we need to give them the address, public key and private key in a small json file. First let's see what our proper keys are using eris keys and then we'll add them into the `account.json`.
 
 ```bash
-eris keys convert ADDR
+eris keys convert $addr
 ```
 
-Where `ADDR` in the above is the key you want to use to interact with the contracts. If you followed the [simple chainmaking tutorial](/tutorials/chainmaking) then you'll want to use the validator address you created on the chain for simplicity's sake. That command will display a json which looks something like this:
+Where `$addr` in the above is the key you want to use to interact with the contracts. If you followed the [simple chainmaking tutorial](/tutorials/chainmaking) then you'll want to use the validator address you created on the chain for simplicity's sake. The `$addr` shell variable should be set for you if you have been following this tutorial. That command will display a json which looks something like this:
 
 ```json
 {"address":"1FDD813D68F73BBABFEA6EF6FB83118441CFC347","pub_key":[1,"993C19257009531BA79D481D764553703DEE82B11F7C514DD0F99BDED5E3CAFF"],"priv_key":[1,"E6D862EF63AC414AF40C6AAD9D73A1620747CFF29021678B704231C12C18627F993C19257009531BA79D481D764553703DEE82B11F7C514DD0F99BDED5E3CAFF"],"last_height":0,"last_round":0,"last_step":0}
