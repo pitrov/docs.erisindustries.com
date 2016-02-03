@@ -17,7 +17,7 @@ This blog post is about the language features of Solidity. I will be going over 
 
 *Type-related information can be found in the official Solidity tutorial, under [types](https://github.com/ethereum/wiki/wiki/Solidity-Tutorial#types). It is good to have read that first.*
 
-Solidity is a `statically typed language`, like for example C/C++ and Java. This may be new to people that has been working mostly with scripting/interpreted languages. What `statically typed` means is that when you declare a variable you must also include its type. For example: `myVar = 55;`is not allowed, but `int myInt = 55;` is. Types can be inferred by using `var` i.e. `var myVar = 55;` is allowed and will automatically get the type `uint8`. You must initialize a `var` when declaring it.
+Solidity is a `statically typed language`, like for example C/C++ and Java. This may be new to people that have been working mostly with scripting/interpreted languages. What `statically typed` means is that when you declare a variable you must also include its type. For example: `myVar = 55;`is not allowed, but `int myInt = 55;` is. Types can be inferred by using `var` i.e. `var myVar = 55;` is allowed and will automatically get the type `uint8`. You must initialize a `var` when declaring it.
 
 Types are checked at compile-time, so if you make a mistake you will get a compiler error. For example, this is not possible:
 
