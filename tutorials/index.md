@@ -5,7 +5,7 @@ title: "Tutorials"
 
 ---
 
-This is a series of Tutorials. These tutorials are meant to be a natural follow-on after readers have have some familiarity with the Eris platform.
+This is a series of Tutorials. These tutorials are meant to be a natural follow-on after readers have some familiarity with the Eris Platform.
 
 If you feel a bit like this marmot:
 
