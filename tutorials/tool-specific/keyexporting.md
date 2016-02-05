@@ -5,7 +5,7 @@ title: "Tutorials | Working With Eris Keys"
 
 ---
 
-**Note** -- This tutorial is built for Eris versions >= 0.11. For other versions of this tutorial please see below:
+**Note** -- This tutorial is built for Eris versions >= 0.11.1. For other versions of this tutorial please see below:
 
 * [v0.10](../deprecated/keyexporting-v0.10/)
 
