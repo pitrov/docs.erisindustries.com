@@ -157,7 +157,7 @@ You *should* be able to use any of the addresses you generated during the chainm
 
 Note that eris:package_manager can override the account which is used in any single job and/or, eris:package_manager can set a default `account` job which will establish a default account within the yaml. We find setting the default account within the yaml to usually be counter-productive because others will not be able to easily use your yaml unless they have the same keys in their `eris-keys` (which we **never** recommend). For more on using accounts [please see the jobs specification](/documentation/eris-pm/latest/jobs_specification/).
 
-That's it! Your contract is all ready to go. You should see the output in `epm.csv` which will have the transaction hash of the transactions as well as the address if the deployed `idi.sol` contract.
+That's it! Your contract is all ready to go. You should see the output in `epm.json` which will have the transaction hash of the transactions as well as the address if the deployed `idi.sol` contract.
 
 **Troubleshooting**
 
