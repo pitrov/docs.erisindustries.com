@@ -24,3 +24,6 @@ Then see our [quick start guide](../getting-started/) to get you more like this 
 [Part IV: Solid Solidity](solidity-4)
 
 [Part V: Modular design and strategies](solidity-5)
+
+[Part VI: Imports and packages](solidity-6)
+
