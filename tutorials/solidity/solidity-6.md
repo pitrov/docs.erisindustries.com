@@ -172,6 +172,7 @@ Strings can't be accessed by index yet (unless it changed yesterday), but bytes 
 The [new imports](https://solidity.readthedocs.org/en/latest/layout-of-source-files.html#importing-other-source-files) lets you import files like you would in JavaScript. It is also possible to add include directories in compiler commands, and to remap paths. Remapping can be very useful; especially when the code is contained in many different directories and subdirectories.
 
 Let's say you have a 'contracts' folder with a 'src' and an 'deps' folder, and the 'deps' folder contains a number of other contracts.
+
 ```
 contracts
 |_src
@@ -182,6 +183,7 @@ contracts
   |_lib2
     |_Lib2Contract.sol
 ```
+
 What you could do is to write the imports in `MyContract.sol` like this:
 
 ```
