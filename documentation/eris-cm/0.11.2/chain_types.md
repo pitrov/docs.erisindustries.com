@@ -28,8 +28,8 @@ could get lost or compromised and the chain would thereafter become useless.
 ## Number of Account Types for Chain Type: simplechain
 
 
-Root:000
 Validator:000
 Full:001
 Developer:000
 Participant:000
+Root:000
