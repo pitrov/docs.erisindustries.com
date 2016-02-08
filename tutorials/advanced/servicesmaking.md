@@ -41,13 +41,13 @@ $ eris keys ls --container
 
 which should output:
 
-```bash
+```
 The keys in your container kind marmot:  33451171C0E158592FE44AFE19E0244A8661E3B8
 ```
 
 At this point, it is highly recommended (but not necessary) to export your key to host for backup:
 
-```bash
+```
 $ eris keys export 33451171C0E158592FE44AFE19E0244A8661E3B8
 ```
 
@@ -57,7 +57,7 @@ See it with:
 $ eris keys ls --host
 ```
 
-**Protip:** You can also `$ eris keys import $ADDR` to go from host to container. Similiarly to `$ eris data import/export` these commands are thought of from the point of view of the container. See [this tutorial](../tool-specific/keyexporting/) for more information on the `eris keys` command.
+**Protip:** You can also `$ eris keys import ADDR` to go from host to container. Similiarly to `$ eris data import/export` these commands are thought of from the point of view of the container. See [this tutorial](../tool-specific/keyexporting/) for more information on the `eris keys` command.
 
 Second, within the container, the key was both: 1) converted to the tendermint format: `priv_validator.json` and 2) used to create the `genesis.json` file. Both these files were then exported from the container to the host into `$HOME/.eris/chains/bob`, where `bob` is the name of the chain created with `chains make` above. 
 
@@ -91,8 +91,8 @@ Maybe you want to chattier output to see what's going on under the hood? Add `--
 
 ```bash
 $ eris chains ls --running
-$ eris chains logs $CHAIN_NAME
-$ eris chains plop $CHAIN_NAME genesis
+$ eris chains logs bob
+$ eris chains plop bob genesis
 ```
 
 All endpoints are available via `http://HostIP:46657`. You can see a sample [here](http://pinkpenguin.interblock.io:46657). Notice a few things for your chain:
@@ -106,14 +106,14 @@ All endpoints are available via `http://HostIP:46657`. You can see a sample [her
 Your chain is now setup and ready to be used as a dependency for the toadserver. (Note: this process is still a WIP and will be smoother in future releases). Since we'll be launching the toadserver as a service, we need two things: 1) its docker image and 2) a service definition file (which specifies how to run the toadserver). The former is already built for you using this [Dockerfile](https://github.com/eris-ltd/toadserver/blob/master/Dockerfile) and is specified in the definition file at this line: `image = "quay.io/eris/toadserver:latest"`. The image will automatically be pulled from quay if not found locally when the toadserver is started (if you answer yes to the prompt). Alternatively, you can build it locally from the Dockerfile. See way below for more info on that.
 
 ## Edit some variables
-Open the file (`$ eris services edit toadserver`) and replace the following environment variables with the values from above.
+Open the file: `$ eris services edit toadserver`, and replace the following environment variables with the values from above.
 
 ```bash
 "MINTX_CHAINID=$CHAIN_NAME",
 "MINTX_PUBKEY=$PUB",
 ```
 
-It should now look like this (using the pubkey generated above):
+It should now look like this:
 
 ```bash
 "MINTX_CHAINID=bob",
@@ -206,7 +206,7 @@ $ docker build -t quay.io/eris/toadserver:demo .
 
 The `-t` specifies a path/to/name:tag for your image while `.` at the end is the path to the Dockerfile. You'll see a bunch of output of your build then you can run `$ docker images` to see a list of images. If the build was successful, yours will be there. Once you've tested your dockerized-application-as-a-service (or would simply like to share it with others), you can
 
-```
+```bash
 $ docker push quay.io/eris/toadserver:demo
 ```
 
@@ -214,22 +214,22 @@ $ docker push quay.io/eris/toadserver:demo
 
 ## Service Definition File
 
-Once one has an image, the usual way to launch a docker container running that image is with `docker run` from the command line. This command specifies a ton of parameters (or not!) for deploying various applications. Working with a definition file simplifies a lot of things. We'll first make one then I'll walk through equivalent `docker run` command. Start with:
+Once one has an image, the usual way to launch a docker container running that image is with `docker run` from the command line. This command specifies a ton of parameters (or not!) for deploying various applications. Working with a definition file simplifies a lot of things. (If you find similarities to `[docker-compose](https://docs.docker.com/compose/)`, that's because the `eris` tool is inspired from it. We'll first make one then I'll walk through equivalent `docker run` command. Start with:
 
-```
+```basg
 $ eris services new toad quay.io/eris/toadserver:demo
 ```
 
 This creates a new service named "toad" with image "quay.io/eris/toadserver:demo" and writes it to `~/.eris/services/toad.toml`. See it then open it with:
 
-```
+```bash
 $ eris services cat toad
 $ eris services edit toad
 ```
 
 You'll see something like:
 
-```
+```toml
 # This is a TOML config file.
 # For more information, see https://github.com/toml-lang/toml
 
@@ -252,9 +252,9 @@ email = "zach@erisindustries.com"
 
 (Factlet: under the hood, maintainer info was autopopulated via git config settings.)
 
-This file is a good start but it's not quite what we want. The toadserver service definition file was used used in the previous sequence way above and looks something like:
+This file is a good start but it's not quite what we want. The toadserver service definition file was used in the previous sequence way above and looks something like:
 
-```
+```toml
 name = "toadserver"
 chain = "$chain:toad:l"
 
@@ -265,9 +265,9 @@ ports = [ "11113:11113" ]
 volumes = [  ]
 environment = [
 	"MINTX_NODE_ADDR=http://toad:46657/",
-	"MINTX_CHAINID=toadserver",
+	"MINTX_CHAINID=bob",
 	"MINTX_SIGN_ADDR=http://keys:4767",
-	"MINTX_PUBKEY=162ECE7A10260292CC562921725154193FA41C791AF4B2F2324687BF43C2107D",
+	"MINTX_PUBKEY=9F7381064F3DEA7355B09A8B47A201D310E2FD475CF686586CD246A23B603D89",
 	"ERIS_IPFS_HOST=http://ipfs",
 	"TOADSERVER_IPFS_NODES=$NODES"
 ]
@@ -294,17 +294,15 @@ $ docker run --name toadserver \
 --publish 11113:11113 \
 --link eris_service_ipfs_1:ipfs \
 --link eris_service_keys_1:keys \
---link eris_chain_toadserver_1:toad \
+--link eris_chain_bob_1:toad \
 --env "MINTX_NODE_ADDR=http://toad:46657/" \
 --env "MINTX_CHAINID=toadserver" \
 --env "MINTX_SIGN_ADDR=http://keys:4767" \
---env "MINTX_PUBKEY=162ECE7A10260292CC562921725154193FA41C791AF4B2F2324687BF43C2107D" \
+--env "MINTX_PUBKEY=9F7381064F3DEA7355B09A8B47A201D310E2FD475CF686586CD246A23B603D89" \
 --env "ERIS_IPFS_HOST=http://ipfs" \
 --env "TOADSERVER_IPFS_NODES=$NODES" \
   quay.io/eris/toadserver
 ```
-
-
 
 What a hassle it would be if you had to type this up at the command line every time you wanted to start a service. Not only that, this command above expects each container it is `--link`ing to, to already be running! That means `docker run` for each ipfs, keys, and your chain. Instead, just add the services you need as `[dependencies]` and they'll be started when and where you need them!
 
