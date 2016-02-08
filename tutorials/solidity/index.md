@@ -27,3 +27,4 @@ Then see our [quick start guide](../getting-started/) to get you more like this 
 
 [Part VI: Imports and packages](solidity-6)
 
+[Bonus: Updating Systems Built in Solidity](updating-solidity-1)
