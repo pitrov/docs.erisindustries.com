@@ -170,9 +170,11 @@ contract MultiAccountValidator is AccountValidator {
 
 ### Summary
 
-Proper delegation is an important part of smart-contract systems. It is also something one has to consider from the very start, because the rules for how a set of contracts can be updated is generally contained in the contracts themselves. It also becomes harder to manage as the system grows, and a strategy that makes a small system work may not be good for a medium-sized or large one. Also, because modularity adds extra code, and thus extra cost, it can be hard to balance scalability with efficiency.
+Proper delegation is an important part of smart-contract systems. It is also something one has to consider from the very start, because the rules for how a set of contracts can be updated is generally contained in the contracts themselves. Also, the more contracts that are in the system the harder they become to manage, and a strategy that makes a small system work may not be good for a medium-sized or large one. 
 
-In my opinion, the most important thing to do is to first acknowledge that the code is inevitably going to need updates, and that there needs to be a good policy for how it is done, and by who. It also find it better to start with an excessively modular system then with the opposit. The large, expensive contracts in a modular system can after all be replaced as better alternatives present themselves.
+Another thing to keep in mind is that modularity comes with a cost, because it requires more code, storage variables and calls. On the public chain, where the gas limitations are quite severe (for obvious reasons), even a small modular system could be hard to deploy and run. Generally, when it comes to scalability vs. efficiency I tend to go with scalability. The large, expensive contracts in an excessively modular system can after all be improved and replaced, but if the contracts are locked down that may not be an option.
+
+In my humble opinion, the most important thing is to at least acknowledge that the code is inevitably going to need updates, and at some point there must be a good policy for how it can be done. The alternative is to not have a plan and fail. And then maybe fail again, and again, until eventually it becomes clear.
 
 ### Next tutorial
 
