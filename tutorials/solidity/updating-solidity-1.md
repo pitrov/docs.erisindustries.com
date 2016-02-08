@@ -12,9 +12,9 @@ This is a new tutorial series about how to create modular systems of smart-contr
 - updating is possible.
 - the new contract works as intended.
 - all the calls made during the replacement procedure was executed successfully.
-- replacing the previous contracts causes no side-effects on the other contracts.
+- replacing the contract has no side-effects in other parts of the system.
 
-The first point may seem obvious, but it usually requires a lot of work because updating is not possible by default; the reason is because of how accounts, code and storage works.
+The first point may seem obvious but it usually requires a lot of work, because updating is not possible by default; the reason is because of how accounts, code and storage works.
 
 ### Accounts, Code and Storage
 
@@ -82,7 +82,7 @@ contract AccountValidator {
     
     function setOwner(address owner_) {
         if(msg.sender == owner)
-           owner = owner_
+           owner = owner_;
     }
     
 }
@@ -170,17 +170,19 @@ contract MultiAccountValidator is AccountValidator {
 
 ### Summary
 
-Proper delegation is an important part of smart-contract systems. It is also something one has to consider from the very start, because the rules for how a set of contracts can be updated is generally contained in the contracts themselves. Also, the more contracts that are in the system the harder they become to manage, and a strategy that makes a small system work may not be good for a medium-sized or large one. 
+Proper delegation is an important part of smart-contract systems. It is also something one has to consider from the very start, because the rules for how a set of contracts can be updated is generally contained in the contracts themselves. Also, the more contracts that are in the system the harder they become to manage, and a strategy that makes a small system work may not be suitable for a medium-sized or large one.
 
 Another thing to keep in mind is that modularity comes with a cost, because it requires more code, storage variables and calls. On the public chain, where the gas limitations are quite severe (for obvious reasons), even a small modular system could be hard to deploy and run. Generally, when it comes to scalability vs. efficiency I tend to go with scalability. The large, expensive contracts in an excessively modular system can after all be improved and replaced, but if the contracts are locked down that may not be an option.
 
-In my humble opinion, the most important thing is to at least acknowledge that the code is inevitably going to need updates, and at some point there must be a good policy for how it can be done. The alternative is to not have a plan and fail. And then maybe fail again, and again, until eventually it becomes clear.
+In my opinion, it is very important to at least acknowledge that the code is going to need updates, and at some point there must be a good policy for how it can be done. The alternative is to not have a plan and fail. And then maybe fail again, and again, until eventually it becomes clear.
 
 ### Next tutorial
 
 The next tutorial will be about how to manage updates. This tutorial explained how contracts can be designed to allow updates, but the process of updating a contract has many steps, starting with the compilation and then testing, uploading calling the function(s) that updates the target contract (`setValidator` in this case), and making sure that all relevant pre- and post-conditions were met.
 
 
-Happy smart-contracting! // Andreas Olofsson (androlo1980@gmail.com)
+Happy smart-contracting! 
 
-BTW, if this makes any sense, maybe check out the [DAO framework](https://github.com/smartcontractproduction/dao)) - a framework for modular systems of Ethereum contracts.
+// Andreas Olofsson (androlo1980@gmail.com)
+
+BTW, if this makes sense, maybe check out the [DAO framework](https://github.com/smartcontractproduction/dao) - a framework for modular systems of Ethereum contracts.
