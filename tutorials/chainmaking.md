@@ -48,7 +48,7 @@ The `eris` toolchain is designed to be very unix like, and as such we are able t
 
 For this tutorial, we have kept the bash scripting to a bare minimum, but should you have any questions regarding any of the bash scripting, please let us know on our [Support Forums](https://support.erisindustries.com) and we will endeavor to make more clear what any commands that are unclear are actually doing.
 
-# Steps 1. Make (or Get) the Public Keys
+# Step 1. Make (or Get) the Public Keys
 
 Everyone who interacts with an eris chains blockchain will need to have a properly formated keypair. To make a keypair we will use `eris keys`.
 
